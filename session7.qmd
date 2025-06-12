@@ -1,12 +1,12 @@
 ---
-title: "Natural Language Processing - Chapter 7"
+title: "Chapter 7: Topic Modeling"
 author: "Tim Roessling"
 date: "`r Sys.Date()`"
 format: html
 jupyter: myvenv
 ---
 
-# Topic Modeling
+# Chapter 7: Topic Modeling
 
 ## Topic Modeling
 

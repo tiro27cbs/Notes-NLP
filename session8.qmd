@@ -1,5 +1,5 @@
 ---
-title: "Natural Language Processing - Chapter 8"
+title: "Chapter 8: Lexical Semantics and Vector Embeddings"
 author: "Tim Roessling"
 date: "`r Sys.Date()`"
 format: html

@@ -1,0 +1,8 @@
+---
+title: "NLP Notes"
+author: "Tim Roessling"
+date: "2025-06-12"
+format: html
+---
+
+This document contains a collection of my notes on Natural Language Processing (NLP). It covers various topics, concepts, and techniques related to understanding and processing human language.

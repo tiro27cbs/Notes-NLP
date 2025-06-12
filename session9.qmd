@@ -1,5 +1,5 @@
 ---
-title: "Natural Language Processing - Chapter 9"
+title: "Chapter 9: Simple Neural Networks"
 author: "Tim Roessling"
 date: "`r Sys.Date()`"
 format: html

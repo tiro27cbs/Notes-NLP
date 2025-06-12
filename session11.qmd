@@ -1,7 +1,274 @@
 ---
-title: "Natural Language Processing - Chapter 11"
+title: "Chapter 11: Question Answering and Information Retrieval"
 author: "Tim Roessling"
 date: "`r Sys.Date()`"
 format: html
 jupyter: myvenv
 ---
+
+# Chapter 11: Question Answering and Information Retrieval
+
+## Introduction
+Information retrieval QA: Also called Open Domain QA
+find relevant passages, then use MRC to draw an answer
+directly from spans of text
+Knowledge-based QA build semantic representation of query,
+then use that to query a database
+LLMs for QA
+
+
+
+## Information Retrieval (IR)
+**Key Concepts in Information Retrieval (IR):**
+
+- **Document:** The unit of text that the system retrieves (e.g., web page, news article, paragraph).
+- **Collection:** The set of documents being used to satisfy requests.
+- **Term:** A word or phrase in the query.
+- **Query:** The user’s information need, represented as a set of terms.
+
+**Vector Space Model:**
+
+Both queries and documents are mapped to vectors, typically using unigram word counts (bag-of-words approach). Documents are ranked by their cosine similarity to the query vector.
+
+- **Example:**  
+    Query: "machine learning applications"  
+    Document 1: "Applications of machine learning in healthcare"  
+    Document 2: "History of art and design"  
+    Document 1 will have a higher cosine similarity to the query.
+
+**Term Frequency–Inverse Document Frequency (TF-IDF):**
+
+- **Term Frequency (tf):** The more a term occurs in a document, the higher its weight.
+- **Inverse Document Frequency (idf):** Terms that appear in many documents get lower weight.
+
+**TF-IDF Example:**
+
+Suppose "machine" appears 3 times in Document 1 and in 100 out of 10,000 documents in the collection.  
+- tf = 3  
+- idf = log(10,000 / 100) = 2  
+- tf-idf = 3 × 2 = 6
+
+**Scoring Documents:**
+
+Represent queries and documents as TF-IDF vectors. Score each document by its cosine similarity to the query:
+
+\[
+\text{score}(q, d) = \frac{q \cdot d}{\|q\| \times \|d\|}
+\]
+
+where  
+- \( q \) is the query vector  
+- \( d \) is the document vector  
+- \( \|q\| \) and \( \|d\| \) are their vector lengths
+
+**Evaluation Metrics:**
+
+- **Precision:** Fraction of returned documents that are relevant.
+- **Recall:** Fraction of all relevant documents that are returned.
+
+| Rank | Judgment (Relevant?) | Precision | Recall |
+|------|---------------------|-----------|--------|
+| 1    | Yes                 | 1/1 = 1.0 | 1/3 = 0.33 |
+| 2    | No                  | 1/2 = 0.5 | 1/3 = 0.33 |
+| 3    | Yes                 | 2/3 = 0.67| 2/3 = 0.67 |
+| 4    | Yes                 | 3/4 = 0.75| 3/3 = 1.0  |
+
+**Vocabulary Mismatch Problem:**
+
+A search for "tragic love story" might not find documents containing "star-crossed lovers."  
+**Solution:** Use models that recognize synonyms and similar phrases.
+
+**Dense Retrieval with Neural Models:**
+
+Encode queries and documents with models like BERT, then compare their embeddings to score relevance.
+
+**Example:**  
+Query: "famous tragic love story"  
+Document: "Romeo and Juliet are star-crossed lovers"  
+BERT can help match these despite different wording.
+
+---
+
+**Question Answering Datasets:**
+
+- **Stanford Question Answering Dataset (SQuAD):** Passages from Wikipedia with questions whose answers are spans from the passage.
+- **SQuAD 2.0:** Adds questions that are unanswerable based on the passage.
+
+**Extractive QA:**
+
+The answer is a span in the passage. For each token \( p_i \) in the passage, compute the probability it is the start or end of the answer span.
+
+**BERT Implementation for Extractive QA:**
+
+- The question is the first sequence, the passage is the second.
+- A linear layer predicts the start and end positions of the answer span.
+- Two vectors are learned: a span-start embedding \( S \) and a span-end embedding \( E \).
+- For each output token \( p_i \):
+    - Span-start probability: dot product of \( S \) and \( p_i \)
+    - Span-end probability: dot product of \( E \) and \( p_i \)
+
+**Example:**
+
+Passage: "The capital of France is Paris."  
+Question: "What is the capital of France?"  
+Model predicts start and end positions corresponding to "Paris".
+
+---
+
+
+### IR-based Question Answering
+
+### Entity Linking
+
+Entity linking is the process of associating a mention in text with a specific real-world entity in a knowledge base or ontology.
+
+- **Purpose:** Disambiguate mentions (e.g., "Paris" as a city in France vs. Paris Hilton).
+- **Applications:** Improves information retrieval, question answering, and knowledge base population.
+
+**Wikification:**  
+A common form of entity linking where mentions in text are mapped to their corresponding Wikipedia pages.
+
+**Steps in Entity Linking:**
+1. **Mention Detection:** Identify candidate entity mentions in the text.
+2. **Candidate Generation:** Generate possible entities from the knowledge base for each mention.
+3. **Entity Disambiguation:** Select the most likely entity based on context.
+
+**Example:**
+
+Text: "Apple was founded by Steve Jobs."  
+- "Apple" → [Apple Inc. (Wikipedia)](https://en.wikipedia.org/wiki/Apple_Inc.)
+- "Steve Jobs" → [Steve Jobs (Wikipedia)](https://en.wikipedia.org/wiki/Steve_Jobs)
+
+Entity linking enables more accurate retrieval and reasoning by grounding text to structured knowledge.
+
+
+## Knowledge-based Question Answering
+Knowledge-based question answering (KBQA) involves answering questions by mapping them to queries over structured databases or knowledge bases.
+
+**Types of Knowledge-based QA:**
+- **Graph-based QA:** Represents the knowledge base as a graph, with entities as nodes and relations/propositions as edges. Answers are found by traversing or querying the graph.
+- **Semantic Parsing QA:** Maps natural language questions to logical forms (e.g., database queries or graph traversals) that can be executed against the knowledge base.
+
+**RDF Triples:**
+A common structure for knowledge bases is the RDF triple: (subject, predicate, object), expressing a simple fact or relation.
+- Example: ("Ada Lovelace", "birth year", "1815")
+
+**Example Questions:**
+- "When was Ada Lovelace born?" → `birth-year(Ada Lovelace, ?x)`
+- "Who was born in 1815?" → `birth-year(?x, 1815)`
+- "What is the capital of England?" → `capital-city(England, ?x)`
+
+**Popular Knowledge Bases:**
+- **DBpedia:** Contains over 2 billion RDF triples extracted from Wikipedia.
+- **Freebase/Wikidata:** Large collaborative knowledge bases with structured facts.
+
+**Question Datasets:**
+- **SimpleQuestions:** 100K+ questions paired with Freebase triples, designed for evaluating KBQA systems.
+
+**Supervision for Semantic Parsing:**
+- **Fully Supervised:** Each question is paired with a hand-annotated logical form.
+- **Weakly Supervised:** Each question is paired only with the answer (denotation); the logical form is treated as a latent variable and learned indirectly.
+
+Knowledge-based QA enables precise, fact-based answering by leveraging structured representations of world knowledge.
+
+
+
+## LLMs for Question Answering
+### Prompting Techniques
+
+See prompting techniques in Session 10.
+
+---
+
+### Retrieve-and-Generate (RAG) for Question Answering
+
+**RAG** (Retrieval-Augmented Generation) combines information retrieval with large language models (LLMs) to answer questions more accurately and with up-to-date information.
+
+**Workflow:**
+1. **Input:** User submits a question.
+2. **Indexing:** Documents are split into chunks, and embeddings are generated for each chunk and for the input question.
+3. **Retrieval:** The system retrieves the most relevant chunks by comparing their embeddings to the question embedding.
+4. **Generation:** The retrieved chunks are combined with the original question to form a prompt, which is passed to the LLM to generate an answer.
+
+---
+
+### Evaluation of RAG Systems
+
+**Retrieval Evaluation:**
+- Are the correct/relevant chunks retrieved for a given query?
+- With reference answers, precision and recall can be measured.
+- Reference-free evaluation (e.g., using LLMs as judges) can assess precision, but recall requires ground-truth relevant chunks.
+
+**Generation Evaluation:**
+- Is the generated answer correct and relevant?
+- With references: Use metrics like BLEU, ROUGE, embedding similarity, or LLM-based judgments.
+- Reference-free: LLM-based evaluation of answer quality.
+
+**Key Criteria:**
+- **Faithfulness:** Does the answer only make claims supported by the retrieved context?
+- **Answer Relevance:** Does the answer directly address the question?
+- **Context Relevance:** Does the context contain only information needed to answer the question?
+
+If the correct answer is not present in the retrieved data, the model should indicate this. Faithful answers should not hallucinate unsupported information.
+
+**Links Between Retrieval and Generation:**
+- Poor retrieval typically leads to poor answers.
+- Evaluating answer quality can indirectly reflect retrieval effectiveness.
+
+---
+
+## Agents
+
+- **Definition:** Agents are systems capable of forming intentions, making plans, and acting to achieve goals. This implies the presence of internal mental states or representations.
+- **LLMs as Agents:** Large Language Models (LLMs) possess richer internal representations than previous AI systems. In practice, an "agent" often refers to a system that uses an LLM to control the flow of an application (e.g., LangChain agents).
+- **Modalities:**
+    - **Text Input:** LLMs natively process text, but implied meanings and context can be challenging. Instruction tuning improves performance.
+    - **Audio Input:** Requires external tools (e.g., speech-to-text). Modality fusion techniques can integrate audio embeddings with text.
+    - **Visual Input:** Involves external tools (e.g., image captioning) or modality fusion to combine visual and textual information.
+
+---
+
+## Formal vs. Functional Abilities of LLMs
+
+- **Human Assumptions:** We often assume language is produced by rational, thinking agents (Turing Test).
+- **Competence Types:**
+    - **Formal Linguistic Competence:** Knowledge of grammar, rules, and patterns.
+    - **Functional Linguistic Competence:** Using and understanding language in real-world contexts.
+- **Common Fallacies** (Mahowald et al., 2023):
+    - "Good at language → good at thought"
+    - "Bad at thought → bad at language"
+- **Examples:**
+    - Grammaticality judgments:
+        - "Bert knows what many writers find." (grammatical)
+        - "*Bert knows that many writers find." (ungrammatical)
+        - "The truck has clearly tipped over." (grammatical)
+        - "*The truck has ever tipped over." (ungrammatical)
+- **Other Abilities:**
+    - Formal reasoning (logic, math)
+    - World knowledge
+    - Situation and social reasoning
+- **Testing Issues:**
+    - Has the model been fine-tuned for the task?
+    - Is test material present in training data?
+
+---
+
+## Takeaways
+
+- **Question Answering Approaches:**
+    - **Information Retrieval (IR):** Encode queries and candidate answers, compare using dot product or cosine similarity. Encodings can be TF-IDF or dense vectors.
+    - **Knowledge-based QA:** Map questions to structured queries over knowledge bases.
+- **Datasets:**
+    - **SQuAD:** Span-based QA from Wikipedia passages.
+    - **Entity Linking/Wikification:** Map mentions to Wikipedia pages.
+    - **RDF Datasets:** DBpedia (2B+ triples), Freebase/Wikidata.
+    - **SimpleQuestions:** 100K+ questions paired with Freebase triples.
+- **LLM Techniques:**
+    - Prompt engineering (settings, structure, few-shot, chain-of-thought)
+    - Retrieval-Augmented Generation (RAG)
+    - Prompt chaining
+    - Agents
+- **Competence:**
+    - LLMs excel at formal linguistic competence.
+    - Functional competence (real-world understanding and reasoning) remains challenging.
+

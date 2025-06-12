@@ -1,5 +1,5 @@
 ---
-title: "Natural Language Processing - Chapter 10"
+title: "Chapter 10: The Transformer and Pre-trained Language Models"
 author: "Tim Roessling"
 date: 2024-06-09
 format: html

@@ -1,5 +1,5 @@
 ---
-title: "Natural Language Processing - Chapter 4"
+title: "Chapter 4: Text Classification and Naive Bayes"
 author: "Maxwell Bernard"
 date: "`r Sys.Date()`"
 format: html
@@ -7,7 +7,9 @@ jupyter: myvenv
 ---
 
 
-# Lecture 4
+# Chapter 4: Text Classification and Naive Bayes
+
+
 ## Text Classification
 - Text classification is the process of assigning predefined categories or labels to text documents based on their content.
 - It is a supervised learning task where a model is trained on labeled data to learn the relationship between the text and its corresponding labels.

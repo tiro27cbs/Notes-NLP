@@ -1,12 +1,12 @@
 ---
-title: "Natural Language Processing - Chapter 2"
+title: "Chapter 2: NLP Libraries and Text Normalization"
 author: "Maxwell Bernard"
 date: "`r Sys.Date()`"
 format: html
 jupyter: myvenv
 ---
 
-# Chapter 2: Introduction to NLP Libraries and Text Normalization
+# Chapter 2: NLP Libraries and Text Normalization
 
 ```{python}
 # | echo: false
@@ -30,6 +30,8 @@ from nltk.util import ngrams  # ngrams is a function that returns the n-grams of
 from collections import Counter  # Counter is a dict subclass for counting hashable objects
 from nltk.lm import MLE  # Maximum Likelihood Estimation
 import re  # Regular Expressions
+
+print("Libraries imported successfully.")
 ```
 
 ## Libraries

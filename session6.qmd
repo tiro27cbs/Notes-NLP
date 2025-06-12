@@ -1,12 +1,12 @@
 ---
-title: "Natural Language Processing - Chapter 6"
+title: "Chapter 6: Sentiment Analysis"
 author: "Maxwell Bernard"
 date: "`r Sys.Date()`"
 format: html
 jupyter: myvenv
 ---
 
-# Lecture 6
+# Chapter 6: Sentiment Analysis
 ## Sentiment Analysis (SA)
 - Sentiment analysis is the process of determining the sentiment or opinion expressed in a piece of text, such as positive, negative, or neutral.
 - A lexicon 
