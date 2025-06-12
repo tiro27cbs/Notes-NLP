@@ -35,6 +35,14 @@ Ekman's Six Basic Emotions are:
 - **LIWC (Linguistic Inquiry and Word Count)**: A text analysis tool that categorizes words into psychological and linguistic categories. It provides insights into emotional, cognitive, and structural aspects of text.
   - LIWC is widely used in psychology and social sciences for analyzing the emotional content of text data.
 
+| Model    | Approach                | Negation Handling | Sarcasm Handling         | Best Use Case                  | Explanation                                                                                   |
+|----------|-------------------------|-------------------|--------------------------|-------------------------------|-----------------------------------------------------------------------------------------------|
+| TextBlob | Lexicon-based           | Poor              | Very Poor                | Basic sentiment analysis (formal text) | Uses a predefined dictionary; fails with 'not good' or sarcasm.                               |
+| VADER    | Lexicon-based + Rules   | Good              | Partial (punctuation, caps) | Social media, informal text      | Recognizes negation and uses punctuation/capitalization cues for sarcasm.                     |
+| LSTM     | RNN-based Model         | Very Good         | Somewhat effective       | Sentiment analysis with learned context | Learns negation from training data but struggles with sarcasm without explicit examples.      |
+| BERT     | Transformer-based       | Excellent         | Best                     | Sarcasm, nuanced sentiment, advanced NLP tasks | Context-aware, understands negation and detects sarcasm using deep contextual learning.       |
+
+
 ## How to do Sentiment Analysis?
 - Two main approaches to sentiment analysis:
   

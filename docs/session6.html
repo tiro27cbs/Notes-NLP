@@ -268,6 +268,60 @@ ul.task-list li input[type="checkbox"] {
 <li>LIWC is widely used in psychology and social sciences for analyzing the emotional content of text data.</li>
 </ul></li>
 </ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 15%">
+<col style="width: 46%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Approach</th>
+<th>Negation Handling</th>
+<th>Sarcasm Handling</th>
+<th>Best Use Case</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>TextBlob</td>
+<td>Lexicon-based</td>
+<td>Poor</td>
+<td>Very Poor</td>
+<td>Basic sentiment analysis (formal text)</td>
+<td>Uses a predefined dictionary; fails with ‘not good’ or sarcasm.</td>
+</tr>
+<tr class="even">
+<td>VADER</td>
+<td>Lexicon-based + Rules</td>
+<td>Good</td>
+<td>Partial (punctuation, caps)</td>
+<td>Social media, informal text</td>
+<td>Recognizes negation and uses punctuation/capitalization cues for sarcasm.</td>
+</tr>
+<tr class="odd">
+<td>LSTM</td>
+<td>RNN-based Model</td>
+<td>Very Good</td>
+<td>Somewhat effective</td>
+<td>Sentiment analysis with learned context</td>
+<td>Learns negation from training data but struggles with sarcasm without explicit examples.</td>
+</tr>
+<tr class="even">
+<td>BERT</td>
+<td>Transformer-based</td>
+<td>Excellent</td>
+<td>Best</td>
+<td>Sarcasm, nuanced sentiment, advanced NLP tasks</td>
+<td>Context-aware, understands negation and detects sarcasm using deep contextual learning.</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="how-to-do-sentiment-analysis" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="how-to-do-sentiment-analysis"><span class="header-section-number">7.3</span> How to do Sentiment Analysis?</h2>
