@@ -1,12 +1,12 @@
 ---
-title: "Chapter 10: The Transformer and Pre-trained Language Models"
+title: "The Transformer and Pre-trained Language Models"
 author: "Tim Roessling"
-date: 2024-06-09
+date: "2025-06-12"
 format: html
 jupyter: myvenv
 ---
 
-# Chapter 10: The Transformer and Pre-trained Language Models
+# The Transformer and Pre-trained Language Models
 
 ## Background
 

@@ -6,3 +6,17 @@ format: html
 ---
 
 This document contains a collection of my notes on Natural Language Processing (NLP). It covers various topics, concepts, and techniques related to understanding and processing human language.
+
+## Lecture Outline
+
+1. **Lecture 1** – Course introduction and introduction to Linguistics and the study of Language  
+2. **Lecture 2** – Basic Text Processing: Regular expressions, Text Normalization, POS tagging, NER  
+3. **Lecture 3** – Language Modeling with N-Grams  
+4. **Lecture 4** – Naïve Bayes, Text Classification  
+5. **Lecture 5** – Logistic Regression  
+6. **Lecture 6** – Sentiment Analysis  
+7. **Lecture 7** – Topic Modeling and Top2Vec  
+8. **Lecture 8** – Vector Semantics and Embeddings  
+9. **Lecture 9** – Neural Networks and Neural Language Models  
+10. **Lecture 10** – The Transformer and Pre-trained language models  
+11. **Lecture 11** – Question Answering and Dialog systems and Chatbots  

@@ -1,13 +1,13 @@
 ---
-title: "Chapter 4: Text Classification and Naive Bayes"
+title: "Text Classification and Naive Bayes"
 author: "Maxwell Bernard"
-date: "`r Sys.Date()`"
+date: "2025-06-12"
 format: html
 jupyter: myvenv
 ---
 
 
-# Chapter 4: Text Classification and Naive Bayes
+# Text Classification and Naive Bayes
 
 
 ## Text Classification

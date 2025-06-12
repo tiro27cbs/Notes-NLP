@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Tim Roessling">
+<meta name="dcterms.date" content="2025-06-12">
 
-<title>10&nbsp; Chapter 9: Simple Neural Networks – NLP Notes</title>
+<title>10&nbsp; Simple Neural Networks – NLP Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -111,7 +112,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./session9.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 9: Simple Neural Networks</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./session9.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Simple Neural Networks</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -145,67 +146,67 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Chapter 1: Introduction to Natural Language Processing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to Natural Language Processing</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 2: NLP Libraries and Text Normalization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">NLP Libraries and Text Normalization</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 3: N-Gram Language Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">N-Gram Language Models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 4: Text Classification and Naive Bayes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Text Classification and Naive Bayes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 5: Logistic Regression and Text Representation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Logistic Regression and Text Representation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 6: Sentiment Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sentiment Analysis</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 7: Topic Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Topic Modeling</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 8: Lexical Semantics and Vector Embeddings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Lexical Semantics and Vector Embeddings</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session9.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 9: Simple Neural Networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Simple Neural Networks</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session10.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chapter 10: The Transformer and Pre-trained Language Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">The Transformer and Pre-trained Language Models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 11: Question Answering and Information Retrieval</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Question Answering and Information Retrieval</span></span></a>
   </div>
 </li>
     </ul>
@@ -218,7 +219,7 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#chapter-9-simple-neural-networks" id="toc-chapter-9-simple-neural-networks" class="nav-link active" data-scroll-target="#chapter-9-simple-neural-networks"><span class="header-section-number">11</span> Chapter 9: Simple Neural Networks</a>
+  <li><a href="#simple-neural-networks" id="toc-simple-neural-networks" class="nav-link active" data-scroll-target="#simple-neural-networks"><span class="header-section-number">11</span> Simple Neural Networks</a>
   <ul class="collapse">
   <li><a href="#ambiguity" id="toc-ambiguity" class="nav-link" data-scroll-target="#ambiguity"><span class="header-section-number">11.1</span> Ambiguity</a></li>
   <li><a href="#simple-neural-networks-and-neural-language-models" id="toc-simple-neural-networks-and-neural-language-models" class="nav-link" data-scroll-target="#simple-neural-networks-and-neural-language-models"><span class="header-section-number">11.2</span> Simple Neural Networks and Neural Language Models</a>
@@ -263,7 +264,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 9: Simple Neural Networks</span></h1>
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Simple Neural Networks</span></h1>
 </div>
 
 
@@ -280,7 +281,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Invalid Date</p>
+      <p class="date">June 12, 2025</p>
     </div>
   </div>
   
@@ -292,8 +293,8 @@ window.Quarto = {
 </header>
 
 
-<section id="chapter-9-simple-neural-networks" class="level1" data-number="11">
-<h1 data-number="11"><span class="header-section-number">11</span> Chapter 9: Simple Neural Networks</h1>
+<section id="simple-neural-networks" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Simple Neural Networks</h1>
 <section id="ambiguity" class="level2" data-number="11.1">
 <h2 data-number="11.1" class="anchored" data-anchor-id="ambiguity"><span class="header-section-number">11.1</span> Ambiguity</h2>
 <p>Ambiguity arises when a sentence can be interpreted in more than one way. For example:</p>
@@ -1059,13 +1060,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./session8.html" class="pagination-link" aria-label="Chapter 8: Lexical Semantics and Vector Embeddings">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 8: Lexical Semantics and Vector Embeddings</span></span>
+      <a href="./session8.html" class="pagination-link" aria-label="Lexical Semantics and Vector Embeddings">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Lexical Semantics and Vector Embeddings</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./session10.html" class="pagination-link" aria-label="Chapter 10: The Transformer and Pre-trained Language Models">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chapter 10: The Transformer and Pre-trained Language Models</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./session10.html" class="pagination-link" aria-label="The Transformer and Pre-trained Language Models">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">The Transformer and Pre-trained Language Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

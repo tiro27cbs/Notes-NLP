@@ -1,12 +1,12 @@
 ---
-title: "Chapter 9: Simple Neural Networks"
+title: "Simple Neural Networks"
 author: "Tim Roessling"
-date: "`r Sys.Date()`"
+date: "2025-06-12"
 format: html
 jupyter: myvenv
 ---
 
-# Chapter 9: Simple Neural Networks
+# Simple Neural Networks
 
 ## Ambiguity
 

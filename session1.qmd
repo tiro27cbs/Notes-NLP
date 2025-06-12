@@ -1,12 +1,12 @@
 ---
-title: "Chapter 1: Introduction to Natural Language Processing"
+title: "Introduction to Natural Language Processing"
 author: "Tim Roessling"
-date: "`r Sys.Date()`"
+date: "2025-06-12"
 format: html
 jupyter: myvenv
 ---
 
-# Chapter 1: Introduction to Natural Language Processing
+# Introduction to Natural Language Processing
 
 ## The Revolution in NLP
 

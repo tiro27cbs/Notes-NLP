@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Tim Roessling">
+<meta name="dcterms.date" content="2025-06-12">
 
-<title>8&nbsp; Chapter 7: Topic Modeling – NLP Notes</title>
+<title>8&nbsp; Topic Modeling – NLP Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./session7.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 7: Topic Modeling</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./session7.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Topic Modeling</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -150,67 +151,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Chapter 1: Introduction to Natural Language Processing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to Natural Language Processing</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 2: NLP Libraries and Text Normalization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">NLP Libraries and Text Normalization</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 3: N-Gram Language Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">N-Gram Language Models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 4: Text Classification and Naive Bayes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Text Classification and Naive Bayes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 5: Logistic Regression and Text Representation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Logistic Regression and Text Representation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 6: Sentiment Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sentiment Analysis</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session7.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 7: Topic Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Topic Modeling</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 8: Lexical Semantics and Vector Embeddings</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Lexical Semantics and Vector Embeddings</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session9.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 9: Simple Neural Networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Simple Neural Networks</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session10.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chapter 10: The Transformer and Pre-trained Language Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">The Transformer and Pre-trained Language Models</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./session11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 11: Question Answering and Information Retrieval</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Question Answering and Information Retrieval</span></span></a>
   </div>
 </li>
     </ul>
@@ -223,9 +224,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#chapter-7-topic-modeling" id="toc-chapter-7-topic-modeling" class="nav-link active" data-scroll-target="#chapter-7-topic-modeling"><span class="header-section-number">9</span> Chapter 7: Topic Modeling</a>
+  <li><a href="#topic-modeling" id="toc-topic-modeling" class="nav-link active" data-scroll-target="#topic-modeling"><span class="header-section-number">9</span> Topic Modeling</a>
   <ul class="collapse">
-  <li><a href="#topic-modeling" id="toc-topic-modeling" class="nav-link" data-scroll-target="#topic-modeling"><span class="header-section-number">9.1</span> Topic Modeling</a>
+  <li><a href="#topic-modeling-1" id="toc-topic-modeling-1" class="nav-link" data-scroll-target="#topic-modeling-1"><span class="header-section-number">9.1</span> Topic Modeling</a>
   <ul class="collapse">
   <li><a href="#what-is-topic-modeling" id="toc-what-is-topic-modeling" class="nav-link" data-scroll-target="#what-is-topic-modeling"><span class="header-section-number">9.1.1</span> What is Topic Modeling?</a></li>
   </ul></li>
@@ -273,7 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 7: Topic Modeling</span></h1>
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Topic Modeling</span></h1>
 </div>
 
 
@@ -290,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Invalid Date</p>
+      <p class="date">June 12, 2025</p>
     </div>
   </div>
   
@@ -302,10 +303,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="chapter-7-topic-modeling" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> Chapter 7: Topic Modeling</h1>
-<section id="topic-modeling" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="topic-modeling"><span class="header-section-number">9.1</span> Topic Modeling</h2>
+<section id="topic-modeling" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Topic Modeling</h1>
+<section id="topic-modeling-1" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="topic-modeling-1"><span class="header-section-number">9.1</span> Topic Modeling</h2>
 <p>As the volume of information grows, it becomes increasingly difficult to locate relevant content. Topic modeling is a technique used to uncover the hidden thematic structure in a collection of documents.</p>
 <p><strong>When might you need to find hidden topics in text?</strong> - Organizing large collections of documents - Summarizing unstructured text data - Improving information retrieval and search - Feature selection for downstream machine learning tasks</p>
 <section id="what-is-topic-modeling" class="level3" data-number="9.1.1">
@@ -1396,13 +1397,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./session6.html" class="pagination-link" aria-label="Chapter 6: Sentiment Analysis">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 6: Sentiment Analysis</span></span>
+      <a href="./session6.html" class="pagination-link" aria-label="Sentiment Analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Sentiment Analysis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./session8.html" class="pagination-link" aria-label="Chapter 8: Lexical Semantics and Vector Embeddings">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 8: Lexical Semantics and Vector Embeddings</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./session8.html" class="pagination-link" aria-label="Lexical Semantics and Vector Embeddings">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Lexical Semantics and Vector Embeddings</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

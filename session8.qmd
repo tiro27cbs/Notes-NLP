@@ -1,12 +1,12 @@
 ---
-title: "Chapter 8: Lexical Semantics and Vector Embeddings"
+title: "Lexical Semantics and Vector Embeddings"
 author: "Tim Roessling"
-date: "`r Sys.Date()`"
+date: "2025-06-12"
 format: html
 jupyter: myvenv
 ---
 
-# Chapter 8: Lexical Semantics and Vector Embeddings
+# Lexical Semantics and Vector Embeddings
 
 ## Word Meanings
 

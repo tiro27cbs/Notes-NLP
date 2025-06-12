@@ -1,12 +1,12 @@
 ---
-title: "Chapter 11: Question Answering and Information Retrieval"
+title: "Question Answering and Information Retrieval"
 author: "Tim Roessling"
-date: "`r Sys.Date()`"
+date: "2025-06-12"
 format: html
 jupyter: myvenv
 ---
 
-# Chapter 11: Question Answering and Information Retrieval
+# Question Answering and Information Retrieval
 
 ## Introduction
 Information retrieval QA: Also called Open Domain QA

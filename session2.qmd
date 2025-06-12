@@ -1,12 +1,12 @@
 ---
-title: "Chapter 2: NLP Libraries and Text Normalization"
+title: "NLP Libraries and Text Normalization"
 author: "Maxwell Bernard"
-date: "`r Sys.Date()`"
+date: "2025-06-12"
 format: html
 jupyter: myvenv
 ---
 
-# Chapter 2: NLP Libraries and Text Normalization
+# NLP Libraries and Text Normalization
 
 ```{python}
 # | echo: false
