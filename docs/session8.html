@@ -8,7 +8,7 @@
 
 <meta name="author" content="Tim Roessling">
 
-<title>9&nbsp; Chapter 8: Lexical Semantics and Vector Embeddings – My NLP Notes</title>
+<title>9&nbsp; Chapter 8: Lexical Semantics and Vector Embeddings – NLP Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -97,7 +97,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">My NLP Notes</a> 
+      <a href="./">NLP Notes</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -379,17 +379,17 @@ ul.task-list li input[type="checkbox"] {
 <h3 data-number="10.2.3" class="anchored" data-anchor-id="comparing-word-vectors"><span class="header-section-number">10.2.3</span> Comparing Word Vectors</h3>
 <ul>
 <li><p><strong>Cosine Similarity</strong>: Measures the angle between two vectors (e.g., “king” and “queen” have high cosine similarity).</p>
-<p>::: {#4402a17d .cell execution_count=1} ``` {.python .cell-code} from sklearn.metrics.pairwise import cosine_similarity import numpy as np</p>
+<p>::: {#599ae023 .cell execution_count=1} ``` {.python .cell-code} from sklearn.metrics.pairwise import cosine_similarity import numpy as np</p>
 <p>vec_king = np.array([0.5, 0.8, 0.1]) vec_queen = np.array([0.51, 0.79, 0.12])</p>
 <p>cos_sim = cosine_similarity([vec_king], [vec_queen]) print(“Cosine Similarity:”, cos_sim[0][0]) ```</p>
 <p>::: {.cell-output .cell-output-stdout} <code>Cosine Similarity: 0.9996667100448761</code> ::: :::</p></li>
 <li><p><strong>Euclidean Distance</strong>: Measures the straight-line distance between vectors.</p>
-<p>::: {#7e7d852a .cell execution_count=2} ``` {.python .cell-code} from scipy.spatial.distance import euclidean import numpy as np</p>
+<p>::: {#d649745c .cell execution_count=2} ``` {.python .cell-code} from scipy.spatial.distance import euclidean import numpy as np</p>
 <p>vec_king = np.array([0.5, 0.8, 0.1]) vec_queen = np.array([0.51, 0.79, 0.12])</p>
 <p>dist = euclidean(vec_king, vec_queen) print(“Euclidean Distance:”, dist) ```</p>
 <p>::: {.cell-output .cell-output-stdout} <code>Euclidean Distance: 0.02449489742783178</code> ::: :::</p></li>
 <li><p><strong>Dot Product</strong>: Measures similarity based on direction and magnitude.</p>
-<p>::: {#57809a84 .cell execution_count=3} ``` {.python .cell-code} import numpy as np</p>
+<p>::: {#ff8aa054 .cell execution_count=3} ``` {.python .cell-code} import numpy as np</p>
 <p>vec_king = np.array([0.5, 0.8, 0.1]) vec_queen = np.array([0.51, 0.79, 0.12])</p>
 <p>dot = np.dot(vec_king, vec_queen) print(“Dot Product:”, dot) ```</p>
 <p>::: {.cell-output .cell-output-stdout} <code>Dot Product: 0.8990000000000001</code> ::: :::</p></li>
