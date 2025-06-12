@@ -7,8 +7,6 @@ jupyter: myvenv
 ---
 
 
-# Text Classification and Naive Bayes
-
 
 ## Text Classification
 - Text classification is the process of assigning predefined categories or labels to text documents based on their content.

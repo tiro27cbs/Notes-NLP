@@ -7,9 +7,6 @@ jupyter: myvenv
 ---
 
 
-# Logistic Regression and Text Representation
-
-
 ## Logistic Regression
 - Logistic regression is a statistical method used for binary classification problems. It models the relationship between a binary dependent variable and one or more independent variables by estimating the probability of the dependent variable being in a particular class.
 - It is a type of regression analysis that uses the logistic function to model the probability of a binary outcome.

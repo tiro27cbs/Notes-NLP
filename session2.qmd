@@ -6,7 +6,6 @@ format: html
 jupyter: myvenv
 ---
 
-# NLP Libraries and Text Normalization
 
 ```{python}
 # | echo: false

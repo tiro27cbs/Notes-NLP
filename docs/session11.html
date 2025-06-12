@@ -70,6 +70,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -189,25 +218,22 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#question-answering-and-information-retrieval" id="toc-question-answering-and-information-retrieval" class="nav-link active" data-scroll-target="#question-answering-and-information-retrieval"><span class="header-section-number">13</span> Question Answering and Information Retrieval</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">12.1</span> Introduction</a></li>
+  <li><a href="#information-retrieval-ir" id="toc-information-retrieval-ir" class="nav-link" data-scroll-target="#information-retrieval-ir"><span class="header-section-number">12.2</span> Information Retrieval (IR)</a>
   <ul class="collapse">
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">13.1</span> Introduction</a></li>
-  <li><a href="#information-retrieval-ir" id="toc-information-retrieval-ir" class="nav-link" data-scroll-target="#information-retrieval-ir"><span class="header-section-number">13.2</span> Information Retrieval (IR)</a>
+  <li><a href="#ir-based-question-answering" id="toc-ir-based-question-answering" class="nav-link" data-scroll-target="#ir-based-question-answering"><span class="header-section-number">12.2.1</span> IR-based Question Answering</a></li>
+  <li><a href="#entity-linking" id="toc-entity-linking" class="nav-link" data-scroll-target="#entity-linking"><span class="header-section-number">12.2.2</span> Entity Linking</a></li>
+  </ul></li>
+  <li><a href="#knowledge-based-question-answering" id="toc-knowledge-based-question-answering" class="nav-link" data-scroll-target="#knowledge-based-question-answering"><span class="header-section-number">12.3</span> Knowledge-based Question Answering</a></li>
+  <li><a href="#llms-for-question-answering" id="toc-llms-for-question-answering" class="nav-link" data-scroll-target="#llms-for-question-answering"><span class="header-section-number">12.4</span> LLMs for Question Answering</a>
   <ul class="collapse">
-  <li><a href="#ir-based-question-answering" id="toc-ir-based-question-answering" class="nav-link" data-scroll-target="#ir-based-question-answering"><span class="header-section-number">13.2.1</span> IR-based Question Answering</a></li>
-  <li><a href="#entity-linking" id="toc-entity-linking" class="nav-link" data-scroll-target="#entity-linking"><span class="header-section-number">13.2.2</span> Entity Linking</a></li>
+  <li><a href="#prompting-techniques" id="toc-prompting-techniques" class="nav-link" data-scroll-target="#prompting-techniques"><span class="header-section-number">12.4.1</span> Prompting Techniques</a></li>
+  <li><a href="#retrieve-and-generate-rag-for-question-answering" id="toc-retrieve-and-generate-rag-for-question-answering" class="nav-link" data-scroll-target="#retrieve-and-generate-rag-for-question-answering"><span class="header-section-number">12.4.2</span> Retrieve-and-Generate (RAG) for Question Answering</a></li>
+  <li><a href="#evaluation-of-rag-systems" id="toc-evaluation-of-rag-systems" class="nav-link" data-scroll-target="#evaluation-of-rag-systems"><span class="header-section-number">12.4.3</span> Evaluation of RAG Systems</a></li>
   </ul></li>
-  <li><a href="#knowledge-based-question-answering" id="toc-knowledge-based-question-answering" class="nav-link" data-scroll-target="#knowledge-based-question-answering"><span class="header-section-number">13.3</span> Knowledge-based Question Answering</a></li>
-  <li><a href="#llms-for-question-answering" id="toc-llms-for-question-answering" class="nav-link" data-scroll-target="#llms-for-question-answering"><span class="header-section-number">13.4</span> LLMs for Question Answering</a>
-  <ul class="collapse">
-  <li><a href="#prompting-techniques" id="toc-prompting-techniques" class="nav-link" data-scroll-target="#prompting-techniques"><span class="header-section-number">13.4.1</span> Prompting Techniques</a></li>
-  <li><a href="#retrieve-and-generate-rag-for-question-answering" id="toc-retrieve-and-generate-rag-for-question-answering" class="nav-link" data-scroll-target="#retrieve-and-generate-rag-for-question-answering"><span class="header-section-number">13.4.2</span> Retrieve-and-Generate (RAG) for Question Answering</a></li>
-  <li><a href="#evaluation-of-rag-systems" id="toc-evaluation-of-rag-systems" class="nav-link" data-scroll-target="#evaluation-of-rag-systems"><span class="header-section-number">13.4.3</span> Evaluation of RAG Systems</a></li>
-  </ul></li>
-  <li><a href="#agents" id="toc-agents" class="nav-link" data-scroll-target="#agents"><span class="header-section-number">13.5</span> Agents</a></li>
-  <li><a href="#formal-vs.-functional-abilities-of-llms" id="toc-formal-vs.-functional-abilities-of-llms" class="nav-link" data-scroll-target="#formal-vs.-functional-abilities-of-llms"><span class="header-section-number">13.6</span> Formal vs.&nbsp;Functional Abilities of LLMs</a></li>
-  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">13.7</span> Takeaways</a></li>
-  </ul></li>
+  <li><a href="#agents" id="toc-agents" class="nav-link" data-scroll-target="#agents"><span class="header-section-number">12.5</span> Agents</a></li>
+  <li><a href="#formal-vs.-functional-abilities-of-llms" id="toc-formal-vs.-functional-abilities-of-llms" class="nav-link" data-scroll-target="#formal-vs.-functional-abilities-of-llms"><span class="header-section-number">12.6</span> Formal vs.&nbsp;Functional Abilities of LLMs</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">12.7</span> Takeaways</a></li>
   </ul>
 </nav>
     </div>
@@ -245,14 +271,12 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="question-answering-and-information-retrieval" class="level1" data-number="13">
-<h1 data-number="13"><span class="header-section-number">13</span> Question Answering and Information Retrieval</h1>
-<section id="introduction" class="level2" data-number="13.1">
-<h2 data-number="13.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">13.1</span> Introduction</h2>
+<section id="introduction" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">12.1</span> Introduction</h2>
 <p>Information retrieval QA: Also called Open Domain QA find relevant passages, then use MRC to draw an answer directly from spans of text Knowledge-based QA build semantic representation of query, then use that to query a database LLMs for QA</p>
 </section>
-<section id="information-retrieval-ir" class="level2" data-number="13.2">
-<h2 data-number="13.2" class="anchored" data-anchor-id="information-retrieval-ir"><span class="header-section-number">13.2</span> Information Retrieval (IR)</h2>
+<section id="information-retrieval-ir" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="information-retrieval-ir"><span class="header-section-number">12.2</span> Information Retrieval (IR)</h2>
 <p><strong>Key Concepts in Information Retrieval (IR):</strong></p>
 <ul>
 <li><strong>Document:</strong> The unit of text that the system retrieves (e.g., web page, news article, paragraph).</li>
@@ -281,11 +305,13 @@ Document 1 will have a higher cosine similarity to the query.</li>
 - tf-idf = 3 × 2 = 6</p>
 <p><strong>Scoring Documents:</strong></p>
 <p>Represent queries and documents as TF-IDF vectors. Score each document by its cosine similarity to the query:</p>
-<p>[ (q, d) = ]</p>
+<p><span class="math display">\[
+\text{score}(q, d) = \frac{q \cdot d}{\|q\| \times \|d\|}
+\]</span></p>
 <p>where<br>
-- ( q ) is the query vector<br>
-- ( d ) is the document vector<br>
-- ( |q| ) and ( |d| ) are their vector lengths</p>
+- <span class="math inline">\(q\)</span> is the query vector<br>
+- <span class="math inline">\(d\)</span> is the document vector<br>
+- <span class="math inline">\(\|q\|\)</span> and <span class="math inline">\(\|d\|\)</span> are their vector lengths</p>
 <p><strong>Evaluation Metrics:</strong></p>
 <ul>
 <li><strong>Precision:</strong> Fraction of returned documents that are relevant.</li>
@@ -360,11 +386,11 @@ BERT can help match these despite different wording.</p>
 Question: “What is the capital of France?”<br>
 Model predicts start and end positions corresponding to “Paris”.</p>
 <hr>
-<section id="ir-based-question-answering" class="level3" data-number="13.2.1">
-<h3 data-number="13.2.1" class="anchored" data-anchor-id="ir-based-question-answering"><span class="header-section-number">13.2.1</span> IR-based Question Answering</h3>
+<section id="ir-based-question-answering" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="ir-based-question-answering"><span class="header-section-number">12.2.1</span> IR-based Question Answering</h3>
 </section>
-<section id="entity-linking" class="level3" data-number="13.2.2">
-<h3 data-number="13.2.2" class="anchored" data-anchor-id="entity-linking"><span class="header-section-number">13.2.2</span> Entity Linking</h3>
+<section id="entity-linking" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="entity-linking"><span class="header-section-number">12.2.2</span> Entity Linking</h3>
 <p>Entity linking is the process of associating a mention in text with a specific real-world entity in a knowledge base or ontology.</p>
 <ul>
 <li><strong>Purpose:</strong> Disambiguate mentions (e.g., “Paris” as a city in France vs.&nbsp;Paris Hilton).</li>
@@ -379,8 +405,8 @@ A common form of entity linking where mentions in text are mapped to their corre
 <p>Entity linking enables more accurate retrieval and reasoning by grounding text to structured knowledge.</p>
 </section>
 </section>
-<section id="knowledge-based-question-answering" class="level2" data-number="13.3">
-<h2 data-number="13.3" class="anchored" data-anchor-id="knowledge-based-question-answering"><span class="header-section-number">13.3</span> Knowledge-based Question Answering</h2>
+<section id="knowledge-based-question-answering" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="knowledge-based-question-answering"><span class="header-section-number">12.3</span> Knowledge-based Question Answering</h2>
 <p>Knowledge-based question answering (KBQA) involves answering questions by mapping them to queries over structured databases or knowledge bases.</p>
 <p><strong>Types of Knowledge-based QA:</strong> - <strong>Graph-based QA:</strong> Represents the knowledge base as a graph, with entities as nodes and relations/propositions as edges. Answers are found by traversing or querying the graph. - <strong>Semantic Parsing QA:</strong> Maps natural language questions to logical forms (e.g., database queries or graph traversals) that can be executed against the knowledge base.</p>
 <p><strong>RDF Triples:</strong> A common structure for knowledge bases is the RDF triple: (subject, predicate, object), expressing a simple fact or relation. - Example: (“Ada Lovelace”, “birth year”, “1815”)</p>
@@ -390,21 +416,21 @@ A common form of entity linking where mentions in text are mapped to their corre
 <p><strong>Supervision for Semantic Parsing:</strong> - <strong>Fully Supervised:</strong> Each question is paired with a hand-annotated logical form. - <strong>Weakly Supervised:</strong> Each question is paired only with the answer (denotation); the logical form is treated as a latent variable and learned indirectly.</p>
 <p>Knowledge-based QA enables precise, fact-based answering by leveraging structured representations of world knowledge.</p>
 </section>
-<section id="llms-for-question-answering" class="level2" data-number="13.4">
-<h2 data-number="13.4" class="anchored" data-anchor-id="llms-for-question-answering"><span class="header-section-number">13.4</span> LLMs for Question Answering</h2>
-<section id="prompting-techniques" class="level3" data-number="13.4.1">
-<h3 data-number="13.4.1" class="anchored" data-anchor-id="prompting-techniques"><span class="header-section-number">13.4.1</span> Prompting Techniques</h3>
+<section id="llms-for-question-answering" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="llms-for-question-answering"><span class="header-section-number">12.4</span> LLMs for Question Answering</h2>
+<section id="prompting-techniques" class="level3" data-number="12.4.1">
+<h3 data-number="12.4.1" class="anchored" data-anchor-id="prompting-techniques"><span class="header-section-number">12.4.1</span> Prompting Techniques</h3>
 <p>See prompting techniques in Session 10.</p>
 <hr>
 </section>
-<section id="retrieve-and-generate-rag-for-question-answering" class="level3" data-number="13.4.2">
-<h3 data-number="13.4.2" class="anchored" data-anchor-id="retrieve-and-generate-rag-for-question-answering"><span class="header-section-number">13.4.2</span> Retrieve-and-Generate (RAG) for Question Answering</h3>
+<section id="retrieve-and-generate-rag-for-question-answering" class="level3" data-number="12.4.2">
+<h3 data-number="12.4.2" class="anchored" data-anchor-id="retrieve-and-generate-rag-for-question-answering"><span class="header-section-number">12.4.2</span> Retrieve-and-Generate (RAG) for Question Answering</h3>
 <p><strong>RAG</strong> (Retrieval-Augmented Generation) combines information retrieval with large language models (LLMs) to answer questions more accurately and with up-to-date information.</p>
 <p><strong>Workflow:</strong> 1. <strong>Input:</strong> User submits a question. 2. <strong>Indexing:</strong> Documents are split into chunks, and embeddings are generated for each chunk and for the input question. 3. <strong>Retrieval:</strong> The system retrieves the most relevant chunks by comparing their embeddings to the question embedding. 4. <strong>Generation:</strong> The retrieved chunks are combined with the original question to form a prompt, which is passed to the LLM to generate an answer.</p>
 <hr>
 </section>
-<section id="evaluation-of-rag-systems" class="level3" data-number="13.4.3">
-<h3 data-number="13.4.3" class="anchored" data-anchor-id="evaluation-of-rag-systems"><span class="header-section-number">13.4.3</span> Evaluation of RAG Systems</h3>
+<section id="evaluation-of-rag-systems" class="level3" data-number="12.4.3">
+<h3 data-number="12.4.3" class="anchored" data-anchor-id="evaluation-of-rag-systems"><span class="header-section-number">12.4.3</span> Evaluation of RAG Systems</h3>
 <p><strong>Retrieval Evaluation:</strong> - Are the correct/relevant chunks retrieved for a given query? - With reference answers, precision and recall can be measured. - Reference-free evaluation (e.g., using LLMs as judges) can assess precision, but recall requires ground-truth relevant chunks.</p>
 <p><strong>Generation Evaluation:</strong> - Is the generated answer correct and relevant? - With references: Use metrics like BLEU, ROUGE, embedding similarity, or LLM-based judgments. - Reference-free: LLM-based evaluation of answer quality.</p>
 <p><strong>Key Criteria:</strong> - <strong>Faithfulness:</strong> Does the answer only make claims supported by the retrieved context? - <strong>Answer Relevance:</strong> Does the answer directly address the question? - <strong>Context Relevance:</strong> Does the context contain only information needed to answer the question?</p>
@@ -413,8 +439,8 @@ A common form of entity linking where mentions in text are mapped to their corre
 <hr>
 </section>
 </section>
-<section id="agents" class="level2" data-number="13.5">
-<h2 data-number="13.5" class="anchored" data-anchor-id="agents"><span class="header-section-number">13.5</span> Agents</h2>
+<section id="agents" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="agents"><span class="header-section-number">12.5</span> Agents</h2>
 <ul>
 <li><strong>Definition:</strong> Agents are systems capable of forming intentions, making plans, and acting to achieve goals. This implies the presence of internal mental states or representations.</li>
 <li><strong>LLMs as Agents:</strong> Large Language Models (LLMs) possess richer internal representations than previous AI systems. In practice, an “agent” often refers to a system that uses an LLM to control the flow of an application (e.g., LangChain agents).</li>
@@ -427,8 +453,8 @@ A common form of entity linking where mentions in text are mapped to their corre
 </ul>
 <hr>
 </section>
-<section id="formal-vs.-functional-abilities-of-llms" class="level2" data-number="13.6">
-<h2 data-number="13.6" class="anchored" data-anchor-id="formal-vs.-functional-abilities-of-llms"><span class="header-section-number">13.6</span> Formal vs.&nbsp;Functional Abilities of LLMs</h2>
+<section id="formal-vs.-functional-abilities-of-llms" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="formal-vs.-functional-abilities-of-llms"><span class="header-section-number">12.6</span> Formal vs.&nbsp;Functional Abilities of LLMs</h2>
 <ul>
 <li><strong>Human Assumptions:</strong> We often assume language is produced by rational, thinking agents (Turing Test).</li>
 <li><strong>Competence Types:</strong>
@@ -465,8 +491,8 @@ A common form of entity linking where mentions in text are mapped to their corre
 </ul>
 <hr>
 </section>
-<section id="takeaways" class="level2" data-number="13.7">
-<h2 data-number="13.7" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">13.7</span> Takeaways</h2>
+<section id="takeaways" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">12.7</span> Takeaways</h2>
 <ul>
 <li><strong>Question Answering Approaches:</strong>
 <ul>
@@ -495,7 +521,6 @@ A common form of entity linking where mentions in text are mapped to their corre
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

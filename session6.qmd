@@ -6,7 +6,7 @@ format: html
 jupyter: myvenv
 ---
 
-# Sentiment Analysis
+
 ## Sentiment Analysis (SA)
 - Sentiment analysis is the process of determining the sentiment or opinion expressed in a piece of text, such as positive, negative, or neutral.
 - A lexicon 

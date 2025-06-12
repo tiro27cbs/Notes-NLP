@@ -105,6 +105,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -224,48 +253,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#topic-modeling" id="toc-topic-modeling" class="nav-link active" data-scroll-target="#topic-modeling"><span class="header-section-number">9</span> Topic Modeling</a>
+  <li><a href="#topic-modeling" id="toc-topic-modeling" class="nav-link active" data-scroll-target="#topic-modeling"><span class="header-section-number">8.1</span> Topic Modeling</a>
   <ul class="collapse">
-  <li><a href="#topic-modeling-1" id="toc-topic-modeling-1" class="nav-link" data-scroll-target="#topic-modeling-1"><span class="header-section-number">9.1</span> Topic Modeling</a>
+  <li><a href="#what-is-topic-modeling" id="toc-what-is-topic-modeling" class="nav-link" data-scroll-target="#what-is-topic-modeling"><span class="header-section-number">8.1.1</span> What is Topic Modeling?</a></li>
+  </ul></li>
+  <li><a href="#latent-dirichlet-allocation-lda" id="toc-latent-dirichlet-allocation-lda" class="nav-link" data-scroll-target="#latent-dirichlet-allocation-lda"><span class="header-section-number">8.2</span> Latent Dirichlet Allocation (LDA)</a>
   <ul class="collapse">
-  <li><a href="#what-is-topic-modeling" id="toc-what-is-topic-modeling" class="nav-link" data-scroll-target="#what-is-topic-modeling"><span class="header-section-number">9.1.1</span> What is Topic Modeling?</a></li>
+  <li><a href="#lda-intuition" id="toc-lda-intuition" class="nav-link" data-scroll-target="#lda-intuition"><span class="header-section-number">8.2.1</span> LDA Intuition</a></li>
+  <li><a href="#how-lda-works" id="toc-how-lda-works" class="nav-link" data-scroll-target="#how-lda-works"><span class="header-section-number">8.2.2</span> How LDA Works</a></li>
+  <li><a href="#key-components" id="toc-key-components" class="nav-link" data-scroll-target="#key-components"><span class="header-section-number">8.2.3</span> Key Components</a></li>
+  <li><a href="#the-trade-off-document-vs.-topic-sparsity" id="toc-the-trade-off-document-vs.-topic-sparsity" class="nav-link" data-scroll-target="#the-trade-off-document-vs.-topic-sparsity"><span class="header-section-number">8.2.4</span> The Trade-off: Document vs.&nbsp;Topic Sparsity</a></li>
+  <li><a href="#lda-parameters" id="toc-lda-parameters" class="nav-link" data-scroll-target="#lda-parameters"><span class="header-section-number">8.2.5</span> LDA Parameters</a></li>
+  <li><a href="#parameter-estimation-in-lda" id="toc-parameter-estimation-in-lda" class="nav-link" data-scroll-target="#parameter-estimation-in-lda"><span class="header-section-number">8.2.6</span> Parameter Estimation in LDA</a></li>
+  <li><a href="#gibbs-sampling-in-lda" id="toc-gibbs-sampling-in-lda" class="nav-link" data-scroll-target="#gibbs-sampling-in-lda"><span class="header-section-number">8.2.7</span> Gibbs Sampling in LDA</a></li>
+  <li><a href="#practical-considerations-for-lda" id="toc-practical-considerations-for-lda" class="nav-link" data-scroll-target="#practical-considerations-for-lda"><span class="header-section-number">8.2.8</span> Practical Considerations for LDA</a></li>
+  <li><a href="#visualizing-and-using-lda-results" id="toc-visualizing-and-using-lda-results" class="nav-link" data-scroll-target="#visualizing-and-using-lda-results"><span class="header-section-number">8.2.9</span> Visualizing and Using LDA Results</a></li>
   </ul></li>
-  <li><a href="#latent-dirichlet-allocation-lda" id="toc-latent-dirichlet-allocation-lda" class="nav-link" data-scroll-target="#latent-dirichlet-allocation-lda"><span class="header-section-number">9.2</span> Latent Dirichlet Allocation (LDA)</a>
+  <li><a href="#top2vec-and-bertopic" id="toc-top2vec-and-bertopic" class="nav-link" data-scroll-target="#top2vec-and-bertopic"><span class="header-section-number">8.3</span> Top2Vec and BERTopic</a>
   <ul class="collapse">
-  <li><a href="#lda-intuition" id="toc-lda-intuition" class="nav-link" data-scroll-target="#lda-intuition"><span class="header-section-number">9.2.1</span> LDA Intuition</a></li>
-  <li><a href="#how-lda-works" id="toc-how-lda-works" class="nav-link" data-scroll-target="#how-lda-works"><span class="header-section-number">9.2.2</span> How LDA Works</a></li>
-  <li><a href="#key-components" id="toc-key-components" class="nav-link" data-scroll-target="#key-components"><span class="header-section-number">9.2.3</span> Key Components</a></li>
-  <li><a href="#the-trade-off-document-vs.-topic-sparsity" id="toc-the-trade-off-document-vs.-topic-sparsity" class="nav-link" data-scroll-target="#the-trade-off-document-vs.-topic-sparsity"><span class="header-section-number">9.2.4</span> The Trade-off: Document vs.&nbsp;Topic Sparsity</a></li>
-  <li><a href="#lda-parameters" id="toc-lda-parameters" class="nav-link" data-scroll-target="#lda-parameters"><span class="header-section-number">9.2.5</span> LDA Parameters</a></li>
-  <li><a href="#parameter-estimation-in-lda" id="toc-parameter-estimation-in-lda" class="nav-link" data-scroll-target="#parameter-estimation-in-lda"><span class="header-section-number">9.2.6</span> Parameter Estimation in LDA</a></li>
-  <li><a href="#gibbs-sampling-in-lda" id="toc-gibbs-sampling-in-lda" class="nav-link" data-scroll-target="#gibbs-sampling-in-lda"><span class="header-section-number">9.2.7</span> Gibbs Sampling in LDA</a></li>
-  <li><a href="#practical-considerations-for-lda" id="toc-practical-considerations-for-lda" class="nav-link" data-scroll-target="#practical-considerations-for-lda"><span class="header-section-number">9.2.8</span> Practical Considerations for LDA</a></li>
-  <li><a href="#visualizing-and-using-lda-results" id="toc-visualizing-and-using-lda-results" class="nav-link" data-scroll-target="#visualizing-and-using-lda-results"><span class="header-section-number">9.2.9</span> Visualizing and Using LDA Results</a></li>
+  <li><a href="#top2vec-distributed-topic-representations" id="toc-top2vec-distributed-topic-representations" class="nav-link" data-scroll-target="#top2vec-distributed-topic-representations"><span class="header-section-number">8.3.1</span> Top2Vec: Distributed Topic Representations</a></li>
+  <li><a href="#bertopic" id="toc-bertopic" class="nav-link" data-scroll-target="#bertopic"><span class="header-section-number">8.3.2</span> BERTopic</a></li>
+  <li><a href="#k-means-clustering-with-word2vec" id="toc-k-means-clustering-with-word2vec" class="nav-link" data-scroll-target="#k-means-clustering-with-word2vec"><span class="header-section-number">8.3.3</span> K-means Clustering with Word2Vec</a></li>
   </ul></li>
-  <li><a href="#top2vec-and-bertopic" id="toc-top2vec-and-bertopic" class="nav-link" data-scroll-target="#top2vec-and-bertopic"><span class="header-section-number">9.3</span> Top2Vec and BERTopic</a>
+  <li><a href="#the-revolution-in-nlp" id="toc-the-revolution-in-nlp" class="nav-link" data-scroll-target="#the-revolution-in-nlp"><span class="header-section-number">8.4</span> The Revolution in NLP</a></li>
+  <li><a href="#language-is-hard" id="toc-language-is-hard" class="nav-link" data-scroll-target="#language-is-hard"><span class="header-section-number">8.5</span> Language is Hard</a>
   <ul class="collapse">
-  <li><a href="#top2vec-distributed-topic-representations" id="toc-top2vec-distributed-topic-representations" class="nav-link" data-scroll-target="#top2vec-distributed-topic-representations"><span class="header-section-number">9.3.1</span> Top2Vec: Distributed Topic Representations</a></li>
-  <li><a href="#bertopic" id="toc-bertopic" class="nav-link" data-scroll-target="#bertopic"><span class="header-section-number">9.3.2</span> BERTopic</a></li>
-  <li><a href="#k-means-clustering-with-word2vec" id="toc-k-means-clustering-with-word2vec" class="nav-link" data-scroll-target="#k-means-clustering-with-word2vec"><span class="header-section-number">9.3.3</span> K-means Clustering with Word2Vec</a></li>
+  <li><a href="#why-is-language-hard" id="toc-why-is-language-hard" class="nav-link" data-scroll-target="#why-is-language-hard"><span class="header-section-number">8.5.1</span> Why is Language Hard?</a></li>
   </ul></li>
-  <li><a href="#the-revolution-in-nlp" id="toc-the-revolution-in-nlp" class="nav-link" data-scroll-target="#the-revolution-in-nlp"><span class="header-section-number">9.4</span> The Revolution in NLP</a></li>
-  <li><a href="#language-is-hard" id="toc-language-is-hard" class="nav-link" data-scroll-target="#language-is-hard"><span class="header-section-number">9.5</span> Language is Hard</a>
+  <li><a href="#brief-history" id="toc-brief-history" class="nav-link" data-scroll-target="#brief-history"><span class="header-section-number">8.6</span> Brief History</a></li>
+  <li><a href="#nlp-the-basic-approach" id="toc-nlp-the-basic-approach" class="nav-link" data-scroll-target="#nlp-the-basic-approach"><span class="header-section-number">8.7</span> NLP: The Basic Approach</a>
   <ul class="collapse">
-  <li><a href="#why-is-language-hard" id="toc-why-is-language-hard" class="nav-link" data-scroll-target="#why-is-language-hard"><span class="header-section-number">9.5.1</span> Why is Language Hard?</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span class="header-section-number">8.7.1</span> Background</a></li>
+  <li><a href="#language-modeling-with-n-grams" id="toc-language-modeling-with-n-grams" class="nav-link" data-scroll-target="#language-modeling-with-n-grams"><span class="header-section-number">8.7.2</span> Language Modeling with N-grams</a></li>
+  <li><a href="#training-an-llm" id="toc-training-an-llm" class="nav-link" data-scroll-target="#training-an-llm"><span class="header-section-number">8.7.3</span> Training an LLM</a></li>
+  <li><a href="#what-does-training-an-llm-look-like" id="toc-what-does-training-an-llm-look-like" class="nav-link" data-scroll-target="#what-does-training-an-llm-look-like"><span class="header-section-number">8.7.4</span> What Does Training an LLM Look Like?</a></li>
+  <li><a href="#probing-gpt" id="toc-probing-gpt" class="nav-link" data-scroll-target="#probing-gpt"><span class="header-section-number">8.7.5</span> Probing GPT</a></li>
   </ul></li>
-  <li><a href="#brief-history" id="toc-brief-history" class="nav-link" data-scroll-target="#brief-history"><span class="header-section-number">9.6</span> Brief History</a></li>
-  <li><a href="#nlp-the-basic-approach" id="toc-nlp-the-basic-approach" class="nav-link" data-scroll-target="#nlp-the-basic-approach"><span class="header-section-number">9.7</span> NLP: The Basic Approach</a>
-  <ul class="collapse">
-  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span class="header-section-number">9.7.1</span> Background</a></li>
-  <li><a href="#language-modeling-with-n-grams" id="toc-language-modeling-with-n-grams" class="nav-link" data-scroll-target="#language-modeling-with-n-grams"><span class="header-section-number">9.7.2</span> Language Modeling with N-grams</a></li>
-  <li><a href="#training-an-llm" id="toc-training-an-llm" class="nav-link" data-scroll-target="#training-an-llm"><span class="header-section-number">9.7.3</span> Training an LLM</a></li>
-  <li><a href="#what-does-training-an-llm-look-like" id="toc-what-does-training-an-llm-look-like" class="nav-link" data-scroll-target="#what-does-training-an-llm-look-like"><span class="header-section-number">9.7.4</span> What Does Training an LLM Look Like?</a></li>
-  <li><a href="#probing-gpt" id="toc-probing-gpt" class="nav-link" data-scroll-target="#probing-gpt"><span class="header-section-number">9.7.5</span> Probing GPT</a></li>
-  </ul></li>
-  <li><a href="#ai-where-are-we-heading" id="toc-ai-where-are-we-heading" class="nav-link" data-scroll-target="#ai-where-are-we-heading"><span class="header-section-number">9.8</span> AI: Where Are We Heading?</a></li>
-  <li><a href="#applications-of-llms" id="toc-applications-of-llms" class="nav-link" data-scroll-target="#applications-of-llms"><span class="header-section-number">9.9</span> Applications of LLMs</a></li>
-  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">9.10</span> Takeaways</a></li>
-  </ul></li>
+  <li><a href="#ai-where-are-we-heading" id="toc-ai-where-are-we-heading" class="nav-link" data-scroll-target="#ai-where-are-we-heading"><span class="header-section-number">8.8</span> AI: Where Are We Heading?</a></li>
+  <li><a href="#applications-of-llms" id="toc-applications-of-llms" class="nav-link" data-scroll-target="#applications-of-llms"><span class="header-section-number">8.9</span> Applications of LLMs</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">8.10</span> Takeaways</a></li>
   </ul>
 </nav>
     </div>
@@ -303,14 +329,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="topic-modeling" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> Topic Modeling</h1>
-<section id="topic-modeling-1" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="topic-modeling-1"><span class="header-section-number">9.1</span> Topic Modeling</h2>
+<section id="topic-modeling" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="topic-modeling"><span class="header-section-number">8.1</span> Topic Modeling</h2>
 <p>As the volume of information grows, it becomes increasingly difficult to locate relevant content. Topic modeling is a technique used to uncover the hidden thematic structure in a collection of documents.</p>
-<p><strong>When might you need to find hidden topics in text?</strong> - Organizing large collections of documents - Summarizing unstructured text data - Improving information retrieval and search - Feature selection for downstream machine learning tasks</p>
-<section id="what-is-topic-modeling" class="level3" data-number="9.1.1">
-<h3 data-number="9.1.1" class="anchored" data-anchor-id="what-is-topic-modeling"><span class="header-section-number">9.1.1</span> What is Topic Modeling?</h3>
+<p><strong>When might you need to find hidden topics in text?</strong></p>
+<ul>
+<li>Organizing large collections of documents</li>
+<li>Summarizing unstructured text data</li>
+<li>Improving information retrieval and search</li>
+<li>Feature selection for downstream machine learning tasks</li>
+</ul>
+<section id="what-is-topic-modeling" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="what-is-topic-modeling"><span class="header-section-number">8.1.1</span> What is Topic Modeling?</h3>
 <ul>
 <li>Topic modeling refers to a set of unsupervised machine learning techniques (such as clustering) for discovering the abstract “topics” that occur in a collection of documents.</li>
 <li>It provides methods for automatically organizing, understanding, searching, and summarizing large electronic archives.</li>
@@ -319,8 +349,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="latent-dirichlet-allocation-lda" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="latent-dirichlet-allocation-lda"><span class="header-section-number">9.2</span> Latent Dirichlet Allocation (LDA)</h2>
+<section id="latent-dirichlet-allocation-lda" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="latent-dirichlet-allocation-lda"><span class="header-section-number">8.2</span> Latent Dirichlet Allocation (LDA)</h2>
 <p>Latent Dirichlet Allocation (LDA) is a foundational topic modeling technique. Let’s break down the name:</p>
 <ul>
 <li><strong>Latent:</strong> Hidden or underlying (the topics are not directly observed).</li>
@@ -328,8 +358,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Allocation:</strong> Assigning topics to words in documents.</li>
 </ul>
 <hr>
-<section id="lda-intuition" class="level3" data-number="9.2.1">
-<h3 data-number="9.2.1" class="anchored" data-anchor-id="lda-intuition"><span class="header-section-number">9.2.1</span> LDA Intuition</h3>
+<section id="lda-intuition" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="lda-intuition"><span class="header-section-number">8.2.1</span> LDA Intuition</h3>
 <p>LDA is a <strong>generative model</strong>: it assumes that documents are created by mixing topics, and each topic is a collection of words.</p>
 <ul>
 <li>Each <strong>topic</strong> is a distribution over words.</li>
@@ -340,8 +370,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 Documents are treated as bags of words. Each document is generated by a mixture of topics, and each topic is a mixture of words. The goal of LDA is to uncover these hidden topics from the observed words.</p>
 <hr>
 </section>
-<section id="how-lda-works" class="level3" data-number="9.2.2">
-<h3 data-number="9.2.2" class="anchored" data-anchor-id="how-lda-works"><span class="header-section-number">9.2.2</span> How LDA Works</h3>
+<section id="how-lda-works" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="how-lda-works"><span class="header-section-number">8.2.2</span> How LDA Works</h3>
 <ol type="1">
 <li>For each document, choose a distribution over topics.</li>
 <li>For each word in the document:
@@ -353,8 +383,8 @@ Documents are treated as bags of words. Each document is generated by a mixture 
 <p>LDA tries to reverse-engineer this process: given the words, it infers the topics.</p>
 <hr>
 </section>
-<section id="key-components" class="level3" data-number="9.2.3">
-<h3 data-number="9.2.3" class="anchored" data-anchor-id="key-components"><span class="header-section-number">9.2.3</span> Key Components</h3>
+<section id="key-components" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="key-components"><span class="header-section-number">8.2.3</span> Key Components</h3>
 <ul>
 <li><strong>Word distribution per topic</strong> (<code>β_k</code>): Which words are likely in each topic.</li>
 <li><strong>Topic distribution per document</strong> (<code>θ_d</code>): Which topics are likely in each document.</li>
@@ -366,14 +396,14 @@ Documents are treated as bags of words. Each document is generated by a mixture 
 <img src="images/chapter7_1.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.1: LDA as a graphical model
+Figure&nbsp;8.1: LDA as a graphical model
 </figcaption>
 </figure>
 </div>
 <hr>
 </section>
-<section id="the-trade-off-document-vs.-topic-sparsity" class="level3" data-number="9.2.4">
-<h3 data-number="9.2.4" class="anchored" data-anchor-id="the-trade-off-document-vs.-topic-sparsity"><span class="header-section-number">9.2.4</span> The Trade-off: Document vs.&nbsp;Topic Sparsity</h3>
+<section id="the-trade-off-document-vs.-topic-sparsity" class="level3" data-number="8.2.4">
+<h3 data-number="8.2.4" class="anchored" data-anchor-id="the-trade-off-document-vs.-topic-sparsity"><span class="header-section-number">8.2.4</span> The Trade-off: Document vs.&nbsp;Topic Sparsity</h3>
 <p>LDA balances two goals:</p>
 <ul>
 <li><strong>Document sparsity:</strong> Each document should use as few topics as possible.</li>
@@ -384,8 +414,8 @@ Figure&nbsp;9.1: LDA as a graphical model
 <p><strong>LDA finds a balance, resulting in topics that best explain the documents.</strong></p>
 <hr>
 </section>
-<section id="lda-parameters" class="level3" data-number="9.2.5">
-<h3 data-number="9.2.5" class="anchored" data-anchor-id="lda-parameters"><span class="header-section-number">9.2.5</span> LDA Parameters</h3>
+<section id="lda-parameters" class="level3" data-number="8.2.5">
+<h3 data-number="8.2.5" class="anchored" data-anchor-id="lda-parameters"><span class="header-section-number">8.2.5</span> LDA Parameters</h3>
 <ul>
 <li><strong>Document density factor (<code>α</code>):</strong> Controls how many topics are expected per document.</li>
 <li><strong>Topic word density factor (<code>β</code>):</strong> Controls how many words are expected per topic.</li>
@@ -393,10 +423,12 @@ Figure&nbsp;9.1: LDA as a graphical model
 </ul>
 <hr>
 </section>
-<section id="parameter-estimation-in-lda" class="level3" data-number="9.2.6">
-<h3 data-number="9.2.6" class="anchored" data-anchor-id="parameter-estimation-in-lda"><span class="header-section-number">9.2.6</span> Parameter Estimation in LDA</h3>
+<section id="parameter-estimation-in-lda" class="level3" data-number="8.2.6">
+<h3 data-number="8.2.6" class="anchored" data-anchor-id="parameter-estimation-in-lda"><span class="header-section-number">8.2.6</span> Parameter Estimation in LDA</h3>
 <p>LDA uses <strong>Bayes’ Theorem</strong> to estimate the hidden variables (topics):</p>
-<p>[ P( ) = ]</p>
+<p><span class="math display">\[
+P(\text{hypothesis} \mid \text{observations}) = \frac{P(\text{observations} \mid \text{hypothesis}) \cdot P(\text{hypothesis})}{P(\text{observations})}
+\]</span></p>
 <ul>
 <li><strong>Prior:</strong> What we believe before seeing the data.</li>
 <li><strong>Posterior:</strong> What we believe after seeing the data.</li>
@@ -460,19 +492,19 @@ Computing the exact posterior is intractable.</p>
 <span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>pyLDAvis.display(vis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
-<section id="gibbs-sampling-in-lda" class="level3" data-number="9.2.7">
-<h3 data-number="9.2.7" class="anchored" data-anchor-id="gibbs-sampling-in-lda"><span class="header-section-number">9.2.7</span> Gibbs Sampling in LDA</h3>
+<section id="gibbs-sampling-in-lda" class="level3" data-number="8.2.7">
+<h3 data-number="8.2.7" class="anchored" data-anchor-id="gibbs-sampling-in-lda"><span class="header-section-number">8.2.7</span> Gibbs Sampling in LDA</h3>
 <p>Gibbs sampling is a Markov Chain Monte Carlo (MCMC) method used to estimate the posterior distribution of the hidden variables in LDA, specifically the topic assignments for each word.</p>
-<section id="what-does-gibbs-sampling-do-in-lda" class="level4" data-number="9.2.7.1">
-<h4 data-number="9.2.7.1" class="anchored" data-anchor-id="what-does-gibbs-sampling-do-in-lda"><span class="header-section-number">9.2.7.1</span> What does Gibbs sampling do in LDA?</h4>
+<section id="what-does-gibbs-sampling-do-in-lda" class="level4" data-number="8.2.7.1">
+<h4 data-number="8.2.7.1" class="anchored" data-anchor-id="what-does-gibbs-sampling-do-in-lda"><span class="header-section-number">8.2.7.1</span> What does Gibbs sampling do in LDA?</h4>
 <ul>
 <li>It generates samples from the joint probability distribution of the topic assignments for all words in all documents.</li>
 <li>For each word, it samples a new topic assignment based on the current state of all other assignments.</li>
 <li>This iterative process gradually approximates the true posterior distribution.</li>
 </ul>
 </section>
-<section id="the-gibbs-sampling-algorithm" class="level4" data-number="9.2.7.2">
-<h4 data-number="9.2.7.2" class="anchored" data-anchor-id="the-gibbs-sampling-algorithm"><span class="header-section-number">9.2.7.2</span> The Gibbs Sampling Algorithm</h4>
+<section id="the-gibbs-sampling-algorithm" class="level4" data-number="8.2.7.2">
+<h4 data-number="8.2.7.2" class="anchored" data-anchor-id="the-gibbs-sampling-algorithm"><span class="header-section-number">8.2.7.2</span> The Gibbs Sampling Algorithm</h4>
 <ol type="1">
 <li><p><strong>Initialization:</strong><br>
 Randomly assign each word in each document to one of the K topics.</p></li>
@@ -495,22 +527,22 @@ For each word ( w_{d,n} ) in document ( d ):</p>
 Iterate over all words multiple times (epochs) until the topic assignments stabilize.</p></li>
 </ol>
 </section>
-<section id="intuition" class="level4" data-number="9.2.7.3">
-<h4 data-number="9.2.7.3" class="anchored" data-anchor-id="intuition"><span class="header-section-number">9.2.7.3</span> Intuition</h4>
+<section id="intuition" class="level4" data-number="8.2.7.3">
+<h4 data-number="8.2.7.3" class="anchored" data-anchor-id="intuition"><span class="header-section-number">8.2.7.3</span> Intuition</h4>
 <ul>
 <li><strong>Document-topic counts</strong> encourage each document to use as few topics as possible (document sparsity).</li>
 <li><strong>Topic-word counts</strong> encourage each topic to use as few words as possible (topic sparsity).</li>
 <li>Over many iterations, the assignments converge to a good approximation of the true topic structure.</li>
 </ul>
 </section>
-<section id="summary" class="level4" data-number="9.2.7.4">
-<h4 data-number="9.2.7.4" class="anchored" data-anchor-id="summary"><span class="header-section-number">9.2.7.4</span> Summary</h4>
+<section id="summary" class="level4" data-number="8.2.7.4">
+<h4 data-number="8.2.7.4" class="anchored" data-anchor-id="summary"><span class="header-section-number">8.2.7.4</span> Summary</h4>
 <p>Gibbs sampling provides an efficient way to estimate the hidden topic structure in LDA by iteratively updating topic assignments for each word based on the current state of the model.</p>
 <hr>
 </section>
 </section>
-<section id="practical-considerations-for-lda" class="level3" data-number="9.2.8">
-<h3 data-number="9.2.8" class="anchored" data-anchor-id="practical-considerations-for-lda"><span class="header-section-number">9.2.8</span> Practical Considerations for LDA</h3>
+<section id="practical-considerations-for-lda" class="level3" data-number="8.2.8">
+<h3 data-number="8.2.8" class="anchored" data-anchor-id="practical-considerations-for-lda"><span class="header-section-number">8.2.8</span> Practical Considerations for LDA</h3>
 <ul>
 <li><strong>Similar to k-means clustering:</strong> LDA is unsupervised and requires the number of topics to be specified in advance.</li>
 <li><strong>Bag-of-words assumption:</strong> Ignores word order and semantic context.</li>
@@ -519,8 +551,8 @@ Iterate over all words multiple times (epochs) until the topic assignments stabi
 </ul>
 <hr>
 </section>
-<section id="visualizing-and-using-lda-results" class="level3" data-number="9.2.9">
-<h3 data-number="9.2.9" class="anchored" data-anchor-id="visualizing-and-using-lda-results"><span class="header-section-number">9.2.9</span> Visualizing and Using LDA Results</h3>
+<section id="visualizing-and-using-lda-results" class="level3" data-number="8.2.9">
+<h3 data-number="8.2.9" class="anchored" data-anchor-id="visualizing-and-using-lda-results"><span class="header-section-number">8.2.9</span> Visualizing and Using LDA Results</h3>
 <ul>
 <li><strong>Document-topic probabilities:</strong> Each document can be represented by its topic probability vector.</li>
 <li><strong>Word-topic assignments:</strong> Each word in a document can be colored or labeled by its assigned topic.</li>
@@ -529,13 +561,13 @@ Iterate over all words multiple times (epochs) until the topic assignments stabi
 <hr>
 </section>
 </section>
-<section id="top2vec-and-bertopic" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="top2vec-and-bertopic"><span class="header-section-number">9.3</span> Top2Vec and BERTopic</h2>
-<section id="top2vec-distributed-topic-representations" class="level3" data-number="9.3.1">
-<h3 data-number="9.3.1" class="anchored" data-anchor-id="top2vec-distributed-topic-representations"><span class="header-section-number">9.3.1</span> Top2Vec: Distributed Topic Representations</h3>
+<section id="top2vec-and-bertopic" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="top2vec-and-bertopic"><span class="header-section-number">8.3</span> Top2Vec and BERTopic</h2>
+<section id="top2vec-distributed-topic-representations" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="top2vec-distributed-topic-representations"><span class="header-section-number">8.3.1</span> Top2Vec: Distributed Topic Representations</h3>
 <p>Top2Vec is a modern topic modeling algorithm (arXiv 2020, <a href="https://github.com/ddangelov/Top2Vec">GitHub: ddangelov/Top2Vec</a>) that automatically discovers topics in text data <strong>without requiring you to specify the number of topics in advance</strong>. It also works <strong>without extensive preprocessing</strong> (e.g., stop word removal, stemming, or lemmatization).</p>
-<section id="key-ideas" class="level4" data-number="9.3.1.1">
-<h4 data-number="9.3.1.1" class="anchored" data-anchor-id="key-ideas"><span class="header-section-number">9.3.1.1</span> Key Ideas</h4>
+<section id="key-ideas" class="level4" data-number="8.3.1.1">
+<h4 data-number="8.3.1.1" class="anchored" data-anchor-id="key-ideas"><span class="header-section-number">8.3.1.1</span> Key Ideas</h4>
 <ul>
 <li><strong>Vector Space Representation:</strong>
 <ul>
@@ -557,8 +589,8 @@ Iterate over all words multiple times (epochs) until the topic assignments stabi
 </ul></li>
 </ul>
 </section>
-<section id="top2vec-workflow" class="level4" data-number="9.3.1.2">
-<h4 data-number="9.3.1.2" class="anchored" data-anchor-id="top2vec-workflow"><span class="header-section-number">9.3.1.2</span> Top2Vec Workflow</h4>
+<section id="top2vec-workflow" class="level4" data-number="8.3.1.2">
+<h4 data-number="8.3.1.2" class="anchored" data-anchor-id="top2vec-workflow"><span class="header-section-number">8.3.1.2</span> Top2Vec Workflow</h4>
 <ol type="1">
 <li><strong>Embed documents and words</strong> (e.g., using doc2vec or word2vec).</li>
 <li><strong>Reduce dimensionality</strong> (UMAP).</li>
@@ -572,13 +604,13 @@ Iterate over all words multiple times (epochs) until the topic assignments stabi
 <img src="images/chapter7_2.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.2: Top2Vec
+Figure&nbsp;8.2: Top2Vec
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="hyperparameters" class="level4" data-number="9.3.1.3">
-<h4 data-number="9.3.1.3" class="anchored" data-anchor-id="hyperparameters"><span class="header-section-number">9.3.1.3</span> Hyperparameters</h4>
+<section id="hyperparameters" class="level4" data-number="8.3.1.3">
+<h4 data-number="8.3.1.3" class="anchored" data-anchor-id="hyperparameters"><span class="header-section-number">8.3.1.3</span> Hyperparameters</h4>
 <ul>
 <li><code>min_count</code>: Minimum word frequency to include in the model.</li>
 <li><code>embedding_model</code>: Embedding method (e.g., ‘doc2vec’, ‘word2vec’).</li>
@@ -587,8 +619,8 @@ Figure&nbsp;9.2: Top2Vec
 <li><code>vector_size</code>: Size of embedding vectors.</li>
 </ul>
 </section>
-<section id="pros-and-cons" class="level4" data-number="9.3.1.4">
-<h4 data-number="9.3.1.4" class="anchored" data-anchor-id="pros-and-cons"><span class="header-section-number">9.3.1.4</span> Pros and Cons</h4>
+<section id="pros-and-cons" class="level4" data-number="8.3.1.4">
+<h4 data-number="8.3.1.4" class="anchored" data-anchor-id="pros-and-cons"><span class="header-section-number">8.3.1.4</span> Pros and Cons</h4>
 <p><strong>Pros:</strong> - Automatically determines the number of topics. - Preserves semantic meaning better than traditional models. - Minimal preprocessing required.</p>
 <p><strong>Cons:</strong> - Computationally intensive—use small datasets for initial testing. - Many hyperparameters to tune; results can vary. - Requires experimentation to achieve optimal results.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python Example: Top2Vec</span></span>
@@ -641,11 +673,11 @@ Figure&nbsp;9.2: Top2Vec
 <hr>
 </section>
 </section>
-<section id="bertopic" class="level3" data-number="9.3.2">
-<h3 data-number="9.3.2" class="anchored" data-anchor-id="bertopic"><span class="header-section-number">9.3.2</span> BERTopic</h3>
+<section id="bertopic" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="bertopic"><span class="header-section-number">8.3.2</span> BERTopic</h3>
 <p><strong>BERTopic</strong> is another modern topic modeling technique inspired by Top2Vec, but leverages transformer-based embeddings (e.g., BERT).</p>
-<section id="key-features" class="level4" data-number="9.3.2.1">
-<h4 data-number="9.3.2.1" class="anchored" data-anchor-id="key-features"><span class="header-section-number">9.3.2.1</span> Key Features</h4>
+<section id="key-features" class="level4" data-number="8.3.2.1">
+<h4 data-number="8.3.2.1" class="anchored" data-anchor-id="key-features"><span class="header-section-number">8.3.2.1</span> Key Features</h4>
 <ul>
 <li><strong>No centroid calculation:</strong><br>
 Each document in a cluster is treated as unique.</li>
@@ -659,8 +691,8 @@ More resource-intensive due to transformer models.</li>
 <hr>
 </section>
 </section>
-<section id="k-means-clustering-with-word2vec" class="level3" data-number="9.3.3">
-<h3 data-number="9.3.3" class="anchored" data-anchor-id="k-means-clustering-with-word2vec"><span class="header-section-number">9.3.3</span> K-means Clustering with Word2Vec</h3>
+<section id="k-means-clustering-with-word2vec" class="level3" data-number="8.3.3">
+<h3 data-number="8.3.3" class="anchored" data-anchor-id="k-means-clustering-with-word2vec"><span class="header-section-number">8.3.3</span> K-means Clustering with Word2Vec</h3>
 <ul>
 <li><strong>Embed documents</strong> using Word2Vec.</li>
 <li><strong>Cluster</strong> the embeddings using k-means.</li>
@@ -727,19 +759,19 @@ More resource-intensive due to transformer models.</li>
 <hr>
 </section>
 </section>
-<section id="the-revolution-in-nlp" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="the-revolution-in-nlp"><span class="header-section-number">9.4</span> The Revolution in NLP</h2>
+<section id="the-revolution-in-nlp" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="the-revolution-in-nlp"><span class="header-section-number">8.4</span> The Revolution in NLP</h2>
 <p>Natural Language Processing (NLP) has undergone a revolution in recent years, primarily due to the introduction of the <strong>transformer model</strong>. Transformers are trained on massive datasets using objectives like <em>masked language modeling</em> (predicting missing words in a sentence). Further improvements are achieved through <strong>Reinforcement Learning from Human Feedback (RLHF)</strong>, allowing models to better align with human preferences.</p>
 <blockquote class="blockquote">
 <p><strong>Example:</strong><br>
 Given the sentence: “The cat sat on the ___,” a transformer model predicts the missing word, such as “mat”.</p>
 </blockquote>
 </section>
-<section id="language-is-hard" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="language-is-hard"><span class="header-section-number">9.5</span> Language is Hard</h2>
+<section id="language-is-hard" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="language-is-hard"><span class="header-section-number">8.5</span> Language is Hard</h2>
 <p>Despite impressive progress, language remains a challenging domain for AI.</p>
-<section id="why-is-language-hard" class="level3" data-number="9.5.1">
-<h3 data-number="9.5.1" class="anchored" data-anchor-id="why-is-language-hard"><span class="header-section-number">9.5.1</span> Why is Language Hard?</h3>
+<section id="why-is-language-hard" class="level3" data-number="8.5.1">
+<h3 data-number="8.5.1" class="anchored" data-anchor-id="why-is-language-hard"><span class="header-section-number">8.5.1</span> Why is Language Hard?</h3>
 <ul>
 <li><strong>Infinite Possibilities:</strong><br>
 Most sentences you hear are unique—you’ve never heard them before and may never hear them again.</li>
@@ -756,8 +788,8 @@ Most sentences you hear are unique—you’ve never heard them before and may ne
 <hr>
 </section>
 </section>
-<section id="brief-history" class="level2" data-number="9.6">
-<h2 data-number="9.6" class="anchored" data-anchor-id="brief-history"><span class="header-section-number">9.6</span> Brief History</h2>
+<section id="brief-history" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="brief-history"><span class="header-section-number">8.6</span> Brief History</h2>
 <ul>
 <li><strong>Descartes:</strong><br>
 Argued that a machine could never truly imitate a human; there would always be a way to tell the difference.</li>
@@ -770,18 +802,18 @@ Proposed by Alan Turing as a test of a machine’s ability to exhibit intelligen
 </ul></li>
 </ul>
 </section>
-<section id="nlp-the-basic-approach" class="level2" data-number="9.7">
-<h2 data-number="9.7" class="anchored" data-anchor-id="nlp-the-basic-approach"><span class="header-section-number">9.7</span> NLP: The Basic Approach</h2>
-<section id="background" class="level3" data-number="9.7.1">
-<h3 data-number="9.7.1" class="anchored" data-anchor-id="background"><span class="header-section-number">9.7.1</span> Background</h3>
+<section id="nlp-the-basic-approach" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="nlp-the-basic-approach"><span class="header-section-number">8.7</span> NLP: The Basic Approach</h2>
+<section id="background" class="level3" data-number="8.7.1">
+<h3 data-number="8.7.1" class="anchored" data-anchor-id="background"><span class="header-section-number">8.7.1</span> Background</h3>
 <ul>
 <li><strong>Numerical Data:</strong> Numbers, measurements, etc.</li>
 <li><strong>Categorical Data:</strong> Discrete categories or labels.</li>
 <li><strong>Text Data:</strong> Unstructured, variable-length, and context-dependent (e.g., email content, headlines, political speeches).</li>
 </ul>
 <p>Text data is fundamentally different from structured data. Can we treat language as structured data for machine learning?</p>
-<section id="making-language-into-structured-data" class="level4" data-number="9.7.1.1">
-<h4 data-number="9.7.1.1" class="anchored" data-anchor-id="making-language-into-structured-data"><span class="header-section-number">9.7.1.1</span> Making Language into Structured Data</h4>
+<section id="making-language-into-structured-data" class="level4" data-number="8.7.1.1">
+<h4 data-number="8.7.1.1" class="anchored" data-anchor-id="making-language-into-structured-data"><span class="header-section-number">8.7.1.1</span> Making Language into Structured Data</h4>
 <ul>
 <li><strong>Bag-of-Words Representation:</strong>
 <ul>
@@ -795,8 +827,8 @@ Proposed by Alan Turing as a test of a machine’s ability to exhibit intelligen
 </ul></li>
 </ul>
 </section>
-<section id="supervised-ml-for-text-processing" class="level4" data-number="9.7.1.2">
-<h4 data-number="9.7.1.2" class="anchored" data-anchor-id="supervised-ml-for-text-processing"><span class="header-section-number">9.7.1.2</span> Supervised ML for Text Processing</h4>
+<section id="supervised-ml-for-text-processing" class="level4" data-number="8.7.1.2">
+<h4 data-number="8.7.1.2" class="anchored" data-anchor-id="supervised-ml-for-text-processing"><span class="header-section-number">8.7.1.2</span> Supervised ML for Text Processing</h4>
 <ul>
 <li><strong>Labeled Text Data:</strong> Enables building classifiers for:
 <ul>
@@ -812,8 +844,8 @@ Proposed by Alan Turing as a test of a machine’s ability to exhibit intelligen
 <li>Raises questions: Does this approach capture real understanding? How does it relate to the Turing Test?</li>
 </ul>
 </section>
-<section id="bag-of-words-limitation" class="level4" data-number="9.7.1.3">
-<h4 data-number="9.7.1.3" class="anchored" data-anchor-id="bag-of-words-limitation"><span class="header-section-number">9.7.1.3</span> Bag-of-Words Limitation</h4>
+<section id="bag-of-words-limitation" class="level4" data-number="8.7.1.3">
+<h4 data-number="8.7.1.3" class="anchored" data-anchor-id="bag-of-words-limitation"><span class="header-section-number">8.7.1.3</span> Bag-of-Words Limitation</h4>
 <ul>
 <li>Ignores word order and context (“bag” of words).<br>
 </li>
@@ -822,14 +854,14 @@ Proposed by Alan Turing as a test of a machine’s ability to exhibit intelligen
 <hr>
 </section>
 </section>
-<section id="language-modeling-with-n-grams" class="level3" data-number="9.7.2">
-<h3 data-number="9.7.2" class="anchored" data-anchor-id="language-modeling-with-n-grams"><span class="header-section-number">9.7.2</span> Language Modeling with N-grams</h3>
+<section id="language-modeling-with-n-grams" class="level3" data-number="8.7.2">
+<h3 data-number="8.7.2" class="anchored" data-anchor-id="language-modeling-with-n-grams"><span class="header-section-number">8.7.2</span> Language Modeling with N-grams</h3>
 <ul>
 <li><strong>Goal:</strong> Assign a probability to a sequence of words.</li>
 <li><strong>Markov Assumption:</strong> The probability of a word depends only on the previous <em>n-1</em> words.</li>
 </ul>
-<section id="example-he-went-to-the-store" class="level4" data-number="9.7.2.1">
-<h4 data-number="9.7.2.1" class="anchored" data-anchor-id="example-he-went-to-the-store"><span class="header-section-number">9.7.2.1</span> Example: “He went to the store”</h4>
+<section id="example-he-went-to-the-store" class="level4" data-number="8.7.2.1">
+<h4 data-number="8.7.2.1" class="anchored" data-anchor-id="example-he-went-to-the-store"><span class="header-section-number">8.7.2.1</span> Example: “He went to the store”</h4>
 <ul>
 <li><strong>Unigrams (1-grams):</strong> He, went, to, the, store</li>
 <li><strong>Bigrams (2-grams):</strong> He went, went to, to the, the store</li>
@@ -838,8 +870,8 @@ Proposed by Alan Turing as a test of a machine’s ability to exhibit intelligen
 <li><strong>5-gram:</strong> He went to the store</li>
 </ul>
 </section>
-<section id="n-gram-approximations" class="level4" data-number="9.7.2.2">
-<h4 data-number="9.7.2.2" class="anchored" data-anchor-id="n-gram-approximations"><span class="header-section-number">9.7.2.2</span> N-gram Approximations</h4>
+<section id="n-gram-approximations" class="level4" data-number="8.7.2.2">
+<h4 data-number="8.7.2.2" class="anchored" data-anchor-id="n-gram-approximations"><span class="header-section-number">8.7.2.2</span> N-gram Approximations</h4>
 <ul>
 <li><p><strong>Bigram Model:</strong><br>
 ( p() = p() p( ) p( ) p( ) p( ) )</p></li>
@@ -851,15 +883,15 @@ N-gram models capture some local word order, but struggle with long-range depend
 <hr>
 </section>
 </section>
-<section id="training-an-llm" class="level3" data-number="9.7.3">
-<h3 data-number="9.7.3" class="anchored" data-anchor-id="training-an-llm"><span class="header-section-number">9.7.3</span> Training an LLM</h3>
+<section id="training-an-llm" class="level3" data-number="8.7.3">
+<h3 data-number="8.7.3" class="anchored" data-anchor-id="training-an-llm"><span class="header-section-number">8.7.3</span> Training an LLM</h3>
 <blockquote class="blockquote">
 <p>“A general language model (LM) should be able to compute the probability of (and also generate) any string.”<br>
 <em>(Radford et al., 2019)</em></p>
 </blockquote>
 </section>
-<section id="what-does-training-an-llm-look-like" class="level3" data-number="9.7.4">
-<h3 data-number="9.7.4" class="anchored" data-anchor-id="what-does-training-an-llm-look-like"><span class="header-section-number">9.7.4</span> What Does Training an LLM Look Like?</h3>
+<section id="what-does-training-an-llm-look-like" class="level3" data-number="8.7.4">
+<h3 data-number="8.7.4" class="anchored" data-anchor-id="what-does-training-an-llm-look-like"><span class="header-section-number">8.7.4</span> What Does Training an LLM Look Like?</h3>
 <p>Consider how humans complete sentences:<br>
 - *As Descartes said, “I think, therefore I <strong>.”*<br>
 - </strong>For all intents and**<br>
@@ -870,16 +902,16 @@ N-gram models capture some local word order, but struggle with long-range depend
 &gt; <strong>Ross:</strong> (squatting and reading the instructions) I’m supposed to attach a brackety ___</p>
 <p>The core training objective for LLMs is <strong>next word prediction</strong>:<br>
 Given a sequence of words, predict the most likely next word.</p>
-<section id="neural-network-for-next-word-prediction" class="level4" data-number="9.7.4.1">
-<h4 data-number="9.7.4.1" class="anchored" data-anchor-id="neural-network-for-next-word-prediction"><span class="header-section-number">9.7.4.1</span> Neural Network for Next Word Prediction</h4>
+<section id="neural-network-for-next-word-prediction" class="level4" data-number="8.7.4.1">
+<h4 data-number="8.7.4.1" class="anchored" data-anchor-id="neural-network-for-next-word-prediction"><span class="header-section-number">8.7.4.1</span> Neural Network for Next Word Prediction</h4>
 <ul>
 <li>The model is a neural network that outputs a score for every word in the vocabulary.</li>
 <li>These scores are converted into probabilities using the <strong>softmax</strong> function.</li>
 <li>For example, with a vocabulary of 50,000 words, the output might look like: <code>[fish: 0.00002, help: 0.00002, ..., the: 0.00002, ..., aardvarks: 0.00002]</code></li>
 </ul>
 </section>
-<section id="training-process" class="level4" data-number="9.7.4.2">
-<h4 data-number="9.7.4.2" class="anchored" data-anchor-id="training-process"><span class="header-section-number">9.7.4.2</span> Training Process</h4>
+<section id="training-process" class="level4" data-number="8.7.4.2">
+<h4 data-number="8.7.4.2" class="anchored" data-anchor-id="training-process"><span class="header-section-number">8.7.4.2</span> Training Process</h4>
 <ol type="1">
 <li><strong>Compute Loss:</strong>
 <ul>
@@ -901,8 +933,8 @@ Given a sequence of words, predict the most likely next word.</p>
 </ul></li>
 </ol>
 </section>
-<section id="example-weight-updates" class="level4" data-number="9.7.4.3">
-<h4 data-number="9.7.4.3" class="anchored" data-anchor-id="example-weight-updates"><span class="header-section-number">9.7.4.3</span> Example: Weight Updates</h4>
+<section id="example-weight-updates" class="level4" data-number="8.7.4.3">
+<h4 data-number="8.7.4.3" class="anchored" data-anchor-id="example-weight-updates"><span class="header-section-number">8.7.4.3</span> Example: Weight Updates</h4>
 <p>Suppose the correct next word is “fish”:<br>
 - The model increases the weights leading to “fish”.<br>
 - The probabilities for other words (e.g., “help”, “the”, “aardvarks”) are slightly reduced.</p>
@@ -914,15 +946,15 @@ Over time, the model learns to predict words in a wide variety of contexts.</p>
 <p><em>This is the fundamental process behind training large language models: predict the next word, compute the loss, update the weights, and repeat—at massive scale.</em></p>
 </section>
 </section>
-<section id="probing-gpt" class="level3" data-number="9.7.5">
-<h3 data-number="9.7.5" class="anchored" data-anchor-id="probing-gpt"><span class="header-section-number">9.7.5</span> Probing GPT</h3>
+<section id="probing-gpt" class="level3" data-number="8.7.5">
+<h3 data-number="8.7.5" class="anchored" data-anchor-id="probing-gpt"><span class="header-section-number">8.7.5</span> Probing GPT</h3>
 <p>Large Language Models (LLMs) today generate highly coherent, grammatical text that can be indistinguishable from human output. They demonstrate some understanding of hierarchical structure and abstract linguistic categories (Mahowald et al., 2024).</p>
 <p>While these models are not perfect learners of abstract linguistic rules, neither are humans. LLMs are progressing toward acquiring formal linguistic competence and have already challenged claims about the impossibility of learning certain linguistic knowledge—such as hierarchical structure and abstract categories—from input alone (Mahowald et al., 2024).</p>
 <hr>
 </section>
 </section>
-<section id="ai-where-are-we-heading" class="level2" data-number="9.8">
-<h2 data-number="9.8" class="anchored" data-anchor-id="ai-where-are-we-heading"><span class="header-section-number">9.8</span> AI: Where Are We Heading?</h2>
+<section id="ai-where-are-we-heading" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="ai-where-are-we-heading"><span class="header-section-number">8.8</span> AI: Where Are We Heading?</h2>
 <p><strong>Artificial General Intelligence (AGI):</strong><br>
 AGI is defined as AI that matches or surpasses human cognitive capabilities across a wide range of tasks.</p>
 <p><strong>AGI Benchmarks:</strong></p>
@@ -940,8 +972,8 @@ An AI is given $100,000 and must turn it into $1 million.</p></li>
 </ul>
 <hr>
 </section>
-<section id="applications-of-llms" class="level2" data-number="9.9">
-<h2 data-number="9.9" class="anchored" data-anchor-id="applications-of-llms"><span class="header-section-number">9.9</span> Applications of LLMs</h2>
+<section id="applications-of-llms" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="applications-of-llms"><span class="header-section-number">8.9</span> Applications of LLMs</h2>
 <ul>
 <li>AI interfaces for customer support and onboarding</li>
 <li>Research portals with Retrieval-Augmented Generation (RAG)</li>
@@ -950,8 +982,8 @@ An AI is given $100,000 and must turn it into $1 million.</p></li>
 </ul>
 <hr>
 </section>
-<section id="takeaways" class="level2" data-number="9.10">
-<h2 data-number="9.10" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">9.10</span> Takeaways</h2>
+<section id="takeaways" class="level2" data-number="8.10">
+<h2 data-number="8.10" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">8.10</span> Takeaways</h2>
 <ul>
 <li><strong>Language is Hard:</strong>
 <ul>
@@ -974,7 +1006,6 @@ An AI is given $100,000 and must turn it into $1 million.</p></li>
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

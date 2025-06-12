@@ -6,7 +6,6 @@ format: html
 jupyter: myvenv
 ---
 
-# Question Answering and Information Retrieval
 
 ## Introduction
 Information retrieval QA: Also called Open Domain QA
@@ -52,14 +51,15 @@ Suppose "machine" appears 3 times in Document 1 and in 100 out of 10,000 documen
 
 Represent queries and documents as TF-IDF vectors. Score each document by its cosine similarity to the query:
 
-\[
+$$
 \text{score}(q, d) = \frac{q \cdot d}{\|q\| \times \|d\|}
-\]
+$$
 
 where  
-- \( q \) is the query vector  
-- \( d \) is the document vector  
-- \( \|q\| \) and \( \|d\| \) are their vector lengths
+- $q$ is the query vector  
+- $d$ is the document vector  
+- $\|q\|$ and $\|d\|$ are their vector lengths
+
 
 **Evaluation Metrics:**
 

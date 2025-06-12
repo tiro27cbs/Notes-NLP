@@ -6,7 +6,6 @@ format: html
 jupyter: myvenv
 ---
 
-# Introduction to Natural Language Processing
 
 ## The Revolution in NLP
 
@@ -90,14 +89,15 @@ Text data is fundamentally different from structured data. Can we treat language
 -   **5-gram:** He went to the store
 
 #### N-gram Approximations
-
--   **Bigram Model:**\
-    ( p(\text{He went to the store}) = p(\text{He}) \times p(\text{went}\|\text{He}) \times p(\text{to}\|\text{went}) \times p(\text{the}\|\text{to}) \times p(\text{store}\|\text{the}) )
-
--   **Trigram Model:**\
-    ( p(\text{He went to the store}) = p(\text{He}) \times p(\text{went}\|\text{He}) \times p(\text{to}\|\text{He went}) \times p(\text{the}\|\text{went to}) \times p(\text{store}\|\text{to the}) )
-
--   **Key Idea:**\
+- **Bigram Model:**  
+    $$
+    p(\text{He went to the store}) = p(\text{He}) \times p(\text{went} \mid \text{He}) \times p(\text{to} \mid \text{went}) \times p(\text{the} \mid \text{to}) \times p(\text{store} \mid \text{the})
+    $$
+- **Trigram Model:**  
+    $$
+    p(\text{He went to the store}) = p(\text{He}) \times p(\text{went} \mid \text{He}) \times p(\text{to} \mid \text{He\ went}) \times p(\text{the} \mid \text{went\ to}) \times p(\text{store} \mid \text{to\ the})
+    $$
+- **Key Idea:**  
     N-gram models capture some local word order, but struggle with long-range dependencies and rare phrases.
 
 ------------------------------------------------------------------------

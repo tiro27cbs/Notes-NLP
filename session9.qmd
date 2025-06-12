@@ -6,7 +6,6 @@ format: html
 jupyter: myvenv
 ---
 
-# Simple Neural Networks
 
 ## Ambiguity
 

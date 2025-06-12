@@ -6,13 +6,13 @@ format: html
 jupyter: myvenv
 ---
 
-# Topic Modeling
 
 ## Topic Modeling
 
 As the volume of information grows, it becomes increasingly difficult to locate relevant content. Topic modeling is a technique used to uncover the hidden thematic structure in a collection of documents.
 
 **When might you need to find hidden topics in text?**
+
 - Organizing large collections of documents
 - Summarizing unstructured text data
 - Improving information retrieval and search
@@ -97,9 +97,9 @@ These are in tension:
 
 LDA uses **Bayes' Theorem** to estimate the hidden variables (topics):
 
-\[
+$$
 P(\text{hypothesis} \mid \text{observations}) = \frac{P(\text{observations} \mid \text{hypothesis}) \cdot P(\text{hypothesis})}{P(\text{observations})}
-\]
+$$
 
 - **Prior:** What we believe before seeing the data.
 - **Posterior:** What we believe after seeing the data.

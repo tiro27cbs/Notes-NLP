@@ -224,19 +224,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#nlp-libraries-and-text-normalization" id="toc-nlp-libraries-and-text-normalization" class="nav-link active" data-scroll-target="#nlp-libraries-and-text-normalization"><span class="header-section-number">4</span> NLP Libraries and Text Normalization</a>
+  <li><a href="#libraries" id="toc-libraries" class="nav-link active" data-scroll-target="#libraries"><span class="header-section-number">3.1</span> Libraries</a></li>
+  <li><a href="#normalization" id="toc-normalization" class="nav-link" data-scroll-target="#normalization"><span class="header-section-number">3.2</span> Normalization</a>
   <ul class="collapse">
-  <li><a href="#libraries" id="toc-libraries" class="nav-link" data-scroll-target="#libraries"><span class="header-section-number">4.1</span> Libraries</a></li>
-  <li><a href="#normalization" id="toc-normalization" class="nav-link" data-scroll-target="#normalization"><span class="header-section-number">4.2</span> Normalization</a>
-  <ul class="collapse">
-  <li><a href="#tokenization" id="toc-tokenization" class="nav-link" data-scroll-target="#tokenization"><span class="header-section-number">4.2.1</span> Tokenization</a></li>
-  <li><a href="#stemming" id="toc-stemming" class="nav-link" data-scroll-target="#stemming"><span class="header-section-number">4.2.2</span> Stemming</a></li>
-  <li><a href="#lemmatization" id="toc-lemmatization" class="nav-link" data-scroll-target="#lemmatization"><span class="header-section-number">4.2.3</span> Lemmatization</a></li>
+  <li><a href="#tokenization" id="toc-tokenization" class="nav-link" data-scroll-target="#tokenization"><span class="header-section-number">3.2.1</span> Tokenization</a></li>
+  <li><a href="#stemming" id="toc-stemming" class="nav-link" data-scroll-target="#stemming"><span class="header-section-number">3.2.2</span> Stemming</a></li>
+  <li><a href="#lemmatization" id="toc-lemmatization" class="nav-link" data-scroll-target="#lemmatization"><span class="header-section-number">3.2.3</span> Lemmatization</a></li>
   </ul></li>
-  <li><a href="#regular-expressions" id="toc-regular-expressions" class="nav-link" data-scroll-target="#regular-expressions"><span class="header-section-number">4.3</span> Regular Expressions</a></li>
-  <li><a href="#pos-tagging" id="toc-pos-tagging" class="nav-link" data-scroll-target="#pos-tagging"><span class="header-section-number">4.4</span> POS Tagging</a></li>
-  <li><a href="#named-entity-recognition-ner" id="toc-named-entity-recognition-ner" class="nav-link" data-scroll-target="#named-entity-recognition-ner"><span class="header-section-number">4.5</span> Named Entity Recognition (NER)</a></li>
-  </ul></li>
+  <li><a href="#regular-expressions" id="toc-regular-expressions" class="nav-link" data-scroll-target="#regular-expressions"><span class="header-section-number">3.3</span> Regular Expressions</a></li>
+  <li><a href="#pos-tagging" id="toc-pos-tagging" class="nav-link" data-scroll-target="#pos-tagging"><span class="header-section-number">3.4</span> POS Tagging</a></li>
+  <li><a href="#named-entity-recognition-ner" id="toc-named-entity-recognition-ner" class="nav-link" data-scroll-target="#named-entity-recognition-ner"><span class="header-section-number">3.5</span> Named Entity Recognition (NER)</a></li>
   </ul>
 </nav>
     </div>
@@ -274,10 +271,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="nlp-libraries-and-text-normalization" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> NLP Libraries and Text Normalization</h1>
-<section id="libraries" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="libraries"><span class="header-section-number">4.1</span> Libraries</h2>
+<section id="libraries" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="libraries"><span class="header-section-number">3.1</span> Libraries</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -326,8 +321,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 </section>
-<section id="normalization" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="normalization"><span class="header-section-number">4.2</span> Normalization</h2>
+<section id="normalization" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="normalization"><span class="header-section-number">3.2</span> Normalization</h2>
 <p>Normalization is the process of converting a text into a standard form. This involves removing any characters that are not part of the standard English alphabet, converting all characters to lowercase, and removing any extra spaces.</p>
 <p>Tasks involved in normalization include</p>
 <ul>
@@ -343,7 +338,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Removing Emojis and Special Characters</strong>: Removing emojis, emoticons, and other special characters.</li>
 </ul>
 <p><strong>Removal of Stopwords in Python using NLTK</strong></p>
-<div id="d639c327" class="cell" data-execution_count="2">
+<div id="25861563" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"NLTK and spaCy are popular NLP libraries used for text processing."</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> word_tokenize(text)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>stop_words <span class="op">=</span> <span class="bu">set</span>(stopwords.words(<span class="st">"english"</span>))</span>
@@ -354,7 +349,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><strong>Removal of Stopwords in Python using spaCy</strong></p>
-<div id="a1b308a1" class="cell" data-execution_count="3">
+<div id="40dd6077" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>) <span class="co"># Load English language model</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"NLTK and spaCy are popular NLP libraries used for text processing."</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> nlp(text)</span>
@@ -364,8 +359,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>spaCy stopwords removal: NLTK spaCy popular NLP libraries text processing .</code></pre>
 </div>
 </div>
-<section id="morphological-normalization" class="level4" data-number="4.2.0.1">
-<h4 data-number="4.2.0.1" class="anchored" data-anchor-id="morphological-normalization"><span class="header-section-number">4.2.0.1</span> Morphological Normalization</h4>
+<section id="morphological-normalization" class="level4" data-number="3.2.0.1">
+<h4 data-number="3.2.0.1" class="anchored" data-anchor-id="morphological-normalization"><span class="header-section-number">3.2.0.1</span> Morphological Normalization</h4>
 <ul>
 <li>Morphological normalization is the process of reducing a word to its base or root form</li>
 <li>This can involve <strong>stemming</strong> or <strong>lemmatization</strong></li>
@@ -378,8 +373,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Inflectional</strong> affixes are added to a word to change its grammatical form eg. “s” for plural nouns, “ed” for past tense verbs eg. “dogs”, “walked”</li>
 </ul>
 </section>
-<section id="tokenization" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="tokenization"><span class="header-section-number">4.2.1</span> Tokenization</h3>
+<section id="tokenization" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="tokenization"><span class="header-section-number">3.2.1</span> Tokenization</h3>
 <ul>
 <li>Tokenization is the process of breaking a text into words, phrases, symbols, or other meaningful elements.</li>
 <li>The tokens are the words, sentences, characters, or subwords that are produced by the tokenization process.</li>
@@ -387,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Type</strong> is number of unique tokens in a text</li>
 <li><strong>Token</strong> is a single instance of a token in a text</li>
 </ul>
-<div id="b51bf79f" class="cell" data-execution_count="4">
+<div id="eb83e020" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> word_tokenize(text)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>total_tokens <span class="op">=</span> <span class="bu">len</span>(tokens)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>total_types <span class="op">=</span> <span class="bu">len</span>(<span class="bu">set</span>(tokens))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -395,12 +390,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><strong>Corpus</strong> is a collection of text documents</li>
 </ul>
-<section id="tokenization-of-raw-text-in-python" class="level5" data-number="4.2.1.0.1">
-<h5 data-number="4.2.1.0.1" class="anchored" data-anchor-id="tokenization-of-raw-text-in-python"><span class="header-section-number">4.2.1.0.1</span> Tokenization of raw text in Python</h5>
+<section id="tokenization-of-raw-text-in-python" class="level5" data-number="3.2.1.0.1">
+<h5 data-number="3.2.1.0.1" class="anchored" data-anchor-id="tokenization-of-raw-text-in-python"><span class="header-section-number">3.2.1.0.1</span> Tokenization of raw text in Python</h5>
 <ul>
 <li>word.isalnum() - returns True if all characters in the word are alphanumeric</li>
 </ul>
-<div id="af90cfa4" class="cell" data-execution_count="5">
+<div id="d83313be" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>shakespeare_url <span class="op">=</span> <span class="st">"https://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt"</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>crime_punishment_url <span class="op">=</span> <span class="st">"http://www.gutenberg.org/files/2554/2554-0.txt"</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -429,16 +424,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(crime_common)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="nltk-tokenizers" class="level5" data-number="4.2.1.0.2">
-<h5 data-number="4.2.1.0.2" class="anchored" data-anchor-id="nltk-tokenizers"><span class="header-section-number">4.2.1.0.2</span> NLTK Tokenizers</h5>
+<section id="nltk-tokenizers" class="level5" data-number="3.2.1.0.2">
+<h5 data-number="3.2.1.0.2" class="anchored" data-anchor-id="nltk-tokenizers"><span class="header-section-number">3.2.1.0.2</span> NLTK Tokenizers</h5>
 <ul>
 <li><code>word_tokenize()</code>: Tokenizes a text into words using a regular expression-based tokenizer. A versatile tokenizer that handles contractions, abbreviations, and punctuation marks effectively. It is suitable for most general-purpose tokenization tasks.</li>
 <li><code>WordPunctTokenizer()</code>: Tokenizes a text into words using a regular expression that matches punctuation as separate tokens. A specialized tokenizer that separates words and punctuation explicitly. It is useful when you need to distinguish between alphabetic and non-alphabetic characters.</li>
 </ul>
 </section>
 </section>
-<section id="stemming" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="stemming"><span class="header-section-number">4.2.2</span> Stemming</h3>
+<section id="stemming" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="stemming"><span class="header-section-number">3.2.2</span> Stemming</h3>
 <ul>
 <li>Stemming is the process of reducing a word to its root or base form. For example, the word “running” would be reduced to “run” by a stemming algorithm.</li>
 <li>Stemmers remove word suffixes by running input word tokens against a pre-defined list of common suffixes.</li>
@@ -446,9 +441,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Porter Stemmer</strong> is a popular (rule-based) stemming algorithm that is widely used in text processing applications.</li>
 <li><strong>Snowball Stemmer</strong> is an improved version of the Porter Stemmer that supports multiple languages.</li>
 </ul>
-<section id="example-of-stemming-in-python-using-nltk" class="level4" data-number="4.2.2.1">
-<h4 data-number="4.2.2.1" class="anchored" data-anchor-id="example-of-stemming-in-python-using-nltk"><span class="header-section-number">4.2.2.1</span> Example of stemming in Python using NLTK</h4>
-<div id="bd68c736" class="cell" data-execution_count="6">
+<section id="example-of-stemming-in-python-using-nltk" class="level4" data-number="3.2.2.1">
+<h4 data-number="3.2.2.1" class="anchored" data-anchor-id="example-of-stemming-in-python-using-nltk"><span class="header-section-number">3.2.2.1</span> Example of stemming in Python using NLTK</h4>
+<div id="6b7c72eb" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sbs <span class="op">=</span> SnowballStemmer(<span class="st">"english"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>text<span class="op">=</span><span class="st">"The stars twinkled in the dark, illuminating the night sky."</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>method <span class="op">=</span> TreebankWordTokenizer()</span>
@@ -474,8 +469,8 @@ sky | sky
 </div>
 </section>
 </section>
-<section id="lemmatization" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3" class="anchored" data-anchor-id="lemmatization"><span class="header-section-number">4.2.3</span> Lemmatization</h3>
+<section id="lemmatization" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="lemmatization"><span class="header-section-number">3.2.3</span> Lemmatization</h3>
 <ul>
 <li>The process of reducing a word to its base or root form, known as a lemma.</li>
 <li>Is more sophisticated than stemming because it uses a dictionary to map words to their base forms.</li>
@@ -483,9 +478,9 @@ sky | sky
 <li>Lemmatization is more accurate than stemming but can be slower and more computationally intensive.</li>
 <li><strong>WordNet Lemmatizer</strong> is a popular lemmatization algorithm that is available in NLTK.</li>
 </ul>
-<section id="example-of-stemming-in-python-using-nltk-1" class="level4" data-number="4.2.3.1">
-<h4 data-number="4.2.3.1" class="anchored" data-anchor-id="example-of-stemming-in-python-using-nltk-1"><span class="header-section-number">4.2.3.1</span> Example of stemming in Python using NLTK</h4>
-<div id="c3958383" class="cell" data-execution_count="7">
+<section id="example-of-stemming-in-python-using-nltk-1" class="level4" data-number="3.2.3.1">
+<h4 data-number="3.2.3.1" class="anchored" data-anchor-id="example-of-stemming-in-python-using-nltk-1"><span class="header-section-number">3.2.3.1</span> Example of stemming in Python using NLTK</h4>
+<div id="167ee84c" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sbs <span class="op">=</span> SnowballStemmer(<span class="st">"english"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>text<span class="op">=</span><span class="st">"The stars twinkled in the dark, illuminating the night sky."</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>method <span class="op">=</span> TreebankWordTokenizer()</span>
@@ -552,8 +547,8 @@ sky | sky
 </section>
 </section>
 </section>
-<section id="regular-expressions" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="regular-expressions"><span class="header-section-number">4.3</span> Regular Expressions</h2>
+<section id="regular-expressions" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="regular-expressions"><span class="header-section-number">3.3</span> Regular Expressions</h2>
 <ul>
 <li>Regular expressions are a powerful tool for <strong>pattern matching</strong> and text processing.</li>
 <li>They allow you to search for patterns in text, extract specific information, and perform complex text transformations.</li>
@@ -707,7 +702,7 @@ sky | sky
 </tbody>
 </table>
 <p><strong>Example of Regular Expressions in Python</strong></p>
-<div id="1eb1e039" class="cell" data-execution_count="8">
+<div id="f8def907" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"The quick brown fox jumps over the lazy dog. The dog barks at the fox."</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> sent_tokenize(text)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> word_tokenize(text)</span>
@@ -731,8 +726,8 @@ sky | sky
 </div>
 </div>
 </section>
-<section id="pos-tagging" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="pos-tagging"><span class="header-section-number">4.4</span> POS Tagging</h2>
+<section id="pos-tagging" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="pos-tagging"><span class="header-section-number">3.4</span> POS Tagging</h2>
 <ul>
 <li><p>Part-of-speech (POS) tagging is the process of assigning a part of speech to each word in a text. The part of speech indicates the grammatical category of the word, such as noun, verb, adjective, etc.</p></li>
 <li><p>The goal of POS tagging is to identify the syntactic structure of a sentence and extract useful information about the text.</p></li>
@@ -911,8 +906,8 @@ sky | sky
 </tr>
 </tbody>
 </table>
-<section id="example-of-pos-tagging-in-python-using-nltk" class="level4" data-number="4.4.0.1">
-<h4 data-number="4.4.0.1" class="anchored" data-anchor-id="example-of-pos-tagging-in-python-using-nltk"><span class="header-section-number">4.4.0.1</span> Example of POS Tagging in Python using NLTK</h4>
+<section id="example-of-pos-tagging-in-python-using-nltk" class="level4" data-number="3.4.0.1">
+<h4 data-number="3.4.0.1" class="anchored" data-anchor-id="example-of-pos-tagging-in-python-using-nltk"><span class="header-section-number">3.4.0.1</span> Example of POS Tagging in Python using NLTK</h4>
 <div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> word_tokenize</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk <span class="im">import</span> pos_tag</span>
@@ -924,14 +919,14 @@ sky | sky
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word, tag <span class="kw">in</span> tags:</span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>word<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>tag<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="example-of-pos-tagging-in-python-using-spacy" class="level4" data-number="4.4.0.2">
-<h4 data-number="4.4.0.2" class="anchored" data-anchor-id="example-of-pos-tagging-in-python-using-spacy"><span class="header-section-number">4.4.0.2</span> Example of POS Tagging in Python using spaCy</h4>
+<section id="example-of-pos-tagging-in-python-using-spacy" class="level4" data-number="3.4.0.2">
+<h4 data-number="3.4.0.2" class="anchored" data-anchor-id="example-of-pos-tagging-in-python-using-spacy"><span class="header-section-number">3.4.0.2</span> Example of POS Tagging in Python using spaCy</h4>
 <ul>
 <li>Make sure to download the spaCy model using <code>python -m spacy download en_core_web_sm</code></li>
 <li>This model is a small English model trained on written web text (blogs, news, comments), which includes vocabulary, vectors, syntax, and entities.</li>
 <li>The model is trained on the OntoNotes 5 corpus and supports POS tagging, dependency parsing, named entity recognition, and more.</li>
 </ul>
-<div id="eba764e5" class="cell" data-execution_count="9">
+<div id="c3fa3034" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>sample_text <span class="op">=</span> <span class="st">"The quick brown fox jumps over the lazy dog."</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> model(sample_text)</span>
@@ -953,8 +948,8 @@ dog | NOUN
 </div>
 </section>
 </section>
-<section id="named-entity-recognition-ner" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="named-entity-recognition-ner"><span class="header-section-number">4.5</span> Named Entity Recognition (NER)</h2>
+<section id="named-entity-recognition-ner" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="named-entity-recognition-ner"><span class="header-section-number">3.5</span> Named Entity Recognition (NER)</h2>
 <ul>
 <li>Named Entity Recognition (NER) is the process of identifying and classifying named entities in a text.</li>
 <li>Named entities are real-world objects such as persons, organizations, locations, dates, and more.</li>
@@ -972,8 +967,8 @@ dog | NOUN
 <li><strong>Product</strong>: Names of products, such as “iPhone” or “Coca-Cola”.</li>
 </ul></li>
 </ul>
-<section id="example-of-named-entity-recognition-in-python-using-nltk" class="level4" data-number="4.5.0.1">
-<h4 data-number="4.5.0.1" class="anchored" data-anchor-id="example-of-named-entity-recognition-in-python-using-nltk"><span class="header-section-number">4.5.0.1</span> Example of Named Entity Recognition in Python using NLTK</h4>
+<section id="example-of-named-entity-recognition-in-python-using-nltk" class="level4" data-number="3.5.0.1">
+<h4 data-number="3.5.0.1" class="anchored" data-anchor-id="example-of-named-entity-recognition-in-python-using-nltk"><span class="header-section-number">3.5.0.1</span> Example of Named Entity Recognition in Python using NLTK</h4>
 <p>In NLP, a tree structure is often used to represent the syntactic structure of a sentence. Each node in the tree represents a linguistic unit, such as a word or a phrase, and the edges represent the relationships between these units. The <code>Tree</code> class provides various methods for creating, traversing, and modifying these tree structures.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Apple is a technology company based in Cupertino, California."</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> word_tokenize(text)</span>
@@ -990,8 +985,8 @@ dog | NOUN
 <li>The NER model uses context and patterns learned from training data to classify named entities, but it is not always perfect and can sometimes make mistakes, as seen with “Apple” in this case.</li>
 </ul>
 </section>
-<section id="example-of-named-entity-recognition-in-python-using-spacy" class="level4" data-number="4.5.0.2">
-<h4 data-number="4.5.0.2" class="anchored" data-anchor-id="example-of-named-entity-recognition-in-python-using-spacy"><span class="header-section-number">4.5.0.2</span> Example of Named Entity Recognition in Python using spaCy</h4>
+<section id="example-of-named-entity-recognition-in-python-using-spacy" class="level4" data-number="3.5.0.2">
+<h4 data-number="3.5.0.2" class="anchored" data-anchor-id="example-of-named-entity-recognition-in-python-using-spacy"><span class="header-section-number">3.5.0.2</span> Example of Named Entity Recognition in Python using spaCy</h4>
 <div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>sample_text <span class="op">=</span> <span class="st">"Apple is a technology company based in Cupertino, California."</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> model(sample_text)</span>
@@ -999,7 +994,6 @@ dog | NOUN
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>displacy.render(doc, style<span class="op">=</span><span class="st">"ent"</span>, jupyter<span class="op">=</span><span class="va">True</span>) <span class="co"># style="ent" is used to display named entities</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
-</section>
 </section>
 </section>
 

@@ -6,8 +6,6 @@ format: html
 jupyter: myvenv
 ---
 
-# Lexical Semantics and Vector Embeddings
-
 ## Word Meanings
 
 Understanding word meanings is fundamental in NLP. Here are some key points:

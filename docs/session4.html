@@ -253,12 +253,9 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#text-classification-and-naive-bayes" id="toc-text-classification-and-naive-bayes" class="nav-link active" data-scroll-target="#text-classification-and-naive-bayes"><span class="header-section-number">6</span> Text Classification and Naive Bayes</a>
-  <ul class="collapse">
-  <li><a href="#text-classification" id="toc-text-classification" class="nav-link" data-scroll-target="#text-classification"><span class="header-section-number">6.1</span> Text Classification</a></li>
-  <li><a href="#bayes-theorem" id="toc-bayes-theorem" class="nav-link" data-scroll-target="#bayes-theorem"><span class="header-section-number">6.2</span> Bayes Theorem</a></li>
-  <li><a href="#evaluation-metrics" id="toc-evaluation-metrics" class="nav-link" data-scroll-target="#evaluation-metrics"><span class="header-section-number">6.3</span> Evaluation Metrics</a></li>
-  </ul></li>
+  <li><a href="#text-classification" id="toc-text-classification" class="nav-link active" data-scroll-target="#text-classification"><span class="header-section-number">5.1</span> Text Classification</a></li>
+  <li><a href="#bayes-theorem" id="toc-bayes-theorem" class="nav-link" data-scroll-target="#bayes-theorem"><span class="header-section-number">5.2</span> Bayes Theorem</a></li>
+  <li><a href="#evaluation-metrics" id="toc-evaluation-metrics" class="nav-link" data-scroll-target="#evaluation-metrics"><span class="header-section-number">5.3</span> Evaluation Metrics</a></li>
   </ul>
 </nav>
     </div>
@@ -296,10 +293,8 @@ window.Quarto = {
 </header>
 
 
-<section id="text-classification-and-naive-bayes" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Text Classification and Naive Bayes</h1>
-<section id="text-classification" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="text-classification"><span class="header-section-number">6.1</span> Text Classification</h2>
+<section id="text-classification" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="text-classification"><span class="header-section-number">5.1</span> Text Classification</h2>
 <ul>
 <li>Text classification is the process of assigning predefined categories or labels to text documents based on their content.</li>
 <li>It is a supervised learning task where a model is trained on labeled data to learn the relationship between the text and its corresponding labels.</li>
@@ -310,8 +305,8 @@ window.Quarto = {
 </ul>
 <p>There are three main types of text classification techniques: - <strong>Supervised Learning</strong>: The model is trained on labeled data, where each document is associated with a predefined category. The model learns to map the input features to the corresponding labels. - Naive Bayes, Logistic Regression - <strong>Unsupervised Learning</strong>: The model is trained on unlabeled data, where the goal is to discover hidden patterns or clusters in the data. The model learns to group similar documents together without any predefined labels. - Latent Dirichlet Allocation (LDA), K-means clustering - <strong>Deep Learning</strong>: The model is trained on large amounts of data using deep neural networks. Deep learning models can automatically learn complex features and representations from the data, making them suitable for text classification tasks. - Convolutional Neural Networks (CNNs), Recurrent Neural Networks (RNNs), Transformers (BERT, GPT-3)</p>
 </section>
-<section id="bayes-theorem" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="bayes-theorem"><span class="header-section-number">6.2</span> Bayes Theorem</h2>
+<section id="bayes-theorem" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="bayes-theorem"><span class="header-section-number">5.2</span> Bayes Theorem</h2>
 <ul>
 <li>Bayes theorem is a fundamental concept in probability theory that describes the relationship between conditional probabilities. It is used to update the probability of a hypothesis based on new evidence.</li>
 <li>The equation is given by: <span class="math display">\[P(H \mid E) = \frac{P(E \mid H) \cdot P(H)}{P(E)}\]</span></li>
@@ -335,7 +330,7 @@ window.Quarto = {
 </ul>
 <p>Types of Naive Bayes Classifiers: - <strong>Gaussian Naive Bayes</strong>: Assumes that the features follow a Gaussian (normal) distribution. It is suitable for continuous features. - <strong>Multinomial Naive Bayes</strong>: Assumes that the features are counts or frequencies. It is suitable for discrete features, such as word counts in text classification. - <strong>Bernoulli Naive Bayes</strong>: Assumes that the features are binary (0 or 1). It is suitable for binary features, such as presence or absence of words in text classification.</p>
 <p>Implementing Naive Bayes - <strong>Step 1</strong>: Load the dataset, clean and preprocess the text data. - <strong>Step 2</strong>: Split the dataset into training and testing sets. - <strong>Step 3</strong>: Extract features from the text data using techniques such as Bag of Words (BoW) - <strong>Step 4</strong>: Train the Naive Bayes classifier on the training set. - <strong>Step 5</strong>: Evaluate the classifier on the testing set using metrics such as accuracy, precision, recall, and F1-score.</p>
-<div id="e68f5caa" class="cell" data-execution_count="1">
+<div id="ea8b3f23" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer</span>
@@ -410,8 +405,8 @@ weighted avg       0.94      0.94      0.94       358
 </div>
 </div>
 </section>
-<section id="evaluation-metrics" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="evaluation-metrics"><span class="header-section-number">6.3</span> Evaluation Metrics</h2>
+<section id="evaluation-metrics" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="evaluation-metrics"><span class="header-section-number">5.3</span> Evaluation Metrics</h2>
 <ul>
 <li><strong>Accuracy</strong>: The proportion of correctly classified instances out of the total instances.
 <ul>
@@ -475,7 +470,6 @@ weighted avg       0.94      0.94      0.94       358
 </ol>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
