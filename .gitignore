@@ -1,0 +1,27 @@
+# Ignore virtual environments
+myvenv/
+venv/
+.env/
+
+# Ignore Quarto output if not using it for GitHub Pages
+_book/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Jupyter/VS Code metadata
+.ipynb_checkpoints/
+.vscode/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+
+images/
+
+
+
+
+/.quarto/

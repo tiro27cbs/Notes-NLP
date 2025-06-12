@@ -1,0 +1,399 @@
+---
+title: "Natural Language Processing - Chapter 2"
+author: "Maxwell Bernard"
+date: "`r Sys.Date()`"
+format: html
+jupyter: myvenv
+---
+
+# Chapter 2: Introduction to NLP Libraries and Text Normalization
+
+```{python}
+# | echo: false
+# | label: Library imports
+# | output: false
+from nltk.corpus import stopwords  # for removing stopwords
+from nltk.tokenize import word_tokenize, sent_tokenize, TreebankWordTokenizer  # for tokenization
+import spacy  # for spaCy library
+from spacy import displacy  # for visualizing named entities
+import nltk
+from nltk import FreqDist, ne_chunk
+
+# nltk.download("stopwords")  # download stopwords to local machine
+from urllib import request  # for fetching data from URLs
+import string  # for string operations
+from nltk.stem import WordNetLemmatizer, SnowballStemmer  # for lemmatization and stemming
+from nltk.tag import pos_tag  # for POS tagging
+from nltk.tree import Tree  # for representing syntactic structure
+from prettytable import PrettyTable  # for generating ASCII tables
+from nltk.util import ngrams  # ngrams is a function that returns the n-grams of a text
+from collections import Counter  # Counter is a dict subclass for counting hashable objects
+from nltk.lm import MLE  # Maximum Likelihood Estimation
+import re  # Regular Expressions
+```
+
+## Libraries
+
+|  | NLTK | spaCy |
+|---------|---------|---------|
+| Methods | string processing library | object-oriented approach - it parses a text, returns document object whose words and sentences are objects themselves | 
+| Tokenization | uses regular expression-based methods which are not always accurate | uses a rule-based approach to tokenization which is more accurate |
+| POS Tagging | provides wide range of POS taggers (ranging from rule-based to machine learning-based) | uses a deep learning-based POS tagger which is more accurate (also offers pre-trained models in multiple languages) |
+| Named Entity Recognition (NER) | provides multiple NER taggers (ranging from rule-based to machine learning-based) | uses a highly efficient deep learning-based NER tagger for detecting entities such as names, organizations, locations, etc. |
+| Performance | slower than spaCy | faster than NLTK (due to its optimized implementation in Cython) |
+
+- `Textblob` is another popular library for NLP in Python. It is built on top of NLTK and provides a simple API for common NLP tasks such as tokenization, POS tagging, and sentiment analysis. 
+  - It is **not good for large scale production use**
+
+## Normalization
+
+Normalization is the process of converting a text into a standard form. This involves removing any characters that are not part of the standard English alphabet, converting all characters to lowercase, and removing any extra spaces.
+
+Tasks involved in normalization include
+
+- **Tokenization**: Breaking a text into words, phrases, symbols, or other meaningful elements.
+- **Case Folding**: Converting all characters to lowercase.
+- **Removing Punctuation**: Removing any non-alphanumeric characters.
+- **Removing Stopwords**: Removing common words that do not carry much meaning.
+- **Stemming or Lemmatization**: Reducing words to their base or root form.
+- **Removing Extra Spaces**: Removing any extra spaces between words.
+- **Expanding Contractions**: Expanding contractions such as "don't" to "do not".
+- **Removing URLs and Emails**: Removing URLs, email addresses, and other web-related content.
+- **Removing HTML Tags**: Removing HTML tags from web pages.
+- **Removing Emojis and Special Characters**: Removing emojis, emoticons, and other special characters.
+
+**Removal of Stopwords in Python using NLTK**
+```{python}
+text = "NLTK and spaCy are popular NLP libraries used for text processing."
+tokens = word_tokenize(text)
+stop_words = set(stopwords.words("english"))
+filtered_tokens = [word for word in tokens if word.lower() not in stop_words]
+print(f"NLTK stopwords removal: {' '.join(filtered_tokens)}")
+```
+
+**Removal of Stopwords in Python using spaCy**
+```{python}
+nlp = spacy.load("en_core_web_sm") # Load English language model
+text = "NLTK and spaCy are popular NLP libraries used for text processing."
+doc = nlp(text)
+filtered_tokens = [token.text for token in doc if not token.is_stop]
+print(f"spaCy stopwords removal: {' '.join(filtered_tokens)}")
+```
+
+#### Morphological Normalization
+
+- Morphological normalization is the process of reducing a word to its base or root form
+- This can involve **stemming** or **lemmatization**
+- **Roots** are the base forms of words eg. "run" is the root of "running", "ran", "runs"
+- **Affixes** are the prefixes and suffixes that are added to roots to create different forms of words eg. "ing", "ed", "s"
+  - **Prefixes** are added to the beginning of a word eg. "un" in "undo"
+  - **Suffixes** are added to the end of a word eg. "ly" in "quickly"
+- **Inflectional** affixes are added to a word to change its grammatical form eg. "s" for plural nouns, "ed" for past tense verbs eg. "dogs", "walked"
+
+### Tokenization
+
+- Tokenization is the process of breaking a text into words, phrases, symbols, or other meaningful elements.
+- The tokens are the words, sentences, characters, or subwords that are produced by the tokenization process.
+- Space based token is used to prepare the text for further processing such as stemming, lemmatization, and POS tagging.
+- **Type** is number of unique tokens in a text
+- **Token** is a single instance of a token in a text
+
+```{python}
+# | eval: false
+tokens = word_tokenize(text)
+total_tokens = len(tokens)
+total_types = len(set(tokens))
+```
+- **Corpus** is a collection of text documents
+
+##### Tokenization of raw text in Python
+- word.isalnum() - returns True if all characters in the word are alphanumeric
+
+```{python}
+#| eval: false
+shakespeare_url = "https://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt"
+crime_punishment_url = "http://www.gutenberg.org/files/2554/2554-0.txt"
+
+# Tokenize Raw Text
+
+shakespeare_text = request.urlopen(shakespeare_url).read().decode("utf8")
+crime_punishment_text = request.urlopen(crime_punishment_url).read().decode("utf8")
+
+shakespeare_tokenized = [word for word in word_tokenize(shakespeare_text.lower()) if word.isalnum()]
+crime_punishment_tokenized = [
+    word for word in word_tokenize(crime_punishment_text.lower()) if word.isalnum()
+]
+
+# FreqDist (from nltk) to produce a frequency distribution (listing top 20 most common words)
+
+shakespeare_freq = FreqDist(shakespeare_tokenized)
+crime_freq = FreqDist(crime_punishment_tokenized)
+
+shakespeare_common = shakespeare_freq.most_common(20)
+crime_common = crime_freq.most_common(20)
+
+print("Top 20 words in Shakespeare")
+print(shakespeare_common)
+
+print("\nTop 20 words in Crime and Punishment:")
+print(crime_common)
+```
+
+##### NLTK Tokenizers
+- `word_tokenize()`: Tokenizes a text into words using a regular expression-based tokenizer. A versatile tokenizer that handles contractions, abbreviations, and punctuation marks effectively. It is suitable for most general-purpose tokenization tasks.
+- `WordPunctTokenizer()`: Tokenizes a text into words using a regular expression that matches punctuation as separate tokens. A specialized tokenizer that separates words and punctuation explicitly. It is useful when you need to distinguish between alphabetic and non-alphabetic characters.
+  
+### Stemming
+
+- Stemming is the process of reducing a word to its root or base form. For example, the word "running" would be reduced to "run" by a stemming algorithm.
+- Stemmers remove word suffixes by running input word tokens against a pre-defined list of common suffixes.
+- Stemming is a heuristic process that does not always produce a valid root word, but it can be useful for text processing tasks such as search indexing and information retrieval.
+- **Porter Stemmer** is a popular (rule-based) stemming algorithm that is widely used in text processing applications.
+- **Snowball Stemmer** is an improved version of the Porter Stemmer that supports multiple languages.
+
+#### Example of stemming in Python using NLTK
+
+```{python}
+sbs = SnowballStemmer("english")
+text="The stars twinkled in the dark, illuminating the night sky."
+method = TreebankWordTokenizer()
+word_tokens = method.tokenize(text)
+stemmed = [sbs.stem(token) for token in word_tokens]
+
+for i in range(len(word_tokens)):
+    print(f"{word_tokens[i]} | {stemmed[i]}")
+```
+
+### Lemmatization
+
+- The process of reducing a word to its base or root form, known as a lemma.
+- Is more sophisticated than stemming because it uses a dictionary to map words to their base forms.
+- POS tagging is used to determine the correct lemma for a word based on its part of speech.
+- Lemmatization is more accurate than stemming but can be slower and more computationally intensive.
+- **WordNet Lemmatizer** is a popular lemmatization algorithm that is available in NLTK.
+
+#### Example of stemming in Python using NLTK
+```{python}
+sbs = SnowballStemmer("english")
+text="The stars twinkled in the dark, illuminating the night sky."
+method = TreebankWordTokenizer()
+word_tokens = method.tokenize(text)
+lemma = WordNetLemmatizer()
+lemmatized = [lemma.lemmatize(token) for token in word_tokens]
+
+for i in range(len(word_tokens)):
+    print(f"{word_tokens[i]} | {lemmatized[i]}")
+```
+
+
+**Comparison table of stemming and lemmatization**
+
+| Stemming | Lemmatization |
+|----------|---------------|
+| Faster | Slower (Resource Intensive) |
+| Less accurate | More accurate |
+| Uses heuristics (eg choppping off endings) | Uses a dictionary-based lookup |
+| Produces root words | Produces base words |
+| Removes word suffixes | Maps words to base forms |
+| Does not require POS tagging | Requires POS tagging |
+
+
+## Regular Expressions
+
+- Regular expressions are a powerful tool for **pattern matching** and text processing.
+- They allow you to search for patterns in text, extract specific information, and perform complex text transformations.
+
+**Regular Expression (Disjunction) Table**
+
+| Pattern | Matches | Example |
+|---------|---------|---------|
+| . | Any character except newline | "a.b" matches "axb", "a1b", "a\@b" |
+| ^ | Start of string | "^abc" matches "abc", "abcd", "abc123" |
+| \$ | End of string | "abc\$" matches "abc", "123abc", "xyzabc" |
+| \* | Zero or more occurrences | "ab*c" matches "ac", "abc", "abbc" |
+| \+ | One or more occurrences | "ab+c" matches "abc", "abbc", "abbbc" |
+| ? | Zero or one occurrence | "ab?c" matches "ac", "abc" |
+| {n} | Exactly n occurrences | "ab{2}c" matches "abbc" |
+| {n,} | n or more occurrences | "ab{2,}c" matches "abbc", "abbbc" |
+| {n,m} | Between n and m occurrences | "ab{2,3}c" matches "abbc", "abbbc" |
+| [abc] | Any character in the set | "[abc]" matches "a", "b", "c" |
+| [^abc] | Any character not in the set | "[^abc]" matches "d", "e", "f" |
+| [A-Z] | Any character in the range | "[A-Z]" matches "A", "B", "C" |
+| [a-z] | Any character in the range | "[a-z]" matches "a", "b", "c" |
+| [0-9] | Any digit | "[0-9]" matches "0", "1", "2" |
+| \\d | Any digit | "\\d" matches "0", "1", "2" |
+| \\D | Any non-digit | "\\D" matches "a", "b", "c" |
+| \\w | Any word character | "\\w" matches "a", "b", "c", "0", "1", "2" |
+| \\W | Any non-word character | "\\W" matches "@", "#", "$" |
+| \\s | Any whitespace character | "\\s" matches " ", "\t", "\n" |
+| \\S | Any non-whitespace character | "\\S" matches "a", "b", "c" |
+
+**Regular Expression Method Table**
+
+| Method | Description |
+|--------|-------------|
+| re.match() | Matches a pattern at the beginning of a string |
+| re.search() | Searches for a pattern in a string |
+| re.findall() | Finds all occurrences of a pattern in a string |
+| re.split() | Splits a string based on a pattern |
+| re.sub() | Replaces a pattern in a string with another pattern |
+
+
+**Example of Regular Expressions in Python**
+
+```{python}
+text = "The quick brown fox jumps over the lazy dog. The dog barks at the fox."
+sentences = sent_tokenize(text)
+words = word_tokenize(text)
+
+# Find all words that start with "b"
+pattern = r"\b[bB]\w+"  # \b is a word boundary, \w+ is one or more word characters
+for word in words:
+    if re.match(pattern, word):
+        print(f" All words that start with 'b': {word}")
+
+# Find all sentences that contain the word "dog"
+pattern = r"\b[dD]ogs?\b"  # \b is a word boundary, ? is zero or one occurrence of previous character, s? matches "dog" or "dogs"
+for sentence in sentences:
+    if re.search(pattern, sentence):
+        print(f" All sentences containing word 'dog': {sentence}")
+```
+
+## POS Tagging
+
+- Part-of-speech (POS) tagging is the process of assigning a part of speech to each word in a text. The part of speech indicates the grammatical category of the word, such as noun, verb, adjective, etc.
+- The goal of POS tagging is to identify the syntactic structure of a sentence and extract useful information about the text.
+
+- **Types of POS Tagging**
+  - **Rule-based POS Tagging**:
+    - Uses hand-crafted rules to assign POS tags to words based on their context.
+    - Relies on a predefined set of rules and patterns to determine the correct POS tag for a word.
+    - **Pros**:
+        - Simple and easy to implement, but may not be as accurate as other methods.
+        - Doesnt require a lot of computational resources or training data.
+        - Can be easily customized and adapted to different languages and domains.
+      - **Cons**:
+        - May not be as accurate as other methods, especially for complex or ambiguous cases.
+        - Requires manual effort to define rules and patterns for different languages and domains.
+        - Limited to the rules and patterns defined by the developer, which may not cover all cases.
+      - **Example**: Rule-based POS taggers in NLTK such as the `DefaultTagger` and `RegexpTagger` and `pos_tag` method.
+<br>
+<br>
+
+  - **Statistical POS Tagging**:
+  - Uses statistical models (such as Hidden Markov Models) to assign POS tags to words based on their context and probability.
+  - Learns the patterns and relationships between words and their POS tags from a large corpus of annotated text.
+    - **Pros**:
+      - More accurate than rule-based methods, especially for complex or ambiguous cases.
+      - Can handle a wide range of languages and domains without manual intervention.
+      - Can be trained on large datasets to improve accuracy and performance.
+    - **Cons**:
+      - Requires a large amount of annotated training data to train the statistical model.
+      - Can be computationally intensive and require significant resources for training and inference.
+      - May not be as interpretable or transparent as rule-based methods, making it difficult to understand the model's decisions.
+    - **Examples**: Machine learning-based POS taggers in spaCy such as the `PerceptronTagger` and `CNNTagger`.
+
+**Most Common POS Tags (NLTK)**
+  
+| Tag | Description | Example |
+|-----|-------------|---------|
+| CC | Coordinating conjunction | and, but, or |
+| CD | Cardinal number | 1, 2, 3 |
+| DT | Determiner | the, a, an |
+| EX | Existential there | there |
+| FW | Foreign word | bonjour |
+| IN | Preposition or subordinating conjunction | in, of, on |
+| JJ | Adjective | big, green, happy |
+| JJR | Adjective, comparative | bigger, greener, happier |
+| JJS | Adjective, superlative | biggest, greenest, happiest |
+| LS | List item marker | 1, 2, 3 |
+| MD | Modal | can, could, might |
+| NN | Noun, singular or mass | dog, cat, house |
+      
+<br>
+<br>
+
+**Most Common POS Tags (SpaCy)**
+
+| Tag | Description | Example |
+|-----|-------------|---------|
+| ADJ | Adjective | big, green, happy |
+| ADP | Adposition | in, to, during |
+| ADV | Adverb | very, tomorrow, down |
+| AUX | Auxiliary | is, has (done), will |
+| CONJ | Conjunction | and, or, but |
+| CCONJ | Coordinating conjunction | and, or, but |
+| DET | Determiner | a, an, the |
+| INTJ | Interjection | psst, ouch, bravo |
+| NOUN | N
+| NUM | Numeral | 42, forty-two |
+
+#### Example of POS Tagging in Python using NLTK
+```python
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk import pos_tag
+
+text = "The quick brown fox jumps over the lazy dog."
+words = word_tokenize(text)
+tags = pos_tag(words)
+
+for word, tag in tags:
+    print(f"{word} | {tag}")
+```
+
+#### Example of POS Tagging in Python using spaCy
+- Make sure to download the spaCy model using `python -m spacy download en_core_web_sm`
+- This model is a small English model trained on written web text (blogs, news, comments), which includes vocabulary, vectors, syntax, and entities.
+- The model is trained on the OntoNotes 5 corpus and supports POS tagging, dependency parsing, named entity recognition, and more.
+```{python}
+model = spacy.load("en_core_web_sm")
+sample_text = "The quick brown fox jumps over the lazy dog."
+doc = model(sample_text)
+
+for word in doc:
+    print(f"{word.text} | {word.pos_}")
+```
+
+## Named Entity Recognition (NER)
+- Named Entity Recognition (NER) is the process of identifying and classifying named entities in a text.
+- Named entities are real-world objects such as persons, organizations, locations, dates, and more.
+- NER is an important task in NLP because it helps extract useful information from unstructured text and enables downstream tasks such as information retrieval, question answering, and text summarization.
+- NER models are trained on annotated datasets that contain labeled examples of named entities in text.
+- **Common types of named entities**:
+  - **Person**: Names of people, such as "John Doe" or "Alice Smith".
+  - **Organization**: Names of companies, institutions, or groups, such as "Google" or "United Nations".
+  - **Location**: Names of places, such as "New York" or "Mount Everest".
+  - **Date**: Dates and times, such as "January 1, 2022" or "10:30 AM".
+  - **Number**: Numerical quantities, such as "100" or "3.14".
+  - **Miscellaneous**: Other named entities, such as "Apple" (the company) or "Python" (the programming language).
+  - **Event**: Names of events, such as "World War II" or "Super Bowl".
+  - **Product**: Names of products, such as "iPhone" or "Coca-Cola".
+
+#### Example of Named Entity Recognition in Python using NLTK
+In NLP, a tree structure is often used to represent the syntactic structure of a sentence. Each node in the tree represents a linguistic unit, such as a word or a phrase, and the edges represent the relationships between these units. The `Tree` class provides various methods for creating, traversing, and modifying these tree structures.
+```python
+text = "Apple is a technology company based in Cupertino, California."
+words = word_tokenize(text)
+tags = pos_tag(words)
+tree = ne_chunk(tags)
+
+for subtree in tree:
+    if isinstance(subtree, Tree):
+        label = subtree.label()
+        words = " ".join([word for word, tag in subtree.leaves()])
+        print(f"{label}: {words}")
+```
+- Note: NLTK's named entity recognizer has identified "Apple", "Cupertino", and "California" as geopolitical entities (GPE).
+- The NER model uses context and patterns learned from training data to classify named entities, but it is not always perfect and can sometimes make mistakes, as seen with "Apple" in this case.
+
+#### Example of Named Entity Recognition in Python using spaCy
+```python
+model = spacy.load("en_core_web_sm")
+sample_text = "Apple is a technology company based in Cupertino, California."
+doc = model(sample_text)
+
+displacy.render(doc, style="ent", jupyter=True) # style="ent" is used to display named entities
+```
+
+

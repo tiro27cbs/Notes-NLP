@@ -1,0 +1,407 @@
+---
+title: "Natural Language Processing - Chapter 3"
+author: "Maxwell Bernard"
+date: "`r Sys.Date()`"
+format: html
+jupyter: myvenv
+---
+
+# Lecture 3
+
+## N-Gram (Probabilistic LM)
+This is model predicts the probability of a word given the previous n-1 words. It is based on the assumption that the probability of a word depends on the context provided by the previous n-1 words. N-grams are used in various NLP tasks such as speech recognition, machine translation, and text generation.
+
+- **Unigram**: A single word
+- **Bigram**: A pair of words
+- **Trigram**: A triplet of words ect...
+
+number of n-grams = (total number of words) - (n - 1)
+
+**Generating different n-grams for a text**:
+
+```{python}
+from nltk import ngrams
+from nltk.tokenize import word_tokenize
+text = "Italy is famous for its cuisine."
+
+def generate_ngrams(text, n):
+    tokens = word_tokenize(text)
+    ngrams_list = list(ngrams(tokens, n))
+    return [" ".join(ngram) for ngram in ngrams_list]
+
+trigrams = generate_ngrams(text, 3)
+
+print("Trigrams:", trigrams)
+```
+
+### Conditional Probability and Chain Rule
+
+- **Joint Probability**: The probability of two or more events occurring together. It is denoted as P(A, B) and is calculated as the probability of both events A and B occurring.
+  - **Joint Probability Formula**: $P(A \cap B) = P(A) \times P(B)$
+  - is equivalent to $P(A \cap B) = P(A) \times P(B)$
+<br>
+<br>
+
+- **Conditional Probability**: The probability of an event given that another event has occurred. It is denoted as P(A | B) which is the probability of event A occurring given that event B has occurred.
+- It is calculated as the probability of both events A and B occurring divided by the probability of event B occurring.
+  - **Conditional Probability Formula**: $P(A \mid B) = \frac{P(A, B)}{P(B)}$
+<br>
+<br>
+
+- **Chain Rule of Probability**: The probability of a sequence of events can be calculated by multiplying the conditional probabilities of each event given the previous events in the sequence.
+  - **Chain Rule Formula**:
+$$
+\small
+P(w_1, w_2, ..., w_n) = P(w_1) * P(w_2 \mid w_1) * P(w_3 \mid w_1, w_2) * ... * P(w_n \mid w_1, w_2, ..., w_{n-1})
+$$
+
+  - **Example**: The probability of the sequence "The quick brown fox" can be calculated using the chain rule as follows:
+$$
+\small
+\begin{aligned}
+P(\text{The quick brown fox}) &= P(\text{The}) \times P(\text{quick} \mid \text{The}) \\
+&\times P(\text{brown} \mid \text{The quick}) \\
+&\times P(\text{fox} \mid \text{The quick brown})
+\end{aligned}
+$$
+    - "What is the probability of the 10th word given the previous 9 words?"
+  - **Note**: The chain rule is used to calculate the probability of a sequence of words in an N-gram model.
+
+### Markov Assumption
+To make things manageable, N-gram models approximate the chain rule by making a simplifying assumption called the Markov assumption. This assumption states that the **probability of a word depends only on the previous n-1 words, not on all the previous words in the sequence.** This simplifies the calculation of the conditional probability of a word given the previous n-1 words.
+
+
+- **First-Order Markov Model**: The probability of a word depends only on the previous word.
+  - $$P(w_n | w_1, w_2, ..., w_{n-1}) = P(w_n | w_{n-1})$$
+  - "The probability of the 10th word depends only on the 9th word, not on the previous words."
+  - **Example**: $P(\text{fox} \mid \text{The quick brown}) = P(\text{fox} \mid \text{brown})$
+  - **Note**: The first-order Markov model is a special case of the N-gram model where n=2.
+<br>
+<br>
+
+- **Second-Order Markov Model**: The probability of a word depends only on the previous two words.
+  - $$P(w_n | w_1, w_2, ..., w_{n-1}) = P(w_n | w_{n-2}, w_{n-1})$$
+  - "The probability of the 10th word depends only on the 8th and 9th words, not on the previous words."
+  - **Example**: $P(\text{fox} \mid \text{The quick brown}) = P(\text{fox} \mid \text{quick brown})$
+  - **Note**: The second-order Markov model is a special case of the N-gram model where n=3.
+
+**N-Gram Probability Calculation**
+
+- Mathematically, for a sequence of words $w_1, w_2, ..., w_n$, the probability of the sequence can be calculated using the chain rule of probability:
+  - $$\small P(w_1, w_2, ..., w_n) = P(w_1) * P(w_2 \mid w_1) * P(w_3 \mid w_1, w_2) * ... * P(w_n \mid w_1, w_2, ..., w_{n-1})$$
+
+- The probability of a word given the previous n-1 words can be calculated using the formula:
+  - $P(w_n | w_1, w_2, ..., w_{n-1}) = \frac{P(w_1, w_2, ..., w_n)}{P(w_1, w_2, ..., w_{n-1})}$
+<br>
+
+- The probability of a sequence of words can be calculated by counting the occurrences of the n-gram in a corpus and dividing by the total number of n-grams in the corpus.
+<br>
+
+- **The Maximum Likelihood Estimation (MLE) of an N-gram** is calculated as:
+  - $P(w_n | w_1, w_2, ..., w_{n-1}) = \frac{\text{Count(n-gram)}}{\text{Count(of previous n-1 words)}}$
+<br>
+<br>
+  - Issue: The MLE can assign zero probability to unseen n-grams, leading to sparsity and poor generalization.
+  
+### Padding 
+Is a technique used to handle the boundary conditions in N-gram models where the context words are not available.
+- **Start-of-Sentence (BOS) Padding**: A special token that represents the beginning of a sentence. It is used to handle the first word in a sentence where the context words are not available.
+  - **Example**: `<s>` The quick brown fox jumps over the lazy dog. Note `<s>` is equivalent to `<start>`
+<br>
+<br>
+
+- **End-of-Sentence (EOS) Padding**: A special token that represents the end of a sentence. It is used to handle the last word in a sentence where the context words are not available.
+  - **Example**: The fox jumps over the lazy dog. `</s>`
+
+**Notes**: the choice of how many padding tokens to use depends on the order of the N-gram model. For a bigram model, you would use one padding token at the beginning of the sentence. For a trigram model, you would use two padding tokens at the beginning of the sentence. The padding tokens are not part of the vocabulary and are used only for modeling purposes.
+
+**Padding Example in Python**
+
+```{python}
+from nltk.tokenize import sent_tokenize, word_tokenize
+text = "I like NLP. NLP is fun. NLP in python is fun."
+sentences = sent_tokenize(text)
+
+# Pad each sentence individually with <s> and </s> tokens and tokenize into words
+padded_sentences = []
+for sentence in sentences:
+    words = word_tokenize(sentence)
+    padded = ["<s>"] + words + ["</s>"]
+    padded_sentences.append(padded)
+
+for sentence in padded_sentences:
+    print(sentence)
+```
+
+
+### Issue of Underflow
+- **Underflow**: A numerical issue that occurs when multiplying many small probabilities together, leading to a very small probability that may be rounded to zero.
+- **Solution**: Use ``log probabilities`` to avoid underflow by converting the product of probabilities to the sum of log probabilities.
+
+### Smoothing Techniques
+- This is a technique used to address the issue of zero probabilities in N-gram models. It assigns a small non-zero probability to unseen n-grams to improve the generalization of the model. You "test" these by comparing smoothed probabilities to unsmoothed ones.
+<br>
+<br>
+
+- **Laplace (Add-One) Smoothing**: A simple smoothing technique that adds one to the count of each n-gram to avoid zero probabilities.
+  - **Formula**: $P(w_n | w_1, w_2, ..., w_{n-1}) = \frac{(\text{Count(n-gram)} + 1)}{(\text{Count(of previous n-1 words)} + V)}$
+    - **V**: The vocabulary size, which is the total number of unique words in the corpus.
+    - **Example**: $$P(\text{fox} \mid \text{quick brown}) = \frac{\text{Count}(\text{quick brown fox}) + 1}{\text{Count}(\text{quick brown}) + V}$$
+
+- **Add-k Smoothing**: A generalization of Laplace smoothing that adds a `smaller constant k` to the count of each n-gram to avoid zero probabilities.
+  - **Formula**: $P(w_n | w_1, w_2, ..., w_{n-1}) = \frac{(\text{Count(n-gram)} + k)}{(\text{Count(of previous n-1 words)} + kV)}$
+    - **k**: A constant value that determines the amount of smoothing.
+    - **Example**: $$P(\text{fox} \mid \text{quick brown}) = \frac{\text{Count}(\text{quick brown fox}) + k}{\text{Count}(\text{quick brown}) + kV}$$
+    - **Test**: Tune k and compare probabilities for rare vs. frequent trigrams.
+
+- **Good-Turing Smoothing**: A more sophisticated smoothing technique that estimates the probability of unseen n-grams based on the frequency of seen n-grams.
+  - adjusts the counts of n-grams based on the frequency of n-grams with similar counts.
+  - **Test**: compute adjusted probabilities for low-frequency n-grams and validate against held-out data.
+
+- **Backoff and Interpolation**: A technique that combines n-gram models of different orders to improve the generalization of the model.
+  - **Backoff**: Uses lower-order n-grams when higher-order n-grams have zero probabilities.
+  - **Interpolation**: Combines probabilities from different n-gram models using linear interpolation.
+  - **Test**: Compare performance of backoff and interpolation on different datasets.
+
+- **Kneser-Ney Smoothing**: A state-of-the-art smoothing technique that estimates the probability of unseen n-grams based on the frequency of n-grams in the context of the n-gram.
+  - It considers how often a word appears in a novel context, rather than just how often it appears overall.
+  - **Test**: Compare Kneser-Ney smoothing to other smoothing techniques on large datasets.
+
+
+### Perplexity
+- **Perplexity**: A measure of how well a language model predicts a given text. It is the inverse probability of the test set, normalized by the number of words.
+- Evaluation Metric: "How well the model predicts the next word in a sequence."
+
+  - **Perplexity Formula**: $PP(W) = P(w_1, w_2, ..., w_N)^{-\frac{1}{N}}$
+    - which can be calculated as $PP(W) = \left(\frac{1}{P(w_1, w_2, ..., w_N)}\right)^{\frac{1}{N}}$
+    - where:
+      - **P(w_1, w_2, ..., w_N)**: Probability of the test set under the language model.
+      - **N**: Number of words in the test set.
+      - **Example**: If the perplexity of a language model is 100, it means that the model is as confused as if it had to choose uniformly among 100 words for each word in the test set.
+    - **N**: The number of words in the test set.
+    - **Example**: If the perplexity of a language model is 100, it means that the model is as confused as if it had to choose uniformly among 100 words for each word in the test set.
+  - <span style="color:green">Lower </span>Perplexity: <span style="color:green">better</span> language model that predicts the test set more accurately.
+  - <span style="color:red">Higher </span>Perplexity: <span style="color:red">worse</span> language model that predicts the test set less accurately.
+
+### Example of Trigram LM in Python
+- Steps:
+  - Tokenize text
+  - Add padding tokens
+  - Generate trigrams
+  - Count unique trigrams
+  - Calculate trigram probabilities (MLE)
+  - Calculate perplexity
+
+**STEP 1: tokenize text and add padding tokens**
+```{python}
+text = "I like NLP. NLP is fun. NLP in python is fun. I like coding in python. NLP is cool."
+tokens = sent_tokenize(text)
+padded_sentences = []
+for token in tokens:
+    words = word_tokenize(token)
+    padded = ["<s>"] + words + ["</s>"]
+    padded_sentences.append(padded)
+
+print("Padded Sentences:")
+for sent in padded_sentences:
+    print(sent)
+```
+
+**STEP 2: Generate trigrams (and bigrams for MLE calculation)**
+```{python}
+trigrams = []
+for sent in padded_sentences:
+    sent_trigrams = list(ngrams(sent, 3))
+    # sent_trigrams = list(ngrams(sent, 3, pad_left=False, pad_right=False, left_pad_symbol="<s>", right_pad_symbol="</s>"))
+    # can use the above line to avoid padding tokens in trigrams, but its less flexible if you need to reuse the padded data.
+    trigrams.extend(sent_trigrams)
+
+bigrams = []
+for sent in padded_sentences:
+    sent_bigrams = list(ngrams(sent, 2))
+    bigrams.extend(sent_bigrams)
+
+print("\nTrigrams:")
+for trigram in trigrams:
+    print(trigram)
+```
+
+**STEP 3: Count unique trigrams and bigrams**
+```{python}
+from collections import Counter
+from prettytable import PrettyTable
+trigram_counts = Counter(trigrams)
+bigrams_counts = Counter(bigrams)
+unique_bigrams = len(bigrams_counts)
+unique_trigrams = len(trigram_counts)
+print("\nUnique Trigrams:", unique_trigrams)
+print("Unique Bigrams:", unique_bigrams)
+
+c_tri_tab = PrettyTable(["Index", "Unique Trigram", "Count"])
+for i, (trigram, count) in enumerate(trigram_counts.items()):
+    c_tri_tab.add_row([i, trigram, count])
+print(c_tri_tab)
+```
+
+**STEP 4: Calculate trigram probabilities (MLE)**
+```{python}
+
+tri_mle = {}
+for (w1, w2, w3), count in trigram_counts.items():
+    tri_mle[(w1, w2, w3)] = round(count / bigrams_counts[(w1, w2)], 3)
+
+print("\nTrigram MLE:")
+tri_mle_tab = PrettyTable(["Word 1", "Word 2", "Word 3", "MLE"])
+for (w1, w2, w3), mle in tri_mle.items():
+    tri_mle_tab.add_row([w1, w2, w3, mle])
+print(tri_mle_tab)
+```
+
+**(Calculating MLE with Laplace Smoothing)**
+```{python}
+V = len(trigram_counts)
+k = 1  # Laplace smoothing constant
+tri_mle_laplace = {}
+
+for (w1, w2, w3), count in trigram_counts.items():
+    tri_mle_laplace[(w1, w2, w3)] = round((count + k) / (bigrams_counts[(w1, w2)] + k * V), 3)
+
+print("\nTrigram MLE with Laplace Smoothing:")
+tri_mle_laplace_tab = PrettyTable(["Word 1", "Word 2", "Word 3", "MLE (Laplace)"])
+for (w1, w2, w3), mle in tri_mle_laplace.items():
+    tri_mle_laplace_tab.add_row([w1, w2, w3, mle])
+print(tri_mle_laplace_tab)
+```
+
+**STEP 5: Calculate Perplexity**
+
+```{python}
+import math
+
+test_trigrams = trigrams  # Reusing the training trigrams for simplicity
+# Calculate the sum of log probabilities
+log_prob_sum = 0
+N = len(test_trigrams)  # Number of trigrams in the test set
+for trigram in test_trigrams:
+    prob = tri_mle.get(trigram, 0)  # Get MLE probability, default to 0 if unseen
+    if prob > 0:  # Avoid log(0)
+        log_prob_sum += math.log2(prob) # use log to avoid underflow issues (A numerical issue that occurs when multiplying many small probabilities together, leading to a very small probability that may be rounded to zero)
+    else:
+        print(f"Warning: Trigram {trigram} has zero probability (unseen in training)")
+        log_prob_sum = float("-inf")  # This will lead to infinite perplexity
+        break
+
+# Calculate perplexity
+if log_prob_sum != float("-inf"):
+    avg_log_prob = log_prob_sum / N
+    perplexity = 2 ** (-avg_log_prob)
+else:
+    perplexity = float("inf")
+
+print(f"Number of test trigrams (N): {N}")
+print(f"Sum of log probabilities: {log_prob_sum:.3f}")
+print(f"Average log probability: {avg_log_prob:.3f}")
+print(f"Perplexity: {perplexity:.3f}")
+
+```
+
+### Example of Trigram LM with NLTK ABC Corpus
+
+```{python}
+print(type(list))
+```
+```{python}
+import time
+from nltk.util import trigrams, bigrams
+
+import nltk
+nltk.download('abc')
+
+
+start_time = time.time()
+from nltk.corpus import abc
+
+# Load the ABC corpus
+abc_text = abc.raw("rural.txt")
+
+# Step 1 get sentences from corpus
+sentences = abc.sents()[0:2000]
+print("Number of sentences:", len(sentences))
+
+# Step 2: Tokenize text and add padding tokens
+tokens = []
+for sentence in sentences:
+    padded_sentence = ["<s>"] + [word.lower() for word in sentence] + ["</s>"]
+    tokens.extend(padded_sentence)
+print("Example tokens:", tokens[:10])
+
+# Step 3: Generate trigrams
+trigram_list = list(trigrams(tokens))
+bigram_list = list(bigrams(tokens))
+
+print("Example trigrams:", trigram_list[:5])
+print("Example bigrams:", bigram_list[:5])
+
+# Step 4: Count unique trigrams
+trigram_counts = Counter(trigram_list)
+bigram_counts = Counter(bigram_list)
+unique_trigrams = len(trigram_counts)
+unique_bigrams = len(bigram_counts)
+print("Unique Trigrams:", unique_trigrams)
+print("Unique Bigrams:", unique_bigrams)
+
+# Step 5: Calculate trigram probabilities (MLE) with Laplace smoothing and k=1
+V = len(trigram_counts)
+k = 0.01
+trigram_mle_laplace = {}
+for (w1, w2, w3), count in trigram_counts.items():
+    trigram_mle_laplace[(w1, w2, w3)] = (count + k) / (bigram_counts[(w1, w2)] + k * V)
+
+
+# Function to predict next word based on conditional probability
+def predict_next_word(w1, w2, trigram_mle):
+    candidates = {w3: prob for (x1, x2, w3), prob in trigram_mle.items() if x1 == w1 and x2 == w2}
+    predicted = max(candidates, key=candidates.get) if candidates else None
+    prob = candidates.get(predicted, 0.0) if predicted else 0.0
+    return predicted, prob
+
+
+# Test prediction
+w1, w2 = "the", "prime"
+predicted_word, probability = predict_next_word(w1, w2, trigram_mle_laplace)
+print(f"Predicted next word after '{w1} {w2}': {predicted_word}")
+print(f"Probability of the next word occurring: {probability:.5f}")
+
+end_time = time.time()
+print(f"Execution time: {end_time - start_time:.5f} seconds")
+```
+
+### Example of Sentence Generation with Trigram LM
+
+```{python}
+import random
+
+start_time = time.time()
+
+
+def generate_sentence(model, max_length):
+    current_bigram = random.choice(list(model.keys()))  # Pick a random starting bigram
+    get_text = list(current_bigram)  # Initialize with the two words from the bigram
+
+    for _ in range(max_length - 2):  # Start from the third word
+        w_next_prob = model.get(tuple(get_text[-2:]), {})  # Get trigram probabilities
+        if not w_next_prob:  # If no next word, break
+            break
+        w_next = random.choices(list(w_next_prob.keys()), weights=list(w_next_prob.values()))[0]
+        get_text.append(w_next)  # Append next word
+
+    return " ".join(get_text)  # Return generated sentence as a string
+
+
+# Example usage
+generated_text = generate_sentence(trigram_mle_laplace, 15)
+print(f"Generated sentence: {generated_text}")
+end_time = time.time()
+print(f"Execution time: {end_time - start_time:.5f} seconds")
+```
+

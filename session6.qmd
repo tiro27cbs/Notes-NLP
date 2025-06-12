@@ -1,0 +1,93 @@
+---
+title: "Natural Language Processing - Chapter 6"
+author: "Maxwell Bernard"
+date: "`r Sys.Date()`"
+format: html
+jupyter: myvenv
+---
+
+# Lecture 6
+## Sentiment Analysis (SA)
+- Sentiment analysis is the process of determining the sentiment or opinion expressed in a piece of text, such as positive, negative, or neutral.
+- A lexicon 
+  - A lexicon is a collection of words and phrases that are associated with specific sentiments, which can be used to analyze the sentiment of a given text.
+  - A sentiment lexicon can include words like "happy," "sad," "angry," and "excited," each associated with a specific sentiment score.
+
+Ekman's Six Basic Emotions are:
+  - Happiness
+  - Sadness
+  - Anger
+  - Fear
+  - Surprise
+  - Disgust
+
+## Resources for Sentiment Lexicons 
+- **VADER (Valence Aware Dictionary and sEntiment Reasoner)**: A lexicon specifically designed for sentiment analysis in social media. It provides sentiment scores for words and phrases, along with rules for handling negations and intensifiers.
+  - VADER is particularly effective for analyzing short texts, such as tweets and product reviews, and is widely used in natural language processing tasks.
+  - VADER uses a combination of lexical features, syntactic rules, and sentiment intensity scores to determine the sentiment of a given text.
+  - It is available in the NLTK library and can be easily integrated into Python applications.
+  - Uses valence score (-1 to 1) to represent the sentiment of a word or phrase.
+- **AFINN (Affective Norms for English Words)**: A lexicon that provides affective ratings for English words, including valence, arousal, and dominance scores. 
+  - It is a list of 3300+ English words rated for valence (positive or negative sentiment) on a scale from -5 to +5.
+  - AFINN is useful for sentiment analysis tasks, particularly in social media and online reviews.
+- **SentiWordNet**: A lexical resource that assigns sentiment scores to WordNet synsets. It provides positive, negative, and objective scores for each synset (group of synonymous words which are words that have similar/same meanings eg Happy and Joyful), allowing for more nuanced sentiment analysis.
+  - It is beneficial for tasks that require understanding the sentiment of words in context.
+- **LIWC (Linguistic Inquiry and Word Count)**: A text analysis tool that categorizes words into psychological and linguistic categories. It provides insights into emotional, cognitive, and structural aspects of text.
+  - LIWC is widely used in psychology and social sciences for analyzing the emotional content of text data.
+
+## How to do Sentiment Analysis?
+- Two main approaches to sentiment analysis:
+  
+- **Rule-based**: Uses predefined rules and lexicons to determine sentiment. It relies on linguistic patterns, such as negations, intensifiers, and sentiment-bearing words.
+  - Example: "I love this product!" would be classified as positive based on the presence of the word "love."
+  - **Pros**: Simple to implement, interpretable results.
+  - **Cons**: Limited flexibility, may not capture complex sentiments or sarcasm.
+- Scoring in Lexicon-based sentiment analysis:
+  - Prepare a sentiment lexicon with words and their corresponding sentiment scores. Scoring can be binary, where words are classified as positive, negative, or neutral. or categorical, where words are classified into multiple categories (e.g., happy, sad, angry). or scale based, where words are assigned a score on a scale (e.g., -1 to 1).
+  - Text preprocessing: Clean and preprocess the text data by removing stop words, punctuation, and special characters. Tokenize the text into words or phrases.
+  - Match and Score: For each word in the text, check if it exists in the sentiment lexicon. If it does, retrieve its sentiment score and add it to the overall sentiment score for the text.
+  - Calculate the overall sentiment score by summing the individual word scores. The final sentiment score can be positive, negative, or neutral based on a predefined threshold.
+  - Example: If the sentiment score is greater than 0, classify the text as positive; if less than 0, classify it as negative; and if equal to 0, classify it as neutral.
+  
+- **Machine learning-based**: Uses supervised learning algorithms to train a model on labeled data. It learns to classify text based on features extracted from the text, such as word frequencies or TF-IDF scores.
+- Uses supervised learning algorithms, such as Naive Bayes, Logistic Regression, Support Vector Machines (SVMs), Neural Networks, to classify text into sentiment categories.
+  - Example: A model trained on positive and negative movie reviews can classify new reviews as positive or negative based on learned patterns.
+  - Uses deep learning models, such as Recurrent Neural Networks (RNNs) or Transformers, to capture complex relationships in the text data.
+- Example: A model trained on positive and negative movie reviews can classify new reviews as positive or negative based on learned patterns.
+  - Pros: More flexible, can capture complex sentiments and context.
+  - Cons: Requires labeled data, may be less interpretable.
+
+| Feature | Rule-Based Sentiment Analysis | Machine Learning-based Sentiment Analysis |
+|---------|-------------------------------|------------------------------------------|
+| Methodology | Uses predefined rules and lexicons | Uses supervised learning algorithms |
+| Examples | VADER, AFINN, LIWC | Naive Bayes, Logistic Regression, SVMs |
+| Adaptability | Limited flexibility, may not capture complex sentiments | More flexible, can capture complex sentiments and context |
+| Data Requirements | Low. Requires a sentiment lexicon | High. Requires labeled training data |
+| Context Sensitivity | Limited context sensitivity | Can capture context and nuances |
+| Language evolution | May not adapt well to new language trends | Can learn from new data and adapt to language evolution |
+| Application | Suitable for simple tasks | Suitable for complex tasks and large datasets |
+| Precision and Recall | May have lower precision and recall | Can achieve higher precision and recall with sufficient data |
+
+
+- **Hybrid Approach**: Combines rule-based and machine learning-based methods to leverage the strengths of both approaches. It uses predefined rules for initial sentiment classification and then refines the results using machine learning models.
+  - Example: A hybrid model may use VADER for initial sentiment scoring and then apply a machine learning model to improve accuracy.
+
+## Python Libraries and Tools for SA 
+- **NLTK (Natural Language Toolkit)**: A popular library for natural language processing in Python. It provides tools for text preprocessing, tokenization, stemming, and sentiment analysis using **VADER** and **WordNet**.
+- **TextBlob**: A simple library for processing textual data. It provides a user-friendly API for common natural language processing tasks, including sentiment analysis, part-of-speech tagging, and noun phrase extraction.
+- **TensorFlow**: An open-source machine learning library developed by Google. It provides tools for building and training deep learning models, including recurrent neural networks (RNNs) and transformers for sentiment analysis. Suited for large-scale applications and production environments.
+- **PyTorch**: An open-source machine learning library developed by Facebook. It is widely used for deep learning applications and provides a flexible platform for building and training neural networks.
+- **Hugging Face Transformers**: A library that provides pre-trained models for natural language processing tasks, including sentiment analysis, text generation, and translation. It supports various architectures like BERT, GPT-2, and T5, making it easy to implement state-of-the-art models.
+
+## SA Challenges
+- Biggest challenges in lexicon-based sentiment analysis?
+- The biggest challenge in lexicon-based sentiment analysis is the inability to capture context and sarcasm. Lexicon-based methods rely on predefined sentiment lexicons, which may not account for the nuances of language, such as:
+- **Contextual Meaning**: Words can have different meanings depending on the context in which they are used. For example, the word "sick" can be positive (e.g., "That movie was sick!") or negative (e.g., "I feel sick"). Lexicon-based methods may misinterpret such words without considering context.
+- **Sarcasm and Irony**: Lexicon-based methods may struggle to identify sarcasm or irony, where the intended sentiment is opposite to the literal meaning of the words. For example, "Great job!" can be sarcastic in a negative context.
+- **Ambiguity**: Some words may have multiple meanings or sentiments, leading to ambiguity in sentiment classification. For example, the word "bark" can refer to the sound a dog makes or the outer covering of a tree.
+- **Cultural and Domain-Specific Language**: Different cultures and domains may use language differently, leading to variations in sentiment expression. Lexicon-based methods may not generalize well across different contexts.
+- **Negation Handling**: Lexicon-based methods may struggle to handle negations effectively. For example, "not good" should be classified as negative, but a simple lexicon lookup may misinterpret it as positive.
+
+
+
+*Add your notes and code examples below as you progress through the chapter.*

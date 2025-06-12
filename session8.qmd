@@ -1,0 +1,189 @@
+---
+title: "Natural Language Processing - Chapter 8"
+author: "Tim Roessling"
+date: "`r Sys.Date()`"
+format: html
+jupyter: myvenv
+---
+
+# Chapter 8: Lexical Semantics and Vector Embeddings
+
+## Word Meanings
+
+Understanding word meanings is fundamental in NLP. Here are some key points:
+
+- **Words have meanings**: But meanings can be complex and context-dependent.
+- **Some words are similar to others**: For example, "car" and "automobile".
+
+### Challenges in Defining Word Meanings
+
+- **Homonymy**: Words with multiple unrelated meanings (e.g., "bank" as a financial institution vs. "bank" of a river).
+- **Polysemy**: Words with multiple related senses (e.g., "paper" as material vs. "paper" as an academic article).
+- **Many-to-many mapping**: Concepts can be associated with multiple words, and words can represent multiple concepts.
+
+### Word Relations
+
+- **Synonymy**: Words with similar meanings (e.g., "big" and "large").
+- **Antonymy**: Words with opposite meanings (e.g., "hot" and "cold").
+- **Similarity**: Degree to which words are alike (e.g., "cup" and "mug").
+- **Relatedness**: Words that are related but not necessarily similar (e.g., "doctor" and "hospital").
+- **Connotation**: Emotional or cultural association (e.g., "childish" vs. "youthful").
+
+---
+
+## Vector Semantics
+
+Vector semantics represents words and documents as points in a multidimensional space.
+
+### Idea 1: Defining Meaning by Linguistic Distribution
+
+> "You shall know a word by the company it keeps."  
+> — J.R. Firth
+
+Words that appear in similar contexts tend to have similar meanings.
+
+### Idea 2: Meaning as a Point in Multidimensional Space
+
+Each word or document is represented as a vector of numbers.
+
+#### Example: Term-Document Matrix
+
+|       | Doc1 | Doc2 | Doc3 |
+|-------|------|------|------|
+| apple |  2   |  0   |  1   |
+| orange|  1   |  1   |  0   |
+| bank  |  0   |  2   |  1   |
+
+Each row is a word, each column is a document, and the numbers are word counts.
+
+![Visualizing Document Vectors](images/chapter8_1.png)
+
+#### Comparing Document Vectors
+
+Suppose we have two document vectors:  
+- Doc1: `[2, 1, 0]`  
+- Doc2: `[0, 1, 2]`
+
+We can measure their similarity using various metrics.
+
+#### Example: Word Context Matrix
+
+|       | context1 | context2 | context3 |
+|-------|----------|----------|----------|
+| bank  |    3     |    0     |    2     |
+| river |    0     |    2     |    3     |
+| money |    2     |    3     |    0     |
+
+---
+
+### Comparing Word Vectors
+
+- **Cosine Similarity**: Measures the angle between two vectors (e.g., "king" and "queen" have high cosine similarity).
+    ```{python}
+    from sklearn.metrics.pairwise import cosine_similarity
+    import numpy as np
+
+    vec_king = np.array([0.5, 0.8, 0.1])
+    vec_queen = np.array([0.51, 0.79, 0.12])
+
+    cos_sim = cosine_similarity([vec_king], [vec_queen])
+    print("Cosine Similarity:", cos_sim[0][0])
+    ```
+
+- **Euclidean Distance**: Measures the straight-line distance between vectors.
+    ```{python}
+    from scipy.spatial.distance import euclidean
+    import numpy as np
+
+    vec_king = np.array([0.5, 0.8, 0.1])
+    vec_queen = np.array([0.51, 0.79, 0.12])
+
+    dist = euclidean(vec_king, vec_queen)
+    print("Euclidean Distance:", dist)
+    ```
+
+- **Dot Product**: Measures similarity based on direction and magnitude.
+    ```{python}
+    import numpy as np
+
+    vec_king = np.array([0.5, 0.8, 0.1])
+    vec_queen = np.array([0.51, 0.79, 0.12])
+
+    dot = np.dot(vec_king, vec_queen)
+    print("Dot Product:", dot)
+    ```
+
+These metrics help quantify how similar or related two words or documents are in vector space.
+
+
+## Word2Vec
+
+
+
+
+### Learning the Embeddings
+Instead of simply counting how often each word *w* occurs near "bank", Word2Vec takes a different approach:  
+it trains a classifier on a binary prediction task.
+
+We don't actually care about the classifier's predictions; instead, we use the learned classifier weights as the word embeddings.
+
+**Big idea: Self-supervision**  
+A word *c* that occurs near "bank" in the corpus is a good candidate for a word that is similar to "bank"—no need for human annotations.
+
+> Dense vectors (embeddings) work better in nearly every NLP task than sparse vectors.  
+> We don’t completely understand all the reasons for this.  
+> — SLP ch 6, p17
+
+---
+
+### Learning Word2Vec Embeddings
+
+1. Treat the target word *t* and a neighboring context word *c* as a positive example.
+2. Randomly sample other words in the vocabulary to get negative examples.
+3. Use logistic regression to train a classifier to distinguish positive from negative pairs.
+4. Use the learned weights as the word embeddings.
+
+---
+### How Word2Vec Learns Embeddings
+
+- **Embeddings**: For each word (*w*) and context (*c*), Word2Vec learns a dense vector representation.
+- **Skip-Gram Training Data**: The model uses pairs of (target word, context word) from a corpus.
+- **Learning Objective**:
+    - Maximize the similarity between target words and their true context words (positive pairs).
+    - Minimize the similarity between target words and randomly chosen words (negative pairs).
+
+#### Training Process
+
+1. **Initialization**: Start with random vectors for each word in the vocabulary.
+2. **Positive Examples**: For each word in the corpus, pair it with its nearby context words.
+3. **Negative Examples**: Pair the target word with randomly sampled words from the vocabulary.
+4. **Classifier Training**: Use logistic regression to distinguish positive from negative pairs, updating the vectors to improve classification.
+5. **Result**: Discard the classifier; the learned vectors are the word embeddings.
+
+#### Analogy Reasoning with Embeddings
+
+Word2Vec embeddings capture relationships between words. For example, vector arithmetic can reveal analogies:
+
+
+## Takeaways
+### Key Takeaways
+
+- **Vector Semantics**:  
+    Summarizes word contexts as dense vectors, enabling mathematical operations on word meanings.
+
+- **Word2Vec**:  
+    - Provides powerful word representations for many NLP tasks (e.g., translation, sentiment analysis, question answering).
+    - Uses the skip-gram word prediction method to learn embeddings.
+    - Embeddings capture abstract relationships (e.g., male–female, capital–city, comparative–superlative).
+    - Note: Word2Vec produces *static* embeddings—each word has a single vector, regardless of context.
+
+#### Practical Steps
+
+- Load pre-trained Word2Vec embeddings.
+- Explore vector similarities to find related words.
+- Solve analogies (e.g., "man" is to "king" as "woman" is to ?).
+- Compute sentence embeddings (e.g., by averaging word vectors).
+- Use embeddings for sentence classification and compare with Bag-of-Words (BoW) models.
+
+
+*Add your notes and code examples below as you progress through the chapter.*

@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Maxwell Bernard">
+
+<title>4&nbsp; Natural Language Processing - Chapter 3 – My NLP Notes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./session4.html" rel="next">
+<link href="./session2.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./session3.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 3</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">My NLP Notes</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">index.html</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 1</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 2</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 3</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 4</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 5</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 6</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 7</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 8</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 9</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 10</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 11</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#lecture-3" id="toc-lecture-3" class="nav-link active" data-scroll-target="#lecture-3"><span class="header-section-number">5</span> Lecture 3</a>
+  <ul class="collapse">
+  <li><a href="#n-gram-probabilistic-lm" id="toc-n-gram-probabilistic-lm" class="nav-link" data-scroll-target="#n-gram-probabilistic-lm"><span class="header-section-number">5.1</span> N-Gram (Probabilistic LM)</a>
+  <ul class="collapse">
+  <li><a href="#conditional-probability-and-chain-rule" id="toc-conditional-probability-and-chain-rule" class="nav-link" data-scroll-target="#conditional-probability-and-chain-rule"><span class="header-section-number">5.1.1</span> Conditional Probability and Chain Rule</a></li>
+  <li><a href="#markov-assumption" id="toc-markov-assumption" class="nav-link" data-scroll-target="#markov-assumption"><span class="header-section-number">5.1.2</span> Markov Assumption</a></li>
+  <li><a href="#padding" id="toc-padding" class="nav-link" data-scroll-target="#padding"><span class="header-section-number">5.1.3</span> Padding</a></li>
+  <li><a href="#issue-of-underflow" id="toc-issue-of-underflow" class="nav-link" data-scroll-target="#issue-of-underflow"><span class="header-section-number">5.1.4</span> Issue of Underflow</a></li>
+  <li><a href="#smoothing-techniques" id="toc-smoothing-techniques" class="nav-link" data-scroll-target="#smoothing-techniques"><span class="header-section-number">5.1.5</span> Smoothing Techniques</a></li>
+  <li><a href="#perplexity" id="toc-perplexity" class="nav-link" data-scroll-target="#perplexity"><span class="header-section-number">5.1.6</span> Perplexity</a></li>
+  <li><a href="#example-of-trigram-lm-in-python" id="toc-example-of-trigram-lm-in-python" class="nav-link" data-scroll-target="#example-of-trigram-lm-in-python"><span class="header-section-number">5.1.7</span> Example of Trigram LM in Python</a></li>
+  <li><a href="#example-of-trigram-lm-with-nltk-abc-corpus" id="toc-example-of-trigram-lm-with-nltk-abc-corpus" class="nav-link" data-scroll-target="#example-of-trigram-lm-with-nltk-abc-corpus"><span class="header-section-number">5.1.8</span> Example of Trigram LM with NLTK ABC Corpus</a></li>
+  <li><a href="#example-of-sentence-generation-with-trigram-lm" id="toc-example-of-sentence-generation-with-trigram-lm" class="nav-link" data-scroll-target="#example-of-sentence-generation-with-trigram-lm"><span class="header-section-number">5.1.9</span> Example of Sentence Generation with Trigram LM</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 3</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Maxwell Bernard </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Invalid Date</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="lecture-3" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Lecture 3</h1>
+<section id="n-gram-probabilistic-lm" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="n-gram-probabilistic-lm"><span class="header-section-number">5.1</span> N-Gram (Probabilistic LM)</h2>
+<p>This is model predicts the probability of a word given the previous n-1 words. It is based on the assumption that the probability of a word depends on the context provided by the previous n-1 words. N-grams are used in various NLP tasks such as speech recognition, machine translation, and text generation.</p>
+<ul>
+<li><strong>Unigram</strong>: A single word</li>
+<li><strong>Bigram</strong>: A pair of words</li>
+<li><strong>Trigram</strong>: A triplet of words ect…</li>
+</ul>
+<p>number of n-grams = (total number of words) - (n - 1)</p>
+<p><strong>Generating different n-grams for a text</strong>:</p>
+<div id="6853dde6" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk <span class="im">import</span> ngrams</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> word_tokenize</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Italy is famous for its cuisine."</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_ngrams(text, n):</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    tokens <span class="op">=</span> word_tokenize(text)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    ngrams_list <span class="op">=</span> <span class="bu">list</span>(ngrams(tokens, n))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="st">" "</span>.join(ngram) <span class="cf">for</span> ngram <span class="kw">in</span> ngrams_list]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>trigrams <span class="op">=</span> generate_ngrams(text, <span class="dv">3</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Trigrams:"</span>, trigrams)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Trigrams: ['Italy is famous', 'is famous for', 'famous for its', 'for its cuisine', 'its cuisine .']</code></pre>
+</div>
+</div>
+<section id="conditional-probability-and-chain-rule" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="conditional-probability-and-chain-rule"><span class="header-section-number">5.1.1</span> Conditional Probability and Chain Rule</h3>
+<ul>
+<li><strong>Joint Probability</strong>: The probability of two or more events occurring together. It is denoted as P(A, B) and is calculated as the probability of both events A and B occurring.
+<ul>
+<li><strong>Joint Probability Formula</strong>: <span class="math inline">\(P(A \cap B) = P(A) \times P(B)\)</span></li>
+<li>is equivalent to <span class="math inline">\(P(A \cap B) = P(A) \times P(B)\)</span> <br> <br></li>
+</ul></li>
+<li><strong>Conditional Probability</strong>: The probability of an event given that another event has occurred. It is denoted as P(A | B) which is the probability of event A occurring given that event B has occurred.</li>
+<li>It is calculated as the probability of both events A and B occurring divided by the probability of event B occurring.
+<ul>
+<li><strong>Conditional Probability Formula</strong>: <span class="math inline">\(P(A \mid B) = \frac{P(A, B)}{P(B)}\)</span> <br> <br></li>
+</ul></li>
+<li><strong>Chain Rule of Probability</strong>: The probability of a sequence of events can be calculated by multiplying the conditional probabilities of each event given the previous events in the sequence.
+<ul>
+<li><p><strong>Chain Rule Formula</strong>: <span class="math display">\[
+\small
+P(w_1, w_2, ..., w_n) = P(w_1) * P(w_2 \mid w_1) * P(w_3 \mid w_1, w_2) * ... * P(w_n \mid w_1, w_2, ..., w_{n-1})
+\]</span></p></li>
+<li><p><strong>Example</strong>: The probability of the sequence “The quick brown fox” can be calculated using the chain rule as follows: <span class="math display">\[
+\small
+\begin{aligned}
+P(\text{The quick brown fox}) &amp;= P(\text{The}) \times P(\text{quick} \mid \text{The}) \\
+&amp;\times P(\text{brown} \mid \text{The quick}) \\
+&amp;\times P(\text{fox} \mid \text{The quick brown})
+\end{aligned}
+\]</span></p>
+<ul>
+<li>“What is the probability of the 10th word given the previous 9 words?”</li>
+</ul></li>
+<li><p><strong>Note</strong>: The chain rule is used to calculate the probability of a sequence of words in an N-gram model.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="markov-assumption" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="markov-assumption"><span class="header-section-number">5.1.2</span> Markov Assumption</h3>
+<p>To make things manageable, N-gram models approximate the chain rule by making a simplifying assumption called the Markov assumption. This assumption states that the <strong>probability of a word depends only on the previous n-1 words, not on all the previous words in the sequence.</strong> This simplifies the calculation of the conditional probability of a word given the previous n-1 words.</p>
+<ul>
+<li><strong>First-Order Markov Model</strong>: The probability of a word depends only on the previous word.
+<ul>
+<li><span class="math display">\[P(w_n | w_1, w_2, ..., w_{n-1}) = P(w_n | w_{n-1})\]</span></li>
+<li>“The probability of the 10th word depends only on the 9th word, not on the previous words.”</li>
+<li><strong>Example</strong>: <span class="math inline">\(P(\text{fox} \mid \text{The quick brown}) = P(\text{fox} \mid \text{brown})\)</span></li>
+<li><strong>Note</strong>: The first-order Markov model is a special case of the N-gram model where n=2. <br> <br></li>
+</ul></li>
+<li><strong>Second-Order Markov Model</strong>: The probability of a word depends only on the previous two words.
+<ul>
+<li><span class="math display">\[P(w_n | w_1, w_2, ..., w_{n-1}) = P(w_n | w_{n-2}, w_{n-1})\]</span></li>
+<li>“The probability of the 10th word depends only on the 8th and 9th words, not on the previous words.”</li>
+<li><strong>Example</strong>: <span class="math inline">\(P(\text{fox} \mid \text{The quick brown}) = P(\text{fox} \mid \text{quick brown})\)</span></li>
+<li><strong>Note</strong>: The second-order Markov model is a special case of the N-gram model where n=3.</li>
+</ul></li>
+</ul>
+<p><strong>N-Gram Probability Calculation</strong></p>
+<ul>
+<li><p>Mathematically, for a sequence of words <span class="math inline">\(w_1, w_2, ..., w_n\)</span>, the probability of the sequence can be calculated using the chain rule of probability:</p>
+<ul>
+<li><span class="math display">\[\small P(w_1, w_2, ..., w_n) = P(w_1) * P(w_2 \mid w_1) * P(w_3 \mid w_1, w_2) * ... * P(w_n \mid w_1, w_2, ..., w_{n-1})\]</span></li>
+</ul></li>
+<li><p>The probability of a word given the previous n-1 words can be calculated using the formula:</p>
+<ul>
+<li><span class="math inline">\(P(w_n | w_1, w_2, ..., w_{n-1}) = \frac{P(w_1, w_2, ..., w_n)}{P(w_1, w_2, ..., w_{n-1})}\)</span> <br></li>
+</ul></li>
+<li><p>The probability of a sequence of words can be calculated by counting the occurrences of the n-gram in a corpus and dividing by the total number of n-grams in the corpus. <br></p></li>
+<li><p><strong>The Maximum Likelihood Estimation (MLE) of an N-gram</strong> is calculated as:</p>
+<ul>
+<li><span class="math inline">\(P(w_n | w_1, w_2, ..., w_{n-1}) = \frac{\text{Count(n-gram)}}{\text{Count(of previous n-1 words)}}\)</span> <br> <br></li>
+<li>Issue: The MLE can assign zero probability to unseen n-grams, leading to sparsity and poor generalization.</li>
+</ul></li>
+</ul>
+</section>
+<section id="padding" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="padding"><span class="header-section-number">5.1.3</span> Padding</h3>
+<p>Is a technique used to handle the boundary conditions in N-gram models where the context words are not available. - <strong>Start-of-Sentence (BOS) Padding</strong>: A special token that represents the beginning of a sentence. It is used to handle the first word in a sentence where the context words are not available. - <strong>Example</strong>: <code>&lt;s&gt;</code> The quick brown fox jumps over the lazy dog. Note <code>&lt;s&gt;</code> is equivalent to <code>&lt;start&gt;</code> <br> <br></p>
+<ul>
+<li><strong>End-of-Sentence (EOS) Padding</strong>: A special token that represents the end of a sentence. It is used to handle the last word in a sentence where the context words are not available.
+<ul>
+<li><strong>Example</strong>: The fox jumps over the lazy dog. <code>&lt;/s&gt;</code></li>
+</ul></li>
+</ul>
+<p><strong>Notes</strong>: the choice of how many padding tokens to use depends on the order of the N-gram model. For a bigram model, you would use one padding token at the beginning of the sentence. For a trigram model, you would use two padding tokens at the beginning of the sentence. The padding tokens are not part of the vocabulary and are used only for modeling purposes.</p>
+<p><strong>Padding Example in Python</strong></p>
+<div id="9392b74f" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> sent_tokenize, word_tokenize</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"I like NLP. NLP is fun. NLP in python is fun."</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> sent_tokenize(text)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Pad each sentence individually with &lt;s&gt; and &lt;/s&gt; tokens and tokenize into words</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>padded_sentences <span class="op">=</span> []</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sentence <span class="kw">in</span> sentences:</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> word_tokenize(sentence)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    padded <span class="op">=</span> [<span class="st">"&lt;s&gt;"</span>] <span class="op">+</span> words <span class="op">+</span> [<span class="st">"&lt;/s&gt;"</span>]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    padded_sentences.append(padded)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sentence <span class="kw">in</span> padded_sentences:</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(sentence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['&lt;s&gt;', 'I', 'like', 'NLP', '.', '&lt;/s&gt;']
+['&lt;s&gt;', 'NLP', 'is', 'fun', '.', '&lt;/s&gt;']
+['&lt;s&gt;', 'NLP', 'in', 'python', 'is', 'fun', '.', '&lt;/s&gt;']</code></pre>
+</div>
+</div>
+</section>
+<section id="issue-of-underflow" class="level3" data-number="5.1.4">
+<h3 data-number="5.1.4" class="anchored" data-anchor-id="issue-of-underflow"><span class="header-section-number">5.1.4</span> Issue of Underflow</h3>
+<ul>
+<li><strong>Underflow</strong>: A numerical issue that occurs when multiplying many small probabilities together, leading to a very small probability that may be rounded to zero.</li>
+<li><strong>Solution</strong>: Use <code>log probabilities</code> to avoid underflow by converting the product of probabilities to the sum of log probabilities.</li>
+</ul>
+</section>
+<section id="smoothing-techniques" class="level3" data-number="5.1.5">
+<h3 data-number="5.1.5" class="anchored" data-anchor-id="smoothing-techniques"><span class="header-section-number">5.1.5</span> Smoothing Techniques</h3>
+<ul>
+<li><p>This is a technique used to address the issue of zero probabilities in N-gram models. It assigns a small non-zero probability to unseen n-grams to improve the generalization of the model. You “test” these by comparing smoothed probabilities to unsmoothed ones. <br> <br></p></li>
+<li><p><strong>Laplace (Add-One) Smoothing</strong>: A simple smoothing technique that adds one to the count of each n-gram to avoid zero probabilities.</p>
+<ul>
+<li><strong>Formula</strong>: <span class="math inline">\(P(w_n | w_1, w_2, ..., w_{n-1}) = \frac{(\text{Count(n-gram)} + 1)}{(\text{Count(of previous n-1 words)} + V)}\)</span>
+<ul>
+<li><strong>V</strong>: The vocabulary size, which is the total number of unique words in the corpus.</li>
+<li><strong>Example</strong>: <span class="math display">\[P(\text{fox} \mid \text{quick brown}) = \frac{\text{Count}(\text{quick brown fox}) + 1}{\text{Count}(\text{quick brown}) + V}\]</span></li>
+</ul></li>
+</ul></li>
+<li><p><strong>Add-k Smoothing</strong>: A generalization of Laplace smoothing that adds a <code>smaller constant k</code> to the count of each n-gram to avoid zero probabilities.</p>
+<ul>
+<li><strong>Formula</strong>: <span class="math inline">\(P(w_n | w_1, w_2, ..., w_{n-1}) = \frac{(\text{Count(n-gram)} + k)}{(\text{Count(of previous n-1 words)} + kV)}\)</span>
+<ul>
+<li><strong>k</strong>: A constant value that determines the amount of smoothing.</li>
+<li><strong>Example</strong>: <span class="math display">\[P(\text{fox} \mid \text{quick brown}) = \frac{\text{Count}(\text{quick brown fox}) + k}{\text{Count}(\text{quick brown}) + kV}\]</span></li>
+<li><strong>Test</strong>: Tune k and compare probabilities for rare vs.&nbsp;frequent trigrams.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Good-Turing Smoothing</strong>: A more sophisticated smoothing technique that estimates the probability of unseen n-grams based on the frequency of seen n-grams.</p>
+<ul>
+<li>adjusts the counts of n-grams based on the frequency of n-grams with similar counts.</li>
+<li><strong>Test</strong>: compute adjusted probabilities for low-frequency n-grams and validate against held-out data.</li>
+</ul></li>
+<li><p><strong>Backoff and Interpolation</strong>: A technique that combines n-gram models of different orders to improve the generalization of the model.</p>
+<ul>
+<li><strong>Backoff</strong>: Uses lower-order n-grams when higher-order n-grams have zero probabilities.</li>
+<li><strong>Interpolation</strong>: Combines probabilities from different n-gram models using linear interpolation.</li>
+<li><strong>Test</strong>: Compare performance of backoff and interpolation on different datasets.</li>
+</ul></li>
+<li><p><strong>Kneser-Ney Smoothing</strong>: A state-of-the-art smoothing technique that estimates the probability of unseen n-grams based on the frequency of n-grams in the context of the n-gram.</p>
+<ul>
+<li>It considers how often a word appears in a novel context, rather than just how often it appears overall.</li>
+<li><strong>Test</strong>: Compare Kneser-Ney smoothing to other smoothing techniques on large datasets.</li>
+</ul></li>
+</ul>
+</section>
+<section id="perplexity" class="level3" data-number="5.1.6">
+<h3 data-number="5.1.6" class="anchored" data-anchor-id="perplexity"><span class="header-section-number">5.1.6</span> Perplexity</h3>
+<ul>
+<li><p><strong>Perplexity</strong>: A measure of how well a language model predicts a given text. It is the inverse probability of the test set, normalized by the number of words.</p></li>
+<li><p>Evaluation Metric: “How well the model predicts the next word in a sequence.”</p>
+<ul>
+<li><strong>Perplexity Formula</strong>: <span class="math inline">\(PP(W) = P(w_1, w_2, ..., w_N)^{-\frac{1}{N}}\)</span>
+<ul>
+<li>which can be calculated as <span class="math inline">\(PP(W) = \left(\frac{1}{P(w_1, w_2, ..., w_N)}\right)^{\frac{1}{N}}\)</span></li>
+<li>where:
+<ul>
+<li><strong>P(w_1, w_2, …, w_N)</strong>: Probability of the test set under the language model.</li>
+<li><strong>N</strong>: Number of words in the test set.</li>
+<li><strong>Example</strong>: If the perplexity of a language model is 100, it means that the model is as confused as if it had to choose uniformly among 100 words for each word in the test set.</li>
+</ul></li>
+<li><strong>N</strong>: The number of words in the test set.</li>
+<li><strong>Example</strong>: If the perplexity of a language model is 100, it means that the model is as confused as if it had to choose uniformly among 100 words for each word in the test set.</li>
+</ul></li>
+<li><span style="color:green">Lower </span>Perplexity: <span style="color:green">better</span> language model that predicts the test set more accurately.</li>
+<li><span style="color:red">Higher </span>Perplexity: <span style="color:red">worse</span> language model that predicts the test set less accurately.</li>
+</ul></li>
+</ul>
+</section>
+<section id="example-of-trigram-lm-in-python" class="level3" data-number="5.1.7">
+<h3 data-number="5.1.7" class="anchored" data-anchor-id="example-of-trigram-lm-in-python"><span class="header-section-number">5.1.7</span> Example of Trigram LM in Python</h3>
+<ul>
+<li>Steps:
+<ul>
+<li>Tokenize text</li>
+<li>Add padding tokens</li>
+<li>Generate trigrams</li>
+<li>Count unique trigrams</li>
+<li>Calculate trigram probabilities (MLE)</li>
+<li>Calculate perplexity</li>
+</ul></li>
+</ul>
+<p><strong>STEP 1: tokenize text and add padding tokens</strong></p>
+<div id="2a31a312" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"I like NLP. NLP is fun. NLP in python is fun. I like coding in python. NLP is cool."</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> sent_tokenize(text)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>padded_sentences <span class="op">=</span> []</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> token <span class="kw">in</span> tokens:</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> word_tokenize(token)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    padded <span class="op">=</span> [<span class="st">"&lt;s&gt;"</span>] <span class="op">+</span> words <span class="op">+</span> [<span class="st">"&lt;/s&gt;"</span>]</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    padded_sentences.append(padded)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Padded Sentences:"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sent <span class="kw">in</span> padded_sentences:</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(sent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Padded Sentences:
+['&lt;s&gt;', 'I', 'like', 'NLP', '.', '&lt;/s&gt;']
+['&lt;s&gt;', 'NLP', 'is', 'fun', '.', '&lt;/s&gt;']
+['&lt;s&gt;', 'NLP', 'in', 'python', 'is', 'fun', '.', '&lt;/s&gt;']
+['&lt;s&gt;', 'I', 'like', 'coding', 'in', 'python', '.', '&lt;/s&gt;']
+['&lt;s&gt;', 'NLP', 'is', 'cool', '.', '&lt;/s&gt;']</code></pre>
+</div>
+</div>
+<p><strong>STEP 2: Generate trigrams (and bigrams for MLE calculation)</strong></p>
+<div id="fd93b626" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>trigrams <span class="op">=</span> []</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sent <span class="kw">in</span> padded_sentences:</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    sent_trigrams <span class="op">=</span> <span class="bu">list</span>(ngrams(sent, <span class="dv">3</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sent_trigrams = list(ngrams(sent, 3, pad_left=False, pad_right=False, left_pad_symbol="&lt;s&gt;", right_pad_symbol="&lt;/s&gt;"))</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># can use the above line to avoid padding tokens in trigrams, but its less flexible if you need to reuse the padded data.</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    trigrams.extend(sent_trigrams)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>bigrams <span class="op">=</span> []</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sent <span class="kw">in</span> padded_sentences:</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    sent_bigrams <span class="op">=</span> <span class="bu">list</span>(ngrams(sent, <span class="dv">2</span>))</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    bigrams.extend(sent_bigrams)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Trigrams:"</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> trigram <span class="kw">in</span> trigrams:</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(trigram)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Trigrams:
+('&lt;s&gt;', 'I', 'like')
+('I', 'like', 'NLP')
+('like', 'NLP', '.')
+('NLP', '.', '&lt;/s&gt;')
+('&lt;s&gt;', 'NLP', 'is')
+('NLP', 'is', 'fun')
+('is', 'fun', '.')
+('fun', '.', '&lt;/s&gt;')
+('&lt;s&gt;', 'NLP', 'in')
+('NLP', 'in', 'python')
+('in', 'python', 'is')
+('python', 'is', 'fun')
+('is', 'fun', '.')
+('fun', '.', '&lt;/s&gt;')
+('&lt;s&gt;', 'I', 'like')
+('I', 'like', 'coding')
+('like', 'coding', 'in')
+('coding', 'in', 'python')
+('in', 'python', '.')
+('python', '.', '&lt;/s&gt;')
+('&lt;s&gt;', 'NLP', 'is')
+('NLP', 'is', 'cool')
+('is', 'cool', '.')
+('cool', '.', '&lt;/s&gt;')</code></pre>
+</div>
+</div>
+<p><strong>STEP 3: Count unique trigrams and bigrams</strong></p>
+<div id="b237bbed" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prettytable <span class="im">import</span> PrettyTable</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>trigram_counts <span class="op">=</span> Counter(trigrams)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>bigrams_counts <span class="op">=</span> Counter(bigrams)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>unique_bigrams <span class="op">=</span> <span class="bu">len</span>(bigrams_counts)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>unique_trigrams <span class="op">=</span> <span class="bu">len</span>(trigram_counts)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Unique Trigrams:"</span>, unique_trigrams)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Unique Bigrams:"</span>, unique_bigrams)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>c_tri_tab <span class="op">=</span> PrettyTable([<span class="st">"Index"</span>, <span class="st">"Unique Trigram"</span>, <span class="st">"Count"</span>])</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (trigram, count) <span class="kw">in</span> <span class="bu">enumerate</span>(trigram_counts.items()):</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    c_tri_tab.add_row([i, trigram, count])</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(c_tri_tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Unique Trigrams: 20
+Unique Bigrams: 17
++-------+----------------------------+-------+
+| Index |       Unique Trigram       | Count |
++-------+----------------------------+-------+
+|   0   |    ('&lt;s&gt;', 'I', 'like')    |   2   |
+|   1   |    ('I', 'like', 'NLP')    |   1   |
+|   2   |    ('like', 'NLP', '.')    |   1   |
+|   3   |    ('NLP', '.', '&lt;/s&gt;')    |   1   |
+|   4   |    ('&lt;s&gt;', 'NLP', 'is')    |   2   |
+|   5   |    ('NLP', 'is', 'fun')    |   1   |
+|   6   |     ('is', 'fun', '.')     |   2   |
+|   7   |    ('fun', '.', '&lt;/s&gt;')    |   2   |
+|   8   |    ('&lt;s&gt;', 'NLP', 'in')    |   1   |
+|   9   |  ('NLP', 'in', 'python')   |   1   |
+|   10  |   ('in', 'python', 'is')   |   1   |
+|   11  |  ('python', 'is', 'fun')   |   1   |
+|   12  |  ('I', 'like', 'coding')   |   1   |
+|   13  |  ('like', 'coding', 'in')  |   1   |
+|   14  | ('coding', 'in', 'python') |   1   |
+|   15  |   ('in', 'python', '.')    |   1   |
+|   16  |  ('python', '.', '&lt;/s&gt;')   |   1   |
+|   17  |   ('NLP', 'is', 'cool')    |   1   |
+|   18  |    ('is', 'cool', '.')     |   1   |
+|   19  |   ('cool', '.', '&lt;/s&gt;')    |   1   |
++-------+----------------------------+-------+</code></pre>
+</div>
+</div>
+<p><strong>STEP 4: Calculate trigram probabilities (MLE)</strong></p>
+<div id="754d437e" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>tri_mle <span class="op">=</span> {}</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (w1, w2, w3), count <span class="kw">in</span> trigram_counts.items():</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    tri_mle[(w1, w2, w3)] <span class="op">=</span> <span class="bu">round</span>(count <span class="op">/</span> bigrams_counts[(w1, w2)], <span class="dv">3</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Trigram MLE:"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>tri_mle_tab <span class="op">=</span> PrettyTable([<span class="st">"Word 1"</span>, <span class="st">"Word 2"</span>, <span class="st">"Word 3"</span>, <span class="st">"MLE"</span>])</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (w1, w2, w3), mle <span class="kw">in</span> tri_mle.items():</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    tri_mle_tab.add_row([w1, w2, w3, mle])</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tri_mle_tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Trigram MLE:
++--------+--------+--------+-------+
+| Word 1 | Word 2 | Word 3 |  MLE  |
++--------+--------+--------+-------+
+|  &lt;s&gt;   |   I    |  like  |  1.0  |
+|   I    |  like  |  NLP   |  0.5  |
+|  like  |  NLP   |   .    |  1.0  |
+|  NLP   |   .    |  &lt;/s&gt;  |  1.0  |
+|  &lt;s&gt;   |  NLP   |   is   | 0.667 |
+|  NLP   |   is   |  fun   |  0.5  |
+|   is   |  fun   |   .    |  1.0  |
+|  fun   |   .    |  &lt;/s&gt;  |  1.0  |
+|  &lt;s&gt;   |  NLP   |   in   | 0.333 |
+|  NLP   |   in   | python |  1.0  |
+|   in   | python |   is   |  0.5  |
+| python |   is   |  fun   |  1.0  |
+|   I    |  like  | coding |  0.5  |
+|  like  | coding |   in   |  1.0  |
+| coding |   in   | python |  1.0  |
+|   in   | python |   .    |  0.5  |
+| python |   .    |  &lt;/s&gt;  |  1.0  |
+|  NLP   |   is   |  cool  |  0.5  |
+|   is   |  cool  |   .    |  1.0  |
+|  cool  |   .    |  &lt;/s&gt;  |  1.0  |
++--------+--------+--------+-------+</code></pre>
+</div>
+</div>
+<p><strong>(Calculating MLE with Laplace Smoothing)</strong></p>
+<div id="b6276413" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> <span class="bu">len</span>(trigram_counts)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">1</span>  <span class="co"># Laplace smoothing constant</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>tri_mle_laplace <span class="op">=</span> {}</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (w1, w2, w3), count <span class="kw">in</span> trigram_counts.items():</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    tri_mle_laplace[(w1, w2, w3)] <span class="op">=</span> <span class="bu">round</span>((count <span class="op">+</span> k) <span class="op">/</span> (bigrams_counts[(w1, w2)] <span class="op">+</span> k <span class="op">*</span> V), <span class="dv">3</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Trigram MLE with Laplace Smoothing:"</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>tri_mle_laplace_tab <span class="op">=</span> PrettyTable([<span class="st">"Word 1"</span>, <span class="st">"Word 2"</span>, <span class="st">"Word 3"</span>, <span class="st">"MLE (Laplace)"</span>])</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (w1, w2, w3), mle <span class="kw">in</span> tri_mle_laplace.items():</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    tri_mle_laplace_tab.add_row([w1, w2, w3, mle])</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tri_mle_laplace_tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Trigram MLE with Laplace Smoothing:
++--------+--------+--------+---------------+
+| Word 1 | Word 2 | Word 3 | MLE (Laplace) |
++--------+--------+--------+---------------+
+|  &lt;s&gt;   |   I    |  like  |     0.136     |
+|   I    |  like  |  NLP   |     0.091     |
+|  like  |  NLP   |   .    |     0.095     |
+|  NLP   |   .    |  &lt;/s&gt;  |     0.095     |
+|  &lt;s&gt;   |  NLP   |   is   |      0.13     |
+|  NLP   |   is   |  fun   |     0.091     |
+|   is   |  fun   |   .    |     0.136     |
+|  fun   |   .    |  &lt;/s&gt;  |     0.136     |
+|  &lt;s&gt;   |  NLP   |   in   |     0.087     |
+|  NLP   |   in   | python |     0.095     |
+|   in   | python |   is   |     0.091     |
+| python |   is   |  fun   |     0.095     |
+|   I    |  like  | coding |     0.091     |
+|  like  | coding |   in   |     0.095     |
+| coding |   in   | python |     0.095     |
+|   in   | python |   .    |     0.091     |
+| python |   .    |  &lt;/s&gt;  |     0.095     |
+|  NLP   |   is   |  cool  |     0.091     |
+|   is   |  cool  |   .    |     0.095     |
+|  cool  |   .    |  &lt;/s&gt;  |     0.095     |
++--------+--------+--------+---------------+</code></pre>
+</div>
+</div>
+<p><strong>STEP 5: Calculate Perplexity</strong></p>
+<div id="dd745f5b" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>test_trigrams <span class="op">=</span> trigrams  <span class="co"># Reusing the training trigrams for simplicity</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the sum of log probabilities</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>log_prob_sum <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="bu">len</span>(test_trigrams)  <span class="co"># Number of trigrams in the test set</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> trigram <span class="kw">in</span> test_trigrams:</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    prob <span class="op">=</span> tri_mle.get(trigram, <span class="dv">0</span>)  <span class="co"># Get MLE probability, default to 0 if unseen</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> prob <span class="op">&gt;</span> <span class="dv">0</span>:  <span class="co"># Avoid log(0)</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        log_prob_sum <span class="op">+=</span> math.log2(prob) <span class="co"># use log to avoid underflow issues (A numerical issue that occurs when multiplying many small probabilities together, leading to a very small probability that may be rounded to zero)</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Warning: Trigram </span><span class="sc">{</span>trigram<span class="sc">}</span><span class="ss"> has zero probability (unseen in training)"</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        log_prob_sum <span class="op">=</span> <span class="bu">float</span>(<span class="st">"-inf"</span>)  <span class="co"># This will lead to infinite perplexity</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate perplexity</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> log_prob_sum <span class="op">!=</span> <span class="bu">float</span>(<span class="st">"-inf"</span>):</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    avg_log_prob <span class="op">=</span> log_prob_sum <span class="op">/</span> N</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    perplexity <span class="op">=</span> <span class="dv">2</span> <span class="op">**</span> (<span class="op">-</span>avg_log_prob)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    perplexity <span class="op">=</span> <span class="bu">float</span>(<span class="st">"inf"</span>)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of test trigrams (N): </span><span class="sc">{</span>N<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sum of log probabilities: </span><span class="sc">{</span>log_prob_sum<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Average log probability: </span><span class="sc">{</span>avg_log_prob<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Perplexity: </span><span class="sc">{</span>perplexity<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of test trigrams (N): 24
+Sum of log probabilities: -8.755
+Average log probability: -0.365
+Perplexity: 1.288</code></pre>
+</div>
+</div>
+</section>
+<section id="example-of-trigram-lm-with-nltk-abc-corpus" class="level3" data-number="5.1.8">
+<h3 data-number="5.1.8" class="anchored" data-anchor-id="example-of-trigram-lm-with-nltk-abc-corpus"><span class="header-section-number">5.1.8</span> Example of Trigram LM with NLTK ABC Corpus</h3>
+<div id="53588642" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(<span class="bu">list</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'type'&gt;</code></pre>
+</div>
+</div>
+<div id="e9aad874" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.util <span class="im">import</span> trigrams, bigrams</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">'abc'</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>start_time <span class="op">=</span> time.time()</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> abc</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the ABC corpus</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>abc_text <span class="op">=</span> abc.raw(<span class="st">"rural.txt"</span>)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1 get sentences from corpus</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> abc.sents()[<span class="dv">0</span>:<span class="dv">2000</span>]</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of sentences:"</span>, <span class="bu">len</span>(sentences))</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Tokenize text and add padding tokens</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> []</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sentence <span class="kw">in</span> sentences:</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    padded_sentence <span class="op">=</span> [<span class="st">"&lt;s&gt;"</span>] <span class="op">+</span> [word.lower() <span class="cf">for</span> word <span class="kw">in</span> sentence] <span class="op">+</span> [<span class="st">"&lt;/s&gt;"</span>]</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    tokens.extend(padded_sentence)</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Example tokens:"</span>, tokens[:<span class="dv">10</span>])</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Generate trigrams</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>trigram_list <span class="op">=</span> <span class="bu">list</span>(trigrams(tokens))</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>bigram_list <span class="op">=</span> <span class="bu">list</span>(bigrams(tokens))</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Example trigrams:"</span>, trigram_list[:<span class="dv">5</span>])</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Example bigrams:"</span>, bigram_list[:<span class="dv">5</span>])</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: Count unique trigrams</span></span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>trigram_counts <span class="op">=</span> Counter(trigram_list)</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>bigram_counts <span class="op">=</span> Counter(bigram_list)</span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>unique_trigrams <span class="op">=</span> <span class="bu">len</span>(trigram_counts)</span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>unique_bigrams <span class="op">=</span> <span class="bu">len</span>(bigram_counts)</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Unique Trigrams:"</span>, unique_trigrams)</span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Unique Bigrams:"</span>, unique_bigrams)</span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 5: Calculate trigram probabilities (MLE) with Laplace smoothing and k=1</span></span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> <span class="bu">len</span>(trigram_counts)</span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="fl">0.01</span></span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a>trigram_mle_laplace <span class="op">=</span> {}</span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (w1, w2, w3), count <span class="kw">in</span> trigram_counts.items():</span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a>    trigram_mle_laplace[(w1, w2, w3)] <span class="op">=</span> (count <span class="op">+</span> k) <span class="op">/</span> (bigram_counts[(w1, w2)] <span class="op">+</span> k <span class="op">*</span> V)</span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to predict next word based on conditional probability</span></span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict_next_word(w1, w2, trigram_mle):</span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a>    candidates <span class="op">=</span> {w3: prob <span class="cf">for</span> (x1, x2, w3), prob <span class="kw">in</span> trigram_mle.items() <span class="cf">if</span> x1 <span class="op">==</span> w1 <span class="kw">and</span> x2 <span class="op">==</span> w2}</span>
+<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a>    predicted <span class="op">=</span> <span class="bu">max</span>(candidates, key<span class="op">=</span>candidates.get) <span class="cf">if</span> candidates <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a>    prob <span class="op">=</span> candidates.get(predicted, <span class="fl">0.0</span>) <span class="cf">if</span> predicted <span class="cf">else</span> <span class="fl">0.0</span></span>
+<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> predicted, prob</span>
+<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Test prediction</span></span>
+<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a>w1, w2 <span class="op">=</span> <span class="st">"the"</span>, <span class="st">"prime"</span></span>
+<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a>predicted_word, probability <span class="op">=</span> predict_next_word(w1, w2, trigram_mle_laplace)</span>
+<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Predicted next word after '</span><span class="sc">{</span>w1<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>w2<span class="sc">}</span><span class="ss">': </span><span class="sc">{</span>predicted_word<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Probability of the next word occurring: </span><span class="sc">{</span>probability<span class="sc">:.5f}</span><span class="ss">"</span>)</span>
+<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a>end_time <span class="op">=</span> time.time()</span>
+<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Execution time: </span><span class="sc">{</span>end_time <span class="op">-</span> start_time<span class="sc">:.5f}</span><span class="ss"> seconds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[nltk_data] Downloading package abc to
+[nltk_data]     C:\Users\roess\AppData\Roaming\nltk_data...
+[nltk_data]   Package abc is already up-to-date!</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of sentences: 2000
+Example tokens: ['&lt;s&gt;', 'pm', 'denies', 'knowledge', 'of', 'awb', 'kickbacks', 'the', 'prime', 'minister']
+Example trigrams: [('&lt;s&gt;', 'pm', 'denies'), ('pm', 'denies', 'knowledge'), ('denies', 'knowledge', 'of'), ('knowledge', 'of', 'awb'), ('of', 'awb', 'kickbacks')]
+Example bigrams: [('&lt;s&gt;', 'pm'), ('pm', 'denies'), ('denies', 'knowledge'), ('knowledge', 'of'), ('of', 'awb')]
+Unique Trigrams: 45447
+Unique Bigrams: 30474
+Predicted next word after 'the prime': minister
+Probability of the next word occurring: 0.02978
+Execution time: 0.33075 seconds</code></pre>
+</div>
+</div>
+</section>
+<section id="example-of-sentence-generation-with-trigram-lm" class="level3" data-number="5.1.9">
+<h3 data-number="5.1.9" class="anchored" data-anchor-id="example-of-sentence-generation-with-trigram-lm"><span class="header-section-number">5.1.9</span> Example of Sentence Generation with Trigram LM</h3>
+<div id="ee6ef94b" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>start_time <span class="op">=</span> time.time()</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_sentence(model, max_length):</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    current_bigram <span class="op">=</span> random.choice(<span class="bu">list</span>(model.keys()))  <span class="co"># Pick a random starting bigram</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    get_text <span class="op">=</span> <span class="bu">list</span>(current_bigram)  <span class="co"># Initialize with the two words from the bigram</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(max_length <span class="op">-</span> <span class="dv">2</span>):  <span class="co"># Start from the third word</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>        w_next_prob <span class="op">=</span> model.get(<span class="bu">tuple</span>(get_text[<span class="op">-</span><span class="dv">2</span>:]), {})  <span class="co"># Get trigram probabilities</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> w_next_prob:  <span class="co"># If no next word, break</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>        w_next <span class="op">=</span> random.choices(<span class="bu">list</span>(w_next_prob.keys()), weights<span class="op">=</span><span class="bu">list</span>(w_next_prob.values()))[<span class="dv">0</span>]</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>        get_text.append(w_next)  <span class="co"># Append next word</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">" "</span>.join(get_text)  <span class="co"># Return generated sentence as a string</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>generated_text <span class="op">=</span> generate_sentence(trigram_mle_laplace, <span class="dv">15</span>)</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Generated sentence: </span><span class="sc">{</span>generated_text<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>end_time <span class="op">=</span> time.time()</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Execution time: </span><span class="sc">{</span>end_time <span class="op">-</span> start_time<span class="sc">:.5f}</span><span class="ss"> seconds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Generated sentence: thoroughbred industry has
+Execution time: 0.00159 seconds</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./session2.html" class="pagination-link" aria-label="Natural Language Processing - Chapter 2">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 2</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./session4.html" class="pagination-link" aria-label="Natural Language Processing - Chapter 4">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 4</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

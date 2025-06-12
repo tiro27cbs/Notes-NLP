@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tim Roessling">
+
+<title>2&nbsp; Natural Language Processing - Chapter 1 – My NLP Notes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./session2.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./session1.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 1</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">My NLP Notes</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">index.html</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 1</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 2</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 3</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 4</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 5</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 6</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 7</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 8</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 9</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 10</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 11</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#chapter-1-introduction-to-natural-language-processing" id="toc-chapter-1-introduction-to-natural-language-processing" class="nav-link active" data-scroll-target="#chapter-1-introduction-to-natural-language-processing"><span class="header-section-number">3</span> Chapter 1: Introduction to Natural Language Processing</a>
+  <ul class="collapse">
+  <li><a href="#the-revolution-in-nlp" id="toc-the-revolution-in-nlp" class="nav-link" data-scroll-target="#the-revolution-in-nlp"><span class="header-section-number">3.1</span> The Revolution in NLP</a></li>
+  <li><a href="#language-is-hard" id="toc-language-is-hard" class="nav-link" data-scroll-target="#language-is-hard"><span class="header-section-number">3.2</span> Language is Hard</a>
+  <ul class="collapse">
+  <li><a href="#why-is-language-hard" id="toc-why-is-language-hard" class="nav-link" data-scroll-target="#why-is-language-hard"><span class="header-section-number">3.2.1</span> Why is Language Hard?</a></li>
+  </ul></li>
+  <li><a href="#brief-history" id="toc-brief-history" class="nav-link" data-scroll-target="#brief-history"><span class="header-section-number">3.3</span> Brief History</a></li>
+  <li><a href="#nlp-the-basic-approach" id="toc-nlp-the-basic-approach" class="nav-link" data-scroll-target="#nlp-the-basic-approach"><span class="header-section-number">3.4</span> NLP: The Basic Approach</a>
+  <ul class="collapse">
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span class="header-section-number">3.4.1</span> Background</a></li>
+  <li><a href="#language-modeling-with-n-grams" id="toc-language-modeling-with-n-grams" class="nav-link" data-scroll-target="#language-modeling-with-n-grams"><span class="header-section-number">3.4.2</span> Language Modeling with N-grams</a></li>
+  <li><a href="#training-an-llm" id="toc-training-an-llm" class="nav-link" data-scroll-target="#training-an-llm"><span class="header-section-number">3.4.3</span> Training an LLM</a></li>
+  <li><a href="#what-does-training-an-llm-look-like" id="toc-what-does-training-an-llm-look-like" class="nav-link" data-scroll-target="#what-does-training-an-llm-look-like"><span class="header-section-number">3.4.4</span> What Does Training an LLM Look Like?</a></li>
+  <li><a href="#probing-gpt" id="toc-probing-gpt" class="nav-link" data-scroll-target="#probing-gpt"><span class="header-section-number">3.4.5</span> Probing GPT</a></li>
+  </ul></li>
+  <li><a href="#ai-where-are-we-heading" id="toc-ai-where-are-we-heading" class="nav-link" data-scroll-target="#ai-where-are-we-heading"><span class="header-section-number">3.5</span> AI: Where Are We Heading?</a></li>
+  <li><a href="#applications-of-llms" id="toc-applications-of-llms" class="nav-link" data-scroll-target="#applications-of-llms"><span class="header-section-number">3.6</span> Applications of LLMs</a></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">3.7</span> Takeaways</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 1</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tim Roessling </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Invalid Date</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-1-introduction-to-natural-language-processing" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Chapter 1: Introduction to Natural Language Processing</h1>
+<section id="the-revolution-in-nlp" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="the-revolution-in-nlp"><span class="header-section-number">3.1</span> The Revolution in NLP</h2>
+<p>Natural Language Processing (NLP) has undergone a revolution in recent years, primarily due to the introduction of the <strong>transformer model</strong>. Transformers are trained on massive datasets using objectives like <em>masked language modeling</em> (predicting missing words in a sentence). Further improvements are achieved through <strong>Reinforcement Learning from Human Feedback (RLHF)</strong>, allowing models to better align with human preferences.</p>
+<blockquote class="blockquote">
+<p><strong>Example:</strong><br>
+Given the sentence: “The cat sat on the ___,” a transformer model predicts the missing word, such as “mat”.</p>
+</blockquote>
+</section>
+<section id="language-is-hard" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="language-is-hard"><span class="header-section-number">3.2</span> Language is Hard</h2>
+<p>Despite impressive progress, language remains a challenging domain for AI.</p>
+<section id="why-is-language-hard" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="why-is-language-hard"><span class="header-section-number">3.2.1</span> Why is Language Hard?</h3>
+<ul>
+<li><strong>Infinite Possibilities:</strong><br>
+Most sentences you hear are unique—you’ve never heard them before and may never hear them again.</li>
+<li><strong>Ambiguity:</strong>
+<ul>
+<li><em>Lexical Ambiguity:</em> Words can have multiple meanings.<br>
+&gt; <em>Example:</em> “bank” (river bank vs.&nbsp;financial bank)</li>
+<li><em>Structural Ambiguity:</em> Sentences can be interpreted in different ways.<br>
+&gt; <em>Example:</em> “I saw the man with the telescope.” (Who has the telescope?)</li>
+</ul></li>
+</ul>
+<p>Many thinkers have argued that true human-level language understanding may be impossible for machines. Current LLMs (Large Language Models) appear to process and reason with language at a high level, but is this really human-like understanding?</p>
+<hr>
+</section>
+</section>
+<section id="brief-history" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="brief-history"><span class="header-section-number">3.3</span> Brief History</h2>
+<ul>
+<li><strong>Descartes:</strong><br>
+Argued that a machine could never truly imitate a human; there would always be a way to tell the difference.</li>
+<li><strong>Turing Test:</strong><br>
+Proposed by Alan Turing as a test of a machine’s ability to exhibit intelligent behavior indistinguishable from a human.
+<ul>
+<li>A human judge engages in a conversation with both a human and a machine.</li>
+<li>If the judge cannot reliably tell which is which, the machine is said to have passed the test.</li>
+</ul></li>
+</ul>
+</section>
+<section id="nlp-the-basic-approach" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="nlp-the-basic-approach"><span class="header-section-number">3.4</span> NLP: The Basic Approach</h2>
+<section id="background" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="background"><span class="header-section-number">3.4.1</span> Background</h3>
+<ul>
+<li><strong>Numerical Data:</strong> Numbers, measurements, etc.</li>
+<li><strong>Categorical Data:</strong> Discrete categories or labels.</li>
+<li><strong>Text Data:</strong> Unstructured, variable-length, and context-dependent (e.g., email content, headlines, political speeches).</li>
+</ul>
+<p>Text data is fundamentally different from structured data. Can we treat language as structured data for machine learning?</p>
+<section id="making-language-into-structured-data" class="level4" data-number="3.4.1.1">
+<h4 data-number="3.4.1.1" class="anchored" data-anchor-id="making-language-into-structured-data"><span class="header-section-number">3.4.1.1</span> Making Language into Structured Data</h4>
+<ul>
+<li><strong>Bag-of-Words Representation:</strong>
+<ul>
+<li>Assign a feature (column) for each word in the vocabulary.</li>
+<li>For a given text, the value is 1 if the word occurs, 0 otherwise.</li>
+<li>Alternative values: word counts or TF-IDF scores.</li>
+<li>Most features are 0 for any given text (sparse representation).</li>
+</ul></li>
+</ul>
+</section>
+<section id="supervised-ml-for-text-processing" class="level4" data-number="3.4.1.2">
+<h4 data-number="3.4.1.2" class="anchored" data-anchor-id="supervised-ml-for-text-processing"><span class="header-section-number">3.4.1.2</span> Supervised ML for Text Processing</h4>
+<ul>
+<li><strong>Labeled Text Data:</strong> Enables building classifiers for:
+<ul>
+<li>Spam Detection</li>
+<li>Sentiment Analysis</li>
+<li>Topic Detection</li>
+<li>…and more</li>
+</ul></li>
+<li>Raises questions: Does this approach capture real understanding? How does it relate to the Turing Test?</li>
+</ul>
+</section>
+<section id="bag-of-words-limitation" class="level4" data-number="3.4.1.3">
+<h4 data-number="3.4.1.3" class="anchored" data-anchor-id="bag-of-words-limitation"><span class="header-section-number">3.4.1.3</span> Bag-of-Words Limitation</h4>
+<ul>
+<li>Ignores word order and context (“bag” of words).</li>
+<li>Cannot distinguish between “dog bites man” and “man bites dog”.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="language-modeling-with-n-grams" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="language-modeling-with-n-grams"><span class="header-section-number">3.4.2</span> Language Modeling with N-grams</h3>
+<ul>
+<li><strong>Goal:</strong> Assign a probability to a sequence of words.</li>
+<li><strong>Markov Assumption:</strong> The probability of a word depends only on the previous <em>n-1</em> words.</li>
+</ul>
+<section id="example-he-went-to-the-store" class="level4" data-number="3.4.2.1">
+<h4 data-number="3.4.2.1" class="anchored" data-anchor-id="example-he-went-to-the-store"><span class="header-section-number">3.4.2.1</span> Example: “He went to the store”</h4>
+<ul>
+<li><strong>Unigrams (1-grams):</strong> He, went, to, the, store</li>
+<li><strong>Bigrams (2-grams):</strong> He went, went to, to the, the store</li>
+<li><strong>Trigrams (3-grams):</strong> He went to, went to the, to the store</li>
+<li><strong>4-grams:</strong> He went to the, went to the store</li>
+<li><strong>5-gram:</strong> He went to the store</li>
+</ul>
+</section>
+<section id="n-gram-approximations" class="level4" data-number="3.4.2.2">
+<h4 data-number="3.4.2.2" class="anchored" data-anchor-id="n-gram-approximations"><span class="header-section-number">3.4.2.2</span> N-gram Approximations</h4>
+<ul>
+<li><p><strong>Bigram Model:</strong><br>
+( p() = p() p(|) p(|) p(|) p(|) )</p></li>
+<li><p><strong>Trigram Model:</strong><br>
+( p() = p() p(|) p(|) p(|) p(|) )</p></li>
+<li><p><strong>Key Idea:</strong><br>
+N-gram models capture some local word order, but struggle with long-range dependencies and rare phrases.</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="training-an-llm" class="level3" data-number="3.4.3">
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="training-an-llm"><span class="header-section-number">3.4.3</span> Training an LLM</h3>
+<blockquote class="blockquote">
+<p>“A general language model (LM) should be able to compute the probability of (and also generate) any string.”<br>
+<em>(Radford et al., 2019)</em></p>
+</blockquote>
+</section>
+<section id="what-does-training-an-llm-look-like" class="level3" data-number="3.4.4">
+<h3 data-number="3.4.4" class="anchored" data-anchor-id="what-does-training-an-llm-look-like"><span class="header-section-number">3.4.4</span> What Does Training an LLM Look Like?</h3>
+<p>Consider how humans complete sentences: - <em>As Descartes said, “I think, therefore I <strong>.” -</strong></em> <strong>For all intents and</strong> - *I learned how to drive a ___*</p>
+<p>Or in dialogue: &gt; <strong>Monica:</strong> Okay, everybody relax. This is not even a ___<br>
+&gt; <strong>Rachel:</strong> Oh God… well, it started about a half hour before the ___<br>
+&gt; <strong>Ross:</strong> (squatting and reading the instructions) I’m supposed to attach a brackety ___</p>
+<p>The core training objective for LLMs is <strong>next word prediction</strong>:<br>
+Given a sequence of words, predict the most likely next word.</p>
+<section id="neural-network-for-next-word-prediction" class="level4" data-number="3.4.4.1">
+<h4 data-number="3.4.4.1" class="anchored" data-anchor-id="neural-network-for-next-word-prediction"><span class="header-section-number">3.4.4.1</span> Neural Network for Next Word Prediction</h4>
+<ul>
+<li>The model is a neural network that outputs a score for every word in the vocabulary.</li>
+<li>These scores are converted into probabilities using the <strong>softmax</strong> function.</li>
+<li>For example, with a vocabulary of 50,000 words, the output might look like: <code>[fish: 0.00002, help: 0.00002, ..., the: 0.00002, ..., aardvarks: 0.00002]</code></li>
+</ul>
+</section>
+<section id="training-process" class="level4" data-number="3.4.4.2">
+<h4 data-number="3.4.4.2" class="anchored" data-anchor-id="training-process"><span class="header-section-number">3.4.4.2</span> Training Process</h4>
+<ol type="1">
+<li><strong>Compute Loss:</strong>
+<ul>
+<li>The true next word is masked (hidden).</li>
+<li>The model predicts probabilities for all words.</li>
+<li>The loss function measures how well the model predicts the correct word (e.g., <em>Loss = 1 - prob(correct word)</em>).</li>
+<li>If the model assigns a probability of 1 to the correct word, loss is 0 (best). If 0, loss is 1 (worst).</li>
+</ul></li>
+<li><strong>Update Weights:</strong>
+<ul>
+<li>The model adjusts its internal weights to increase the probability of the correct word.</li>
+<li>This also slightly decreases the probability for all other words.</li>
+<li>Each training example provides a small update—repeated millions or billions of times.</li>
+</ul></li>
+</ol>
+</section>
+<section id="example-weight-updates" class="level4" data-number="3.4.4.3">
+<h4 data-number="3.4.4.3" class="anchored" data-anchor-id="example-weight-updates"><span class="header-section-number">3.4.4.3</span> Example: Weight Updates</h4>
+<p>Suppose the correct next word is “fish”: - The model increases the weights leading to “fish”. - The probabilities for other words (e.g., “help”, “the”, “aardvarks”) are slightly reduced.</p>
+<blockquote class="blockquote">
+<p>Each example nudges the model to make the correct word more likely in context, and less likely for others.<br>
+Over time, the model learns to predict words in a wide variety of contexts.</p>
+</blockquote>
+<hr>
+<p><em>This is the fundamental process behind training large language models: predict the next word, compute the loss, update the weights, and repeat—at massive scale.</em></p>
+</section>
+</section>
+<section id="probing-gpt" class="level3" data-number="3.4.5">
+<h3 data-number="3.4.5" class="anchored" data-anchor-id="probing-gpt"><span class="header-section-number">3.4.5</span> Probing GPT</h3>
+<p>Large Language Models (LLMs) today generate highly coherent, grammatical text that can be indistinguishable from human output. They demonstrate some understanding of hierarchical structure and abstract linguistic categories (Mahowald et al., 2024).</p>
+<p>While these models are not perfect learners of abstract linguistic rules, neither are humans. LLMs are progressing toward acquiring formal linguistic competence and have already challenged claims about the impossibility of learning certain linguistic knowledge—such as hierarchical structure and abstract categories—from input alone (Mahowald et al., 2024).</p>
+<hr>
+</section>
+</section>
+<section id="ai-where-are-we-heading" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="ai-where-are-we-heading"><span class="header-section-number">3.5</span> AI: Where Are We Heading?</h2>
+<p><strong>Artificial General Intelligence (AGI):</strong><br>
+AGI is defined as AI that matches or surpasses human cognitive capabilities across a wide range of tasks.</p>
+<p><strong>AGI Benchmarks:</strong></p>
+<ul>
+<li><p><strong>The Robot College Student Test (Goertzel):</strong><br>
+A machine enrolls in a university, takes and passes the same classes as humans, and obtains a degree. LLMs can now pass university-level exams without attending classes.</p></li>
+<li><p><strong>The Employment Test (Nilsson):</strong><br>
+A machine performs an economically important job at least as well as humans. AI is already replacing humans in roles ranging from fast food to marketing.</p></li>
+<li><p><strong>The Ikea Test (Marcus):</strong><br>
+An AI views the parts and instructions of an Ikea flat-pack product, then controls a robot to assemble the furniture correctly.</p></li>
+<li><p><strong>The Coffee Test (Wozniak):</strong><br>
+A machine enters an average home and figures out how to make coffee: find the machine, coffee, water, mug, and brew coffee by pushing the right buttons. This remains unsolved.</p></li>
+<li><p><strong>The Modern Turing Test (Suleyman):</strong><br>
+An AI is given $100,000 and must turn it into $1 million.</p></li>
+</ul>
+<hr>
+</section>
+<section id="applications-of-llms" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="applications-of-llms"><span class="header-section-number">3.6</span> Applications of LLMs</h2>
+<ul>
+<li>AI interfaces for customer support and onboarding</li>
+<li>Research portals with Retrieval-Augmented Generation (RAG)</li>
+<li>Automated customer support (e.g., Zendesk)</li>
+<li>Accessibility tools (e.g., BeMyAI)</li>
+</ul>
+<hr>
+</section>
+<section id="takeaways" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">3.7</span> Takeaways</h2>
+<ul>
+<li><strong>Language is Hard:</strong>
+<ul>
+<li>Language is infinite and ambiguous (both lexically and structurally).</li>
+</ul></li>
+<li><strong>The Revolution in NLP:</strong>
+<ul>
+<li>LLMs now approach human-level language ability.</li>
+</ul></li>
+<li><strong>Exciting Research Directions:</strong>
+<ul>
+<li>Building applications with LLMs</li>
+<li>Probing their abilities</li>
+</ul></li>
+<li><strong>Powerful AI is Coming:</strong>
+<ul>
+<li>The field is rapidly advancing, with significant societal impact on the horizon.</li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="index.html">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">index.html</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./session2.html" class="pagination-link" aria-label="Natural Language Processing - Chapter 2">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 2</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

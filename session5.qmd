@@ -1,0 +1,112 @@
+---
+title: "Natural Language Processing - Chapter 5"
+author: "Maxwell Bernard"
+date: "`r Sys.Date()`"
+format: html
+jupyter: myvenv
+---
+
+
+# Lecture 5 
+## Logistic Regression
+- Logistic regression is a statistical method used for binary classification problems. It models the relationship between a binary dependent variable and one or more independent variables by estimating the probability of the dependent variable being in a particular class.
+- It is a type of regression analysis that uses the logistic function to model the probability of a binary outcome.
+- Logistic regression is widely used in various fields, including social sciences, healthcare, marketing, and finance, for tasks such as predicting customer churn, disease diagnosis, and credit risk assessment.
+- Logistic regression is a linear model that uses the logistic function to map the linear combination of input features to a probability value between 0 and 1.
+- The logistic function is defined as:
+  - $$f(x) = \frac{1}{1 + e^{-x}}$$ 
+  - Where:
+    - x: The linear combination of input features and their corresponding weights.
+    - e: The base of the natural logarithm (approximately 2.71828).
+    - f(x): The output probability value between 0 and 1.
+    - This is known as the sigmoid function.
+- The logistic regression model can be represented as:
+- $$P(Y=1|X) = \frac{1}{1 + e^{-(\beta_0 + \beta_1X_1 + \beta_2X_2 + ... + \beta_nX_n)}}$$
+- Where:
+  - P(Y=1|X): The probability of the dependent variable Y being equal to 1 given the input features X.
+  - β0: The intercept term (bias).
+  - β1, β2, ..., βn: The coefficients (weights) for each input feature X1, X2, ..., Xn.
+- The coefficients are learned during the training process using maximum likelihood estimation (MLE), which finds the values of the coefficients that maximize the likelihood of the observed data given the model.
+- The bias teram helps the model to fit the data better by allowing it to shift the decision boundary. A bias <0 means the model is more likely to predict class 0, while a bias >0 means the model is more likely to predict class 1.
+
+**Log-Odds**:
+
+- The log-odds (or logit) is the logarithm of the odds ratio, which is the ratio of the probability of an event occurring to the probability of it not occurring.
+- The log-odds can be calculated as:
+  - $$\text{log-odds} = \log\left(\frac{P(Y=1|X)}{1 - P(Y=1|X)}\right) = = \beta_0 + \beta_1X_1 + \beta_2X_2 + ... + \beta_nX_n$$
+  
+- The log-odds transformation is useful because it maps the probability values (0, 1) to the entire real line (-∞, +∞), allowing for a linear relationship between the input features and the log-odds.
+- The log-odds can be interpreted as the change in the log-odds of the dependent variable for a one-unit increase in the independent variable.
+- Logg odds of the probability of the positive class can be modelled as a linear function of the input features
+
+
+### Training Logistic Regression
+- **Maximum Likelihood Estimation (MLE)** is used to estimate the coefficients of the logistic regression model.
+  - The MLE finds the values of the coefficients that maximize the likelihood of the observed data given the model.
+- **L2 regularization (Ridge)** is often used to prevent overfitting by adding a penalty term to the loss function.
+  - The regularization term helps to constrain the coefficients, reducing their variance and improving the model's generalization to unseen data.
+  - The choice of regularization strength is crucial, as too much regularization can lead to underfitting, while too little can result in overfitting.
+  - Cross-validation is commonly used to select the optimal regularization parameter.
+  - It is important to evaluate the model's performance on a validation set to ensure that it generalizes well to new data.
+- **L1 regularization (Lasso)** can also be used to perform feature selection by driving some coefficients to zero, effectively removing those features from the model.
+- **Elastic Net** is a combination of L1 and L2 regularization, allowing for both feature selection and coefficient shrinkage.
+- **Bayesian logistic regression** is another approach that incorporates prior distributions on the coefficients, allowing for uncertainty quantification and regularization.
+
+
+Scikit-Learn's LogisticRegression
+
+- the most commonly used solver is L2-regularized MLE with the `liblinear` solver.
+- The available optimization solvers are:
+  - `liblinear`: A coordinate descent algorithm for L1 and L2 regularization. Better for small datasets of size < 10,000.
+  - `saga`: A stochastic average gradient descent algorithm for L1 and L2 regularization. Suitable for large datasets of size > 10,000.
+  - `newton-cg`: A Newton's method algorithm for L2 regularization.
+  - `lbfgs`: An optimization algorithm based on the limited-memory Broyden-Fletcher-Goldfarb-Shanno (BFGS) method for L2 regularization. Suitable for small to medium-sized datasets
+
+
+### Bag of Words vs. TF-IDF
+- **Bag of Words (BoW)**: A simple representation of text data where each document is represented as a vector of word counts. It ignores the order of words and focuses on the frequency of each word in the document.
+  - Pros: Simple to implement, easy to interpret, works well for many applications.
+  - Cons: Ignores word order, can lead to high-dimensional sparse vectors, may not capture semantic meaning.
+- **Term Frequency-Inverse Document Frequency (TF-IDF)**: A more sophisticated representation of text data that considers both the frequency of words in a document and their importance across the entire corpus. It assigns higher weights to words that are frequent in a document but rare in the corpus.
+- TF-IDF is calculated as:
+- $$\text{TF-IDF}(w, d) = \text{TF}(w, d) \cdot \text{IDF}(w)$$
+    - TF(w, d): The term frequency of word w in document d.
+    - IDF(w): The inverse document frequency of word w, calculated as:
+      - $$\text{IDF}(w) = \log\left(\frac{N}{DF(w)}\right)$$
+      - Where:
+        - N: The total number of documents in the corpus.
+        - DF(w): The number of documents containing word w.
+        - In this context documents is the number of tokens in the corpus.
+  - TF-IDF captures the importance of words in a document relative to the entire corpus, making it more effective for tasks such as text classification and information retrieval.
+  - **Pros**: Captures word importance, reduces the impact of common words, better for semantic understanding.
+  - **Cons**: More complex to implement, may still lead to high-dimensional sparse vectors.
+- **Example**: In a corpus of 100 documents, the word "the" appears in 90 documents, while the word "NLP" appears in 10 documents. The TF-IDF score for "the" will be lower than that for "NLP" because "the" is common across many documents, while "NLP" is more specific to certain documents.
+
+Make table of columns: Feature | BoW | TF-IDF
+
+| Feature | Bag of Words (BoW) | TF-IDF |
+|---------|---------------|------------|
+| Concept | Counts word frequencies | Weights word importance |
+| Dimensionality | High-dimensional sparse vectors | High-dimensional sparse vectors, but weights may reduce freature noise|
+| Complexity | Simple to implement | More complex to implement, due to IDF calculation |
+| Word Importance | Ignores word importance | Considers word importance relative to the corpus |
+| Context Sensitivity | Ignores word order and context | Ignores word order, but captures context through IDF |
+| Peformance | Works well for many applications | Better for semantic understanding and information retrieval |
+| Use Cases | Text classification, sentiment analysis | Text classification, information retrieval, search engines |
+| Limitations | Ignores word order, may lead to high-dimensional vectors | May still lead to high-dimensional vectors, sensitive to document length, Does not capture word order |
+
+### LR Model Assumptions
+- **Linearity**: The relationship between the independent variables and the log-odds of the dependent variable is linear. This means that a one-unit change in an independent variable will result in a constant change in the log-odds of the dependent variable.
+- **Independence**: The observations are independent of each other. This means that the outcome of one observation does not influence the outcome of another observation.
+- **No Multicollinearity**: The independent variables are not highly correlated with each other. This means that the model should not include highly correlated features, as this can lead to unstable coefficient estimates and difficulty in interpreting the results.
+- **No Outliers**: The model assumes that there are no extreme outliers in the data that could disproportionately influence the results. Outliers can affect the estimates of the coefficients and the overall fit of the model.
+  
+
+### LR Limitations
+- **Linearity Assumption**: Logistic regression assumes a linear relationship between the independent variables and the log-odds of the dependent variable. This may not hold true for all datasets, leading to poor performance.
+- **Feature Independence**: Logistic regression assumes that the independent variables are independent of each other. In practice, this assumption may not hold, leading to multicollinearity issues.
+- **Sensitivity to Outliers**: Logistic regression can be sensitive to outliers, which can disproportionately influence the model's coefficients and predictions.
+- **Inability to Capture Complex Relationships**: Logistic regression is a linear model and may not capture complex relationships between features and the target variable. Non-linear relationships may require more advanced models, such as decision trees or neural networks.
+- -**Requires Large Sample Size**: Logistic regression requires a sufficient amount of data to produce reliable estimates. Small sample sizes may lead to overfitting and unreliable predictions. Sample size should be at least 10 times the number of features. eg if you have 5 features, you should have at least 50 samples.
+
+

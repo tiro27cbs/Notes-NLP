@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Maxwell Bernard">
+
+<title>3&nbsp; Natural Language Processing - Chapter 2 – My NLP Notes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./session3.html" rel="next">
+<link href="./session1.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./session2.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 2</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">My NLP Notes</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">index.html</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 1</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 2</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 3</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 4</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 5</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 6</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 7</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 8</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 9</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 10</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 11</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#chapter-2-introduction-to-nlp-libraries-and-text-normalization" id="toc-chapter-2-introduction-to-nlp-libraries-and-text-normalization" class="nav-link active" data-scroll-target="#chapter-2-introduction-to-nlp-libraries-and-text-normalization"><span class="header-section-number">4</span> Chapter 2: Introduction to NLP Libraries and Text Normalization</a>
+  <ul class="collapse">
+  <li><a href="#libraries" id="toc-libraries" class="nav-link" data-scroll-target="#libraries"><span class="header-section-number">4.1</span> Libraries</a></li>
+  <li><a href="#normalization" id="toc-normalization" class="nav-link" data-scroll-target="#normalization"><span class="header-section-number">4.2</span> Normalization</a>
+  <ul class="collapse">
+  <li><a href="#tokenization" id="toc-tokenization" class="nav-link" data-scroll-target="#tokenization"><span class="header-section-number">4.2.1</span> Tokenization</a></li>
+  <li><a href="#stemming" id="toc-stemming" class="nav-link" data-scroll-target="#stemming"><span class="header-section-number">4.2.2</span> Stemming</a></li>
+  <li><a href="#lemmatization" id="toc-lemmatization" class="nav-link" data-scroll-target="#lemmatization"><span class="header-section-number">4.2.3</span> Lemmatization</a></li>
+  </ul></li>
+  <li><a href="#regular-expressions" id="toc-regular-expressions" class="nav-link" data-scroll-target="#regular-expressions"><span class="header-section-number">4.3</span> Regular Expressions</a></li>
+  <li><a href="#pos-tagging" id="toc-pos-tagging" class="nav-link" data-scroll-target="#pos-tagging"><span class="header-section-number">4.4</span> POS Tagging</a></li>
+  <li><a href="#named-entity-recognition-ner" id="toc-named-entity-recognition-ner" class="nav-link" data-scroll-target="#named-entity-recognition-ner"><span class="header-section-number">4.5</span> Named Entity Recognition (NER)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 2</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Maxwell Bernard </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Invalid Date</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-2-introduction-to-nlp-libraries-and-text-normalization" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Chapter 2: Introduction to NLP Libraries and Text Normalization</h1>
+<section id="libraries" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="libraries"><span class="header-section-number">4.1</span> Libraries</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>NLTK</th>
+<th>spaCy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Methods</td>
+<td>string processing library</td>
+<td>object-oriented approach - it parses a text, returns document object whose words and sentences are objects themselves</td>
+</tr>
+<tr class="even">
+<td>Tokenization</td>
+<td>uses regular expression-based methods which are not always accurate</td>
+<td>uses a rule-based approach to tokenization which is more accurate</td>
+</tr>
+<tr class="odd">
+<td>POS Tagging</td>
+<td>provides wide range of POS taggers (ranging from rule-based to machine learning-based)</td>
+<td>uses a deep learning-based POS tagger which is more accurate (also offers pre-trained models in multiple languages)</td>
+</tr>
+<tr class="even">
+<td>Named Entity Recognition (NER)</td>
+<td>provides multiple NER taggers (ranging from rule-based to machine learning-based)</td>
+<td>uses a highly efficient deep learning-based NER tagger for detecting entities such as names, organizations, locations, etc.</td>
+</tr>
+<tr class="odd">
+<td>Performance</td>
+<td>slower than spaCy</td>
+<td>faster than NLTK (due to its optimized implementation in Cython)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>Textblob</code> is another popular library for NLP in Python. It is built on top of NLTK and provides a simple API for common NLP tasks such as tokenization, POS tagging, and sentiment analysis.
+<ul>
+<li>It is <strong>not good for large scale production use</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="normalization" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="normalization"><span class="header-section-number">4.2</span> Normalization</h2>
+<p>Normalization is the process of converting a text into a standard form. This involves removing any characters that are not part of the standard English alphabet, converting all characters to lowercase, and removing any extra spaces.</p>
+<p>Tasks involved in normalization include</p>
+<ul>
+<li><strong>Tokenization</strong>: Breaking a text into words, phrases, symbols, or other meaningful elements.</li>
+<li><strong>Case Folding</strong>: Converting all characters to lowercase.</li>
+<li><strong>Removing Punctuation</strong>: Removing any non-alphanumeric characters.</li>
+<li><strong>Removing Stopwords</strong>: Removing common words that do not carry much meaning.</li>
+<li><strong>Stemming or Lemmatization</strong>: Reducing words to their base or root form.</li>
+<li><strong>Removing Extra Spaces</strong>: Removing any extra spaces between words.</li>
+<li><strong>Expanding Contractions</strong>: Expanding contractions such as “don’t” to “do not”.</li>
+<li><strong>Removing URLs and Emails</strong>: Removing URLs, email addresses, and other web-related content.</li>
+<li><strong>Removing HTML Tags</strong>: Removing HTML tags from web pages.</li>
+<li><strong>Removing Emojis and Special Characters</strong>: Removing emojis, emoticons, and other special characters.</li>
+</ul>
+<p><strong>Removal of Stopwords in Python using NLTK</strong></p>
+<div id="55596c5d" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"NLTK and spaCy are popular NLP libraries used for text processing."</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> word_tokenize(text)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>stop_words <span class="op">=</span> <span class="bu">set</span>(stopwords.words(<span class="st">"english"</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>filtered_tokens <span class="op">=</span> [word <span class="cf">for</span> word <span class="kw">in</span> tokens <span class="cf">if</span> word.lower() <span class="kw">not</span> <span class="kw">in</span> stop_words]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"NLTK stopwords removal: </span><span class="sc">{</span><span class="st">' '</span><span class="sc">.</span>join(filtered_tokens)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NLTK stopwords removal: NLTK spaCy popular NLP libraries used text processing .</code></pre>
+</div>
+</div>
+<p><strong>Removal of Stopwords in Python using spaCy</strong></p>
+<div id="c393a866" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>) <span class="co"># Load English language model</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"NLTK and spaCy are popular NLP libraries used for text processing."</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> nlp(text)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>filtered_tokens <span class="op">=</span> [token.text <span class="cf">for</span> token <span class="kw">in</span> doc <span class="cf">if</span> <span class="kw">not</span> token.is_stop]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"spaCy stopwords removal: </span><span class="sc">{</span><span class="st">' '</span><span class="sc">.</span>join(filtered_tokens)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>spaCy stopwords removal: NLTK spaCy popular NLP libraries text processing .</code></pre>
+</div>
+</div>
+<section id="morphological-normalization" class="level4" data-number="4.2.0.1">
+<h4 data-number="4.2.0.1" class="anchored" data-anchor-id="morphological-normalization"><span class="header-section-number">4.2.0.1</span> Morphological Normalization</h4>
+<ul>
+<li>Morphological normalization is the process of reducing a word to its base or root form</li>
+<li>This can involve <strong>stemming</strong> or <strong>lemmatization</strong></li>
+<li><strong>Roots</strong> are the base forms of words eg. “run” is the root of “running”, “ran”, “runs”</li>
+<li><strong>Affixes</strong> are the prefixes and suffixes that are added to roots to create different forms of words eg. “ing”, “ed”, “s”
+<ul>
+<li><strong>Prefixes</strong> are added to the beginning of a word eg. “un” in “undo”</li>
+<li><strong>Suffixes</strong> are added to the end of a word eg. “ly” in “quickly”</li>
+</ul></li>
+<li><strong>Inflectional</strong> affixes are added to a word to change its grammatical form eg. “s” for plural nouns, “ed” for past tense verbs eg. “dogs”, “walked”</li>
+</ul>
+</section>
+<section id="tokenization" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="tokenization"><span class="header-section-number">4.2.1</span> Tokenization</h3>
+<ul>
+<li>Tokenization is the process of breaking a text into words, phrases, symbols, or other meaningful elements.</li>
+<li>The tokens are the words, sentences, characters, or subwords that are produced by the tokenization process.</li>
+<li>Space based token is used to prepare the text for further processing such as stemming, lemmatization, and POS tagging.</li>
+<li><strong>Type</strong> is number of unique tokens in a text</li>
+<li><strong>Token</strong> is a single instance of a token in a text</li>
+</ul>
+<div id="e907a913" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tokens <span class="op">=</span> word_tokenize(text)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>total_tokens <span class="op">=</span> <span class="bu">len</span>(tokens)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>total_types <span class="op">=</span> <span class="bu">len</span>(<span class="bu">set</span>(tokens))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong>Corpus</strong> is a collection of text documents</li>
+</ul>
+<section id="tokenization-of-raw-text-in-python" class="level5" data-number="4.2.1.0.1">
+<h5 data-number="4.2.1.0.1" class="anchored" data-anchor-id="tokenization-of-raw-text-in-python"><span class="header-section-number">4.2.1.0.1</span> Tokenization of raw text in Python</h5>
+<ul>
+<li>word.isalnum() - returns True if all characters in the word are alphanumeric</li>
+</ul>
+<div id="6d59ec8b" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>shakespeare_url <span class="op">=</span> <span class="st">"https://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt"</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>crime_punishment_url <span class="op">=</span> <span class="st">"http://www.gutenberg.org/files/2554/2554-0.txt"</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Tokenize Raw Text</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>shakespeare_text <span class="op">=</span> request.urlopen(shakespeare_url).read().decode(<span class="st">"utf8"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>crime_punishment_text <span class="op">=</span> request.urlopen(crime_punishment_url).read().decode(<span class="st">"utf8"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>shakespeare_tokenized <span class="op">=</span> [word <span class="cf">for</span> word <span class="kw">in</span> word_tokenize(shakespeare_text.lower()) <span class="cf">if</span> word.isalnum()]</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>crime_punishment_tokenized <span class="op">=</span> [</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    word <span class="cf">for</span> word <span class="kw">in</span> word_tokenize(crime_punishment_text.lower()) <span class="cf">if</span> word.isalnum()</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># FreqDist (from nltk) to produce a frequency distribution (listing top 20 most common words)</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>shakespeare_freq <span class="op">=</span> FreqDist(shakespeare_tokenized)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>crime_freq <span class="op">=</span> FreqDist(crime_punishment_tokenized)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>shakespeare_common <span class="op">=</span> shakespeare_freq.most_common(<span class="dv">20</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>crime_common <span class="op">=</span> crime_freq.most_common(<span class="dv">20</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Top 20 words in Shakespeare"</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(shakespeare_common)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Top 20 words in Crime and Punishment:"</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(crime_common)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="nltk-tokenizers" class="level5" data-number="4.2.1.0.2">
+<h5 data-number="4.2.1.0.2" class="anchored" data-anchor-id="nltk-tokenizers"><span class="header-section-number">4.2.1.0.2</span> NLTK Tokenizers</h5>
+<ul>
+<li><code>word_tokenize()</code>: Tokenizes a text into words using a regular expression-based tokenizer. A versatile tokenizer that handles contractions, abbreviations, and punctuation marks effectively. It is suitable for most general-purpose tokenization tasks.</li>
+<li><code>WordPunctTokenizer()</code>: Tokenizes a text into words using a regular expression that matches punctuation as separate tokens. A specialized tokenizer that separates words and punctuation explicitly. It is useful when you need to distinguish between alphabetic and non-alphabetic characters.</li>
+</ul>
+</section>
+</section>
+<section id="stemming" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="stemming"><span class="header-section-number">4.2.2</span> Stemming</h3>
+<ul>
+<li>Stemming is the process of reducing a word to its root or base form. For example, the word “running” would be reduced to “run” by a stemming algorithm.</li>
+<li>Stemmers remove word suffixes by running input word tokens against a pre-defined list of common suffixes.</li>
+<li>Stemming is a heuristic process that does not always produce a valid root word, but it can be useful for text processing tasks such as search indexing and information retrieval.</li>
+<li><strong>Porter Stemmer</strong> is a popular (rule-based) stemming algorithm that is widely used in text processing applications.</li>
+<li><strong>Snowball Stemmer</strong> is an improved version of the Porter Stemmer that supports multiple languages.</li>
+</ul>
+<section id="example-of-stemming-in-python-using-nltk" class="level4" data-number="4.2.2.1">
+<h4 data-number="4.2.2.1" class="anchored" data-anchor-id="example-of-stemming-in-python-using-nltk"><span class="header-section-number">4.2.2.1</span> Example of stemming in Python using NLTK</h4>
+<div id="d67b83b3" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sbs <span class="op">=</span> SnowballStemmer(<span class="st">"english"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>text<span class="op">=</span><span class="st">"The stars twinkled in the dark, illuminating the night sky."</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>method <span class="op">=</span> TreebankWordTokenizer()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>word_tokens <span class="op">=</span> method.tokenize(text)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>stemmed <span class="op">=</span> [sbs.stem(token) <span class="cf">for</span> token <span class="kw">in</span> word_tokens]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(word_tokens)):</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>word_tokens[i]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>stemmed[i]<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The | the
+stars | star
+twinkled | twinkl
+in | in
+the | the
+dark | dark
+, | ,
+illuminating | illumin
+the | the
+night | night
+sky | sky
+. | .</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="lemmatization" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="lemmatization"><span class="header-section-number">4.2.3</span> Lemmatization</h3>
+<ul>
+<li>The process of reducing a word to its base or root form, known as a lemma.</li>
+<li>Is more sophisticated than stemming because it uses a dictionary to map words to their base forms.</li>
+<li>POS tagging is used to determine the correct lemma for a word based on its part of speech.</li>
+<li>Lemmatization is more accurate than stemming but can be slower and more computationally intensive.</li>
+<li><strong>WordNet Lemmatizer</strong> is a popular lemmatization algorithm that is available in NLTK.</li>
+</ul>
+<section id="example-of-stemming-in-python-using-nltk-1" class="level4" data-number="4.2.3.1">
+<h4 data-number="4.2.3.1" class="anchored" data-anchor-id="example-of-stemming-in-python-using-nltk-1"><span class="header-section-number">4.2.3.1</span> Example of stemming in Python using NLTK</h4>
+<div id="324b395c" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sbs <span class="op">=</span> SnowballStemmer(<span class="st">"english"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>text<span class="op">=</span><span class="st">"The stars twinkled in the dark, illuminating the night sky."</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>method <span class="op">=</span> TreebankWordTokenizer()</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>word_tokens <span class="op">=</span> method.tokenize(text)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>lemma <span class="op">=</span> WordNetLemmatizer()</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>lemmatized <span class="op">=</span> [lemma.lemmatize(token) <span class="cf">for</span> token <span class="kw">in</span> word_tokens]</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(word_tokens)):</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>word_tokens[i]<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>lemmatized[i]<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The | The
+stars | star
+twinkled | twinkled
+in | in
+the | the
+dark | dark
+, | ,
+illuminating | illuminating
+the | the
+night | night
+sky | sky
+. | .</code></pre>
+</div>
+</div>
+<p><strong>Comparison table of stemming and lemmatization</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Stemming</th>
+<th>Lemmatization</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Faster</td>
+<td>Slower (Resource Intensive)</td>
+</tr>
+<tr class="even">
+<td>Less accurate</td>
+<td>More accurate</td>
+</tr>
+<tr class="odd">
+<td>Uses heuristics (eg choppping off endings)</td>
+<td>Uses a dictionary-based lookup</td>
+</tr>
+<tr class="even">
+<td>Produces root words</td>
+<td>Produces base words</td>
+</tr>
+<tr class="odd">
+<td>Removes word suffixes</td>
+<td>Maps words to base forms</td>
+</tr>
+<tr class="even">
+<td>Does not require POS tagging</td>
+<td>Requires POS tagging</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="regular-expressions" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="regular-expressions"><span class="header-section-number">4.3</span> Regular Expressions</h2>
+<ul>
+<li>Regular expressions are a powerful tool for <strong>pattern matching</strong> and text processing.</li>
+<li>They allow you to search for patterns in text, extract specific information, and perform complex text transformations.</li>
+</ul>
+<p><strong>Regular Expression (Disjunction) Table</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pattern</th>
+<th>Matches</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>.</td>
+<td>Any character except newline</td>
+<td>“a.b” matches “axb”, “a1b”, “a@b”</td>
+</tr>
+<tr class="even">
+<td>^</td>
+<td>Start of string</td>
+<td>“^abc” matches “abc”, “abcd”, “abc123”</td>
+</tr>
+<tr class="odd">
+<td>$</td>
+<td>End of string</td>
+<td>“abc$” matches “abc”, “123abc”, “xyzabc”</td>
+</tr>
+<tr class="even">
+<td>*</td>
+<td>Zero or more occurrences</td>
+<td>“ab*c” matches “ac”, “abc”, “abbc”</td>
+</tr>
+<tr class="odd">
+<td>+</td>
+<td>One or more occurrences</td>
+<td>“ab+c” matches “abc”, “abbc”, “abbbc”</td>
+</tr>
+<tr class="even">
+<td>?</td>
+<td>Zero or one occurrence</td>
+<td>“ab?c” matches “ac”, “abc”</td>
+</tr>
+<tr class="odd">
+<td>{n}</td>
+<td>Exactly n occurrences</td>
+<td>“ab{2}c” matches “abbc”</td>
+</tr>
+<tr class="even">
+<td>{n,}</td>
+<td>n or more occurrences</td>
+<td>“ab{2,}c” matches “abbc”, “abbbc”</td>
+</tr>
+<tr class="odd">
+<td>{n,m}</td>
+<td>Between n and m occurrences</td>
+<td>“ab{2,3}c” matches “abbc”, “abbbc”</td>
+</tr>
+<tr class="even">
+<td>[abc]</td>
+<td>Any character in the set</td>
+<td>“[abc]” matches “a”, “b”, “c”</td>
+</tr>
+<tr class="odd">
+<td>[^abc]</td>
+<td>Any character not in the set</td>
+<td>“[^abc]” matches “d”, “e”, “f”</td>
+</tr>
+<tr class="even">
+<td>[A-Z]</td>
+<td>Any character in the range</td>
+<td>“[A-Z]” matches “A”, “B”, “C”</td>
+</tr>
+<tr class="odd">
+<td>[a-z]</td>
+<td>Any character in the range</td>
+<td>“[a-z]” matches “a”, “b”, “c”</td>
+</tr>
+<tr class="even">
+<td>[0-9]</td>
+<td>Any digit</td>
+<td>“[0-9]” matches “0”, “1”, “2”</td>
+</tr>
+<tr class="odd">
+<td>\d</td>
+<td>Any digit</td>
+<td>“\d” matches “0”, “1”, “2”</td>
+</tr>
+<tr class="even">
+<td>\D</td>
+<td>Any non-digit</td>
+<td>“\D” matches “a”, “b”, “c”</td>
+</tr>
+<tr class="odd">
+<td>\w</td>
+<td>Any word character</td>
+<td>“\w” matches “a”, “b”, “c”, “0”, “1”, “2”</td>
+</tr>
+<tr class="even">
+<td>\W</td>
+<td>Any non-word character</td>
+<td>“\W” matches “@”, “#”, “$”</td>
+</tr>
+<tr class="odd">
+<td>\s</td>
+<td>Any whitespace character</td>
+<td>“\s” matches ” “,”, “”</td>
+</tr>
+<tr class="even">
+<td>\S</td>
+<td>Any non-whitespace character</td>
+<td>“\S” matches “a”, “b”, “c”</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Regular Expression Method Table</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>re.match()</td>
+<td>Matches a pattern at the beginning of a string</td>
+</tr>
+<tr class="even">
+<td>re.search()</td>
+<td>Searches for a pattern in a string</td>
+</tr>
+<tr class="odd">
+<td>re.findall()</td>
+<td>Finds all occurrences of a pattern in a string</td>
+</tr>
+<tr class="even">
+<td>re.split()</td>
+<td>Splits a string based on a pattern</td>
+</tr>
+<tr class="odd">
+<td>re.sub()</td>
+<td>Replaces a pattern in a string with another pattern</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example of Regular Expressions in Python</strong></p>
+<div id="0860578c" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"The quick brown fox jumps over the lazy dog. The dog barks at the fox."</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> sent_tokenize(text)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> word_tokenize(text)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Find all words that start with "b"</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\b[bB]\w+"</span>  <span class="co"># \b is a word boundary, \w+ is one or more word characters</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word <span class="kw">in</span> words:</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> re.match(pattern, word):</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f" All words that start with 'b': </span><span class="sc">{</span>word<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Find all sentences that contain the word "dog"</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\b[dD]ogs?\b"</span>  <span class="co"># \b is a word boundary, ? is zero or one occurrence of previous character, s? matches "dog" or "dogs"</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sentence <span class="kw">in</span> sentences:</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> re.search(pattern, sentence):</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f" All sentences containing word 'dog': </span><span class="sc">{</span>sentence<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> All words that start with 'b': brown
+ All words that start with 'b': barks
+ All sentences containing word 'dog': The quick brown fox jumps over the lazy dog.
+ All sentences containing word 'dog': The dog barks at the fox.</code></pre>
+</div>
+</div>
+</section>
+<section id="pos-tagging" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="pos-tagging"><span class="header-section-number">4.4</span> POS Tagging</h2>
+<ul>
+<li><p>Part-of-speech (POS) tagging is the process of assigning a part of speech to each word in a text. The part of speech indicates the grammatical category of the word, such as noun, verb, adjective, etc.</p></li>
+<li><p>The goal of POS tagging is to identify the syntactic structure of a sentence and extract useful information about the text.</p></li>
+<li><p><strong>Types of POS Tagging</strong></p>
+<ul>
+<li><strong>Rule-based POS Tagging</strong>:
+<ul>
+<li>Uses hand-crafted rules to assign POS tags to words based on their context.</li>
+<li>Relies on a predefined set of rules and patterns to determine the correct POS tag for a word.</li>
+<li><strong>Pros</strong>:
+<ul>
+<li>Simple and easy to implement, but may not be as accurate as other methods.</li>
+<li>Doesnt require a lot of computational resources or training data.</li>
+<li>Can be easily customized and adapted to different languages and domains.</li>
+<li><strong>Cons</strong>:
+<ul>
+<li>May not be as accurate as other methods, especially for complex or ambiguous cases.</li>
+<li>Requires manual effort to define rules and patterns for different languages and domains.</li>
+<li>Limited to the rules and patterns defined by the developer, which may not cover all cases.</li>
+</ul></li>
+<li><strong>Example</strong>: Rule-based POS taggers in NLTK such as the <code>DefaultTagger</code> and <code>RegexpTagger</code> and <code>pos_tag</code> method. <br> <br></li>
+</ul></li>
+</ul></li>
+<li><strong>Statistical POS Tagging</strong>:</li>
+<li>Uses statistical models (such as Hidden Markov Models) to assign POS tags to words based on their context and probability.</li>
+<li>Learns the patterns and relationships between words and their POS tags from a large corpus of annotated text.
+<ul>
+<li><strong>Pros</strong>:
+<ul>
+<li>More accurate than rule-based methods, especially for complex or ambiguous cases.</li>
+<li>Can handle a wide range of languages and domains without manual intervention.</li>
+<li>Can be trained on large datasets to improve accuracy and performance.</li>
+</ul></li>
+<li><strong>Cons</strong>:
+<ul>
+<li>Requires a large amount of annotated training data to train the statistical model.</li>
+<li>Can be computationally intensive and require significant resources for training and inference.</li>
+<li>May not be as interpretable or transparent as rule-based methods, making it difficult to understand the model’s decisions.</li>
+</ul></li>
+<li><strong>Examples</strong>: Machine learning-based POS taggers in spaCy such as the <code>PerceptronTagger</code> and <code>CNNTagger</code>.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><strong>Most Common POS Tags (NLTK)</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tag</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CC</td>
+<td>Coordinating conjunction</td>
+<td>and, but, or</td>
+</tr>
+<tr class="even">
+<td>CD</td>
+<td>Cardinal number</td>
+<td>1, 2, 3</td>
+</tr>
+<tr class="odd">
+<td>DT</td>
+<td>Determiner</td>
+<td>the, a, an</td>
+</tr>
+<tr class="even">
+<td>EX</td>
+<td>Existential there</td>
+<td>there</td>
+</tr>
+<tr class="odd">
+<td>FW</td>
+<td>Foreign word</td>
+<td>bonjour</td>
+</tr>
+<tr class="even">
+<td>IN</td>
+<td>Preposition or subordinating conjunction</td>
+<td>in, of, on</td>
+</tr>
+<tr class="odd">
+<td>JJ</td>
+<td>Adjective</td>
+<td>big, green, happy</td>
+</tr>
+<tr class="even">
+<td>JJR</td>
+<td>Adjective, comparative</td>
+<td>bigger, greener, happier</td>
+</tr>
+<tr class="odd">
+<td>JJS</td>
+<td>Adjective, superlative</td>
+<td>biggest, greenest, happiest</td>
+</tr>
+<tr class="even">
+<td>LS</td>
+<td>List item marker</td>
+<td>1, 2, 3</td>
+</tr>
+<tr class="odd">
+<td>MD</td>
+<td>Modal</td>
+<td>can, could, might</td>
+</tr>
+<tr class="even">
+<td>NN</td>
+<td>Noun, singular or mass</td>
+<td>dog, cat, house</td>
+</tr>
+</tbody>
+</table>
+<p><br> <br></p>
+<p><strong>Most Common POS Tags (SpaCy)</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tag</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ADJ</td>
+<td>Adjective</td>
+<td>big, green, happy</td>
+</tr>
+<tr class="even">
+<td>ADP</td>
+<td>Adposition</td>
+<td>in, to, during</td>
+</tr>
+<tr class="odd">
+<td>ADV</td>
+<td>Adverb</td>
+<td>very, tomorrow, down</td>
+</tr>
+<tr class="even">
+<td>AUX</td>
+<td>Auxiliary</td>
+<td>is, has (done), will</td>
+</tr>
+<tr class="odd">
+<td>CONJ</td>
+<td>Conjunction</td>
+<td>and, or, but</td>
+</tr>
+<tr class="even">
+<td>CCONJ</td>
+<td>Coordinating conjunction</td>
+<td>and, or, but</td>
+</tr>
+<tr class="odd">
+<td>DET</td>
+<td>Determiner</td>
+<td>a, an, the</td>
+</tr>
+<tr class="even">
+<td>INTJ</td>
+<td>Interjection</td>
+<td>psst, ouch, bravo</td>
+</tr>
+<tr class="odd">
+<td>NOUN</td>
+<td>N</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>NUM</td>
+<td>Numeral</td>
+<td>42, forty-two</td>
+</tr>
+</tbody>
+</table>
+<section id="example-of-pos-tagging-in-python-using-nltk" class="level4" data-number="4.4.0.1">
+<h4 data-number="4.4.0.1" class="anchored" data-anchor-id="example-of-pos-tagging-in-python-using-nltk"><span class="header-section-number">4.4.0.1</span> Example of POS Tagging in Python using NLTK</h4>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> word_tokenize</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk <span class="im">import</span> pos_tag</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"The quick brown fox jumps over the lazy dog."</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> word_tokenize(text)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>tags <span class="op">=</span> pos_tag(words)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word, tag <span class="kw">in</span> tags:</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>word<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>tag<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="example-of-pos-tagging-in-python-using-spacy" class="level4" data-number="4.4.0.2">
+<h4 data-number="4.4.0.2" class="anchored" data-anchor-id="example-of-pos-tagging-in-python-using-spacy"><span class="header-section-number">4.4.0.2</span> Example of POS Tagging in Python using spaCy</h4>
+<ul>
+<li>Make sure to download the spaCy model using <code>python -m spacy download en_core_web_sm</code></li>
+<li>This model is a small English model trained on written web text (blogs, news, comments), which includes vocabulary, vectors, syntax, and entities.</li>
+<li>The model is trained on the OntoNotes 5 corpus and supports POS tagging, dependency parsing, named entity recognition, and more.</li>
+</ul>
+<div id="8e4d8593" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>sample_text <span class="op">=</span> <span class="st">"The quick brown fox jumps over the lazy dog."</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> model(sample_text)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> word <span class="kw">in</span> doc:</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>word<span class="sc">.</span>text<span class="sc">}</span><span class="ss"> | </span><span class="sc">{</span>word<span class="sc">.</span>pos_<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The | DET
+quick | ADJ
+brown | ADJ
+fox | NOUN
+jumps | VERB
+over | ADP
+the | DET
+lazy | ADJ
+dog | NOUN
+. | PUNCT</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="named-entity-recognition-ner" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="named-entity-recognition-ner"><span class="header-section-number">4.5</span> Named Entity Recognition (NER)</h2>
+<ul>
+<li>Named Entity Recognition (NER) is the process of identifying and classifying named entities in a text.</li>
+<li>Named entities are real-world objects such as persons, organizations, locations, dates, and more.</li>
+<li>NER is an important task in NLP because it helps extract useful information from unstructured text and enables downstream tasks such as information retrieval, question answering, and text summarization.</li>
+<li>NER models are trained on annotated datasets that contain labeled examples of named entities in text.</li>
+<li><strong>Common types of named entities</strong>:
+<ul>
+<li><strong>Person</strong>: Names of people, such as “John Doe” or “Alice Smith”.</li>
+<li><strong>Organization</strong>: Names of companies, institutions, or groups, such as “Google” or “United Nations”.</li>
+<li><strong>Location</strong>: Names of places, such as “New York” or “Mount Everest”.</li>
+<li><strong>Date</strong>: Dates and times, such as “January 1, 2022” or “10:30 AM”.</li>
+<li><strong>Number</strong>: Numerical quantities, such as “100” or “3.14”.</li>
+<li><strong>Miscellaneous</strong>: Other named entities, such as “Apple” (the company) or “Python” (the programming language).</li>
+<li><strong>Event</strong>: Names of events, such as “World War II” or “Super Bowl”.</li>
+<li><strong>Product</strong>: Names of products, such as “iPhone” or “Coca-Cola”.</li>
+</ul></li>
+</ul>
+<section id="example-of-named-entity-recognition-in-python-using-nltk" class="level4" data-number="4.5.0.1">
+<h4 data-number="4.5.0.1" class="anchored" data-anchor-id="example-of-named-entity-recognition-in-python-using-nltk"><span class="header-section-number">4.5.0.1</span> Example of Named Entity Recognition in Python using NLTK</h4>
+<p>In NLP, a tree structure is often used to represent the syntactic structure of a sentence. Each node in the tree represents a linguistic unit, such as a word or a phrase, and the edges represent the relationships between these units. The <code>Tree</code> class provides various methods for creating, traversing, and modifying these tree structures.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">"Apple is a technology company based in Cupertino, California."</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> word_tokenize(text)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>tags <span class="op">=</span> pos_tag(words)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>tree <span class="op">=</span> ne_chunk(tags)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> subtree <span class="kw">in</span> tree:</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(subtree, Tree):</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        label <span class="op">=</span> subtree.label()</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>        words <span class="op">=</span> <span class="st">" "</span>.join([word <span class="cf">for</span> word, tag <span class="kw">in</span> subtree.leaves()])</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>words<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Note: NLTK’s named entity recognizer has identified “Apple”, “Cupertino”, and “California” as geopolitical entities (GPE).</li>
+<li>The NER model uses context and patterns learned from training data to classify named entities, but it is not always perfect and can sometimes make mistakes, as seen with “Apple” in this case.</li>
+</ul>
+</section>
+<section id="example-of-named-entity-recognition-in-python-using-spacy" class="level4" data-number="4.5.0.2">
+<h4 data-number="4.5.0.2" class="anchored" data-anchor-id="example-of-named-entity-recognition-in-python-using-spacy"><span class="header-section-number">4.5.0.2</span> Example of Named Entity Recognition in Python using spaCy</h4>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>sample_text <span class="op">=</span> <span class="st">"Apple is a technology company based in Cupertino, California."</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> model(sample_text)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>displacy.render(doc, style<span class="op">=</span><span class="st">"ent"</span>, jupyter<span class="op">=</span><span class="va">True</span>) <span class="co"># style="ent" is used to display named entities</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./session1.html" class="pagination-link" aria-label="Natural Language Processing - Chapter 1">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 1</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./session3.html" class="pagination-link" aria-label="Natural Language Processing - Chapter 3">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 3</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

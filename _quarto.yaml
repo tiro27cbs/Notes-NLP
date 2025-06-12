@@ -1,0 +1,26 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "My NLP Notes"
+  author: "Tim Roessling"
+  chapters:
+    - index.qmd
+    - session1.qmd
+    - session2.qmd
+    - session3.qmd
+    - session4.qmd
+    - session5.qmd
+    - session6.qmd
+    - session7.qmd
+    - session8.qmd
+    - session9.qmd
+    - session10.qmd
+    - session11.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    number-sections: true

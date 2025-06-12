@@ -1,0 +1,175 @@
+---
+title: "Natural Language Processing - Chapter 4"
+author: "Maxwell Bernard"
+date: "`r Sys.Date()`"
+format: html
+jupyter: myvenv
+---
+
+
+# Lecture 4
+## Text Classification
+- Text classification is the process of assigning predefined categories or labels to text documents based on their content.
+- It is a supervised learning task where a model is trained on labeled data to learn the relationship between the text and its corresponding labels.
+- Text classification is used in various applications such as spam detection, sentiment analysis, topic categorization, and more.
+- The goal of text classification is to build a model that can accurately predict the category of unseen text documents based on their content.
+- The process of text classification involves several steps, including data preprocessing, feature extraction, model training, and evaluation.
+- The choice of features and the classification algorithm can significantly impact the performance of the model.
+  
+There are three main types of text classification techniques:
+- **Supervised Learning**: The model is trained on labeled data, where each document is associated with a predefined category. The model learns to map the input features to the corresponding labels.
+  -  Naive Bayes, Logistic Regression
+- **Unsupervised Learning**: The model is trained on unlabeled data, where the goal is to discover hidden patterns or clusters in the data. The model learns to group similar documents together without any predefined labels.
+  - Latent Dirichlet Allocation (LDA), K-means clustering
+- **Deep Learning**: The model is trained on large amounts of data using deep neural networks. Deep learning models can automatically learn complex features and representations from the data, making them suitable for text classification tasks.
+  - Convolutional Neural Networks (CNNs), Recurrent Neural Networks (RNNs), Transformers (BERT, GPT-3)
+
+
+## Bayes Theorem
+- Bayes theorem is a fundamental concept in probability theory that describes the relationship between conditional probabilities. It is used to update the probability of a hypothesis based on new evidence.
+- The equation is given by: 
+$$P(H \mid E) = \frac{P(E \mid H) \cdot P(H)}{P(E)}$$
+- Where:
+  - P(H|E): The probability of hypothesis H given evidence E (posterior probability).
+  - P(E|H): The probability of evidence E given hypothesis H (likelihood).
+  - P(H): The prior probability of hypothesis H.
+  - P(E): The total probability of evidence E.
+
+- **Naive Assumption**: The naive assumption in Naive Bayes classifiers is that the features are conditionally independent given the class label. This simplifies the computation of the posterior probability.
+- The naive assumption allows us to calculate the joint probability of the features given the class label as the product of the individual probabilities of each feature.
+- An exmple of the naive assumption is:
+- $$P(X_1, X_2, ..., X_n \mid C) = P(X_1 \mid C) \cdot P(X_2 \mid C) \cdot ... \cdot P(X_n \mid C)$$
+- Where:
+  - P(X1, X2, ..., Xn | C): The joint probability of features X1, X2, ..., Xn given class C.
+  - P(Xi | C): The probability of feature Xi given class C.
+- The naive assumption is a simplification that allows Naive Bayes classifiers to work well in practice, even when the features are not truly independent.
+
+Types of Naive Bayes Classifiers:
+- **Gaussian Naive Bayes**: Assumes that the features follow a Gaussian (normal) distribution. It is suitable for continuous features.
+- **Multinomial Naive Bayes**: Assumes that the features are counts or frequencies. It is suitable for discrete features, such as word counts in text classification.
+- **Bernoulli Naive Bayes**: Assumes that the features are binary (0 or 1). It is suitable for binary features, such as presence or absence of words in text classification.
+
+Implementing Naive Bayes
+- **Step 1**: Load the dataset, clean and preprocess the text data.
+- **Step 2**: Split the dataset into training and testing sets.
+- **Step 3**: Extract features from the text data using techniques such as Bag of Words (BoW)
+- **Step 4**: Train the Naive Bayes classifier on the training set.
+- **Step 5**: Evaluate the classifier on the testing set using metrics such as accuracy, precision, recall, and F1-score.
+
+```{python}
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.pipeline import make_pipeline
+from sklearn.datasets import fetch_20newsgroups
+from nltk.corpus import stopwords
+stop_words = set(stopwords.words("english"))
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer
+stemmer = PorterStemmer()
+from nltk import download
+from nltk import pos_tag
+from nltk import ne_chunk
+from nltk.tree import Tree
+from nltk.tokenize import word_tokenize
+
+
+# Load the dataset
+newsgroups = fetch_20newsgroups(
+    subset="all", categories=["alt.atheism", "sci.space"], remove=("headers", "footers", "quotes")
+)
+df = pd.DataFrame({"text": newsgroups.data, "label": newsgroups.target})
+# Preprocess the text data
+
+
+def preprocess_text(text):
+    # Tokenize the text
+    tokens = word_tokenize(text)
+    # Remove stop words
+    tokens = [word for word in tokens if word.lower() not in stop_words]
+    # Stem the words
+    tokens = [stemmer.stem(word) for word in tokens]
+    return " ".join(tokens)
+
+
+df["text"] = df["text"].apply(preprocess_text)
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(
+    df["text"], df["label"], test_size=0.2, random_state=42
+)
+
+# Create a pipeline with CountVectorizer and MultinomialNB
+pipeline = make_pipeline(CountVectorizer(), MultinomialNB())
+
+# Train the Naive Bayes classifier
+pipeline.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred = pipeline.predict(X_test)
+
+# Evaluate the classifier
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy:.4f}")
+
+print("Classification Report:")
+print(classification_report(y_test, y_pred, target_names=newsgroups.target_names))
+
+```
+
+## Evaluation Metrics
+
+- **Accuracy**: The proportion of correctly classified instances out of the total instances.
+  - Formula: $Accuracy = \frac{TP + TN}{TP + TN + FP + FN}$
+  - Where:
+    - TP: True Positives
+    - TN: True Negatives
+    - FP: False Positives
+    - FN: False Negatives
+- **Precision**: The proportion of true positive predictions out of all positive predictions.
+  - Formula: $Precision = \frac{TP}{TP + FP}$
+  - Indicates how many of the predicted positive instances are actually positive.
+  - High precision means fewer false positives.
+- **Recall**: The proportion of true positive predictions out of all actual positive instances.
+  - Formula: $Recall = \frac{TP}{TP + FN}$
+  - Indicates how many of the actual positive instances were correctly predicted.
+  - High recall means fewer false negatives.
+  - Also known as Sensitivity or True Positive Rate.
+  - High precision and low recall means the model is conservative in making positive predictions.
+- **F1-Score**: The harmonic mean of precision and recall. It is a single metric that balances both precision and recall.
+  - Formula: $F1 = 2 \cdot \frac{Precision \cdot Recall}{Precision + Recall}$
+  - A high F1-score indicates a good balance between precision and recall.
+  - Useful when the class distribution is imbalanced, because accuracy can be misleading.
+  - **Classification Report**: A summary of precision, recall, and F1-score for each class in a multi-class classification problem.
+
+
+Disadvatages of Naive Bayes:
+
+  - **Independence Assumption**: The naive assumption of feature independence may not hold in real-world data, leading to suboptimal performance.
+  - **Zero Probability Problem**: If a feature value is not present in the training data for a particular class, the model will assign a probability of zero to that class, which can be problematic.
+  - **Probability Estimation Bias**: Naive Bayes may produce biased probability estimates, especially for rare events or classes with limited training data.
+  - **Feature Revelance**: Naive Bayes may not perform well when features are highly correlated or when the feature space is large and sparse.
+  - **Limited Expressiveness**: Naive Bayes is a linear classifier and may not capture complex relationships between features and classes.
+
+
+If you are using a Naive Bayes classifier for a dataset
+where 95% of the tweets are from positive class. Can
+you suggest any method to handle this imbalance, and
+briefly explain how it helps improve model
+performance?
+
+**Answer:** To handle class imbalance in a dataset where 95% of the tweets are from the positive class, you can use the following methods:
+
+  1. **Resampling Techniques**:
+      - **Oversampling**: Increase the number of instances in the minority class (negative class) by duplicating existing instances or generating synthetic samples (e.g., using SMOTE).
+      - **Undersampling**: Decrease the number of instances in the majority class (positive class) by randomly removing instances.
+      - **Combination**: Use a combination of oversampling and undersampling to balance the classes.
+      - **How it helps**: Resampling techniques help to create a more balanced dataset, which allows the model to learn better from both classes and reduces the bias towards the majority class. This can lead to improved performance in terms of precision, recall, and F1-score for the minority class.
+  2. **Class Weights**: Assign higher weights to the minority class during model training. This can be done by using the `class_weight` parameter in scikit-learn classifiers.
+      - **How it helps**: By assigning higher weights to the minority class, the model is penalized more for misclassifying instances from that class, which encourages it to focus on learning from the minority class.
+  3. **Ensemble Methods**: Use ensemble methods such as Random Forest or Gradient Boosting, which can handle class imbalance better than individual classifiers.
+      - **How it helps**: Ensemble methods combine the predictions of multiple classifiers, which can improve overall performance and robustness against class imbalance.
+
+

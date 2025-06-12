@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tim Roessling">
+<meta name="dcterms.date" content="2024-06-09">
+
+<title>11&nbsp; Natural Language Processing - Chapter 10 – My NLP Notes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./session11.html" rel="next">
+<link href="./session9.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./session10.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 10</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">My NLP Notes</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">index.html</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 1</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 2</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 3</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 4</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 5</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 6</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 7</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 8</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 9</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session10.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 10</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 11</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#chapter-10-the-transformer-and-pre-trained-language-models" id="toc-chapter-10-the-transformer-and-pre-trained-language-models" class="nav-link active" data-scroll-target="#chapter-10-the-transformer-and-pre-trained-language-models"><span class="header-section-number">12</span> Chapter 10: The Transformer and Pre-trained Language Models</a>
+  <ul class="collapse">
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span class="header-section-number">12.1</span> Background</a>
+  <ul class="collapse">
+  <li><a href="#descartes-and-the-nature-of-thought" id="toc-descartes-and-the-nature-of-thought" class="nav-link" data-scroll-target="#descartes-and-the-nature-of-thought"><span class="header-section-number">12.1.1</span> Descartes and the Nature of Thought</a></li>
+  <li><a href="#the-turing-test" id="toc-the-turing-test" class="nav-link" data-scroll-target="#the-turing-test"><span class="header-section-number">12.1.2</span> The Turing Test</a></li>
+  <li><a href="#singularity-and-agi" id="toc-singularity-and-agi" class="nav-link" data-scroll-target="#singularity-and-agi"><span class="header-section-number">12.1.3</span> Singularity and AGI</a></li>
+  </ul></li>
+  <li><a href="#the-challenge-of-language" id="toc-the-challenge-of-language" class="nav-link" data-scroll-target="#the-challenge-of-language"><span class="header-section-number">12.2</span> The Challenge of Language</a></li>
+  <li><a href="#the-miracle-of-llms-3-key-insights" id="toc-the-miracle-of-llms-3-key-insights" class="nav-link" data-scroll-target="#the-miracle-of-llms-3-key-insights"><span class="header-section-number">12.3</span> The Miracle of LLMs – 3 Key Insights</a></li>
+  <li><a href="#word-embeddings" id="toc-word-embeddings" class="nav-link" data-scroll-target="#word-embeddings"><span class="header-section-number">12.4</span> Word Embeddings</a></li>
+  <li><a href="#transformers" id="toc-transformers" class="nav-link" data-scroll-target="#transformers"><span class="header-section-number">12.5</span> Transformers</a>
+  <ul class="collapse">
+  <li><a href="#the-problem-with-static-embeddings" id="toc-the-problem-with-static-embeddings" class="nav-link" data-scroll-target="#the-problem-with-static-embeddings"><span class="header-section-number">12.5.1</span> The Problem with Static Embeddings</a></li>
+  <li><a href="#contextual-embeddings" id="toc-contextual-embeddings" class="nav-link" data-scroll-target="#contextual-embeddings"><span class="header-section-number">12.5.2</span> Contextual Embeddings</a></li>
+  <li><a href="#attention-mechanism" id="toc-attention-mechanism" class="nav-link" data-scroll-target="#attention-mechanism"><span class="header-section-number">12.5.3</span> Attention Mechanism</a></li>
+  <li><a href="#position-embeddings" id="toc-position-embeddings" class="nav-link" data-scroll-target="#position-embeddings"><span class="header-section-number">12.5.4</span> Position Embeddings</a></li>
+  <li><a href="#output-logits-and-softmax" id="toc-output-logits-and-softmax" class="nav-link" data-scroll-target="#output-logits-and-softmax"><span class="header-section-number">12.5.5</span> Output: Logits and Softmax</a></li>
+  <li><a href="#bert-bidirectional-encoder-representations-from-transformers" id="toc-bert-bidirectional-encoder-representations-from-transformers" class="nav-link" data-scroll-target="#bert-bidirectional-encoder-representations-from-transformers"><span class="header-section-number">12.5.6</span> BERT: Bidirectional Encoder Representations from Transformers</a></li>
+  <li><a href="#decoder-only-models-e.g.-gpt" id="toc-decoder-only-models-e.g.-gpt" class="nav-link" data-scroll-target="#decoder-only-models-e.g.-gpt"><span class="header-section-number">12.5.7</span> Decoder-Only Models (e.g., GPT)</a></li>
+  </ul></li>
+  <li><a href="#large-language-models-llms" id="toc-large-language-models-llms" class="nav-link" data-scroll-target="#large-language-models-llms"><span class="header-section-number">12.6</span> Large Language Models (LLMs)</a>
+  <ul class="collapse">
+  <li><a href="#from-n-gram-models-to-llms" id="toc-from-n-gram-models-to-llms" class="nav-link" data-scroll-target="#from-n-gram-models-to-llms"><span class="header-section-number">12.6.1</span> From N-gram Models to LLMs</a></li>
+  <li><a href="#why-llms-are-powerful" id="toc-why-llms-are-powerful" class="nav-link" data-scroll-target="#why-llms-are-powerful"><span class="header-section-number">12.6.2</span> Why LLMs Are Powerful</a></li>
+  </ul></li>
+  <li><a href="#decoding-and-sampling" id="toc-decoding-and-sampling" class="nav-link" data-scroll-target="#decoding-and-sampling"><span class="header-section-number">12.7</span> Decoding and Sampling</a>
+  <ul class="collapse">
+  <li><a href="#random-sampling" id="toc-random-sampling" class="nav-link" data-scroll-target="#random-sampling"><span class="header-section-number">12.7.1</span> Random Sampling</a></li>
+  <li><a href="#balancing-quality-and-diversity" id="toc-balancing-quality-and-diversity" class="nav-link" data-scroll-target="#balancing-quality-and-diversity"><span class="header-section-number">12.7.2</span> Balancing Quality and Diversity</a></li>
+  <li><a href="#top-k-sampling" id="toc-top-k-sampling" class="nav-link" data-scroll-target="#top-k-sampling"><span class="header-section-number">12.7.3</span> Top-k Sampling</a></li>
+  <li><a href="#top-p-nucleus-sampling" id="toc-top-p-nucleus-sampling" class="nav-link" data-scroll-target="#top-p-nucleus-sampling"><span class="header-section-number">12.7.4</span> Top-p (Nucleus) Sampling</a></li>
+  <li><a href="#temperature-sampling" id="toc-temperature-sampling" class="nav-link" data-scroll-target="#temperature-sampling"><span class="header-section-number">12.7.5</span> Temperature Sampling</a></li>
+  </ul></li>
+  <li><a href="#pretraining" id="toc-pretraining" class="nav-link" data-scroll-target="#pretraining"><span class="header-section-number">12.8</span> Pretraining</a>
+  <ul class="collapse">
+  <li><a href="#self-supervised-training" id="toc-self-supervised-training" class="nav-link" data-scroll-target="#self-supervised-training"><span class="header-section-number">12.8.1</span> Self-Supervised Training</a></li>
+  <li><a href="#language-model-training-loss-function" id="toc-language-model-training-loss-function" class="nav-link" data-scroll-target="#language-model-training-loss-function"><span class="header-section-number">12.8.2</span> Language Model Training: Loss Function</a></li>
+  <li><a href="#pretraining-data" id="toc-pretraining-data" class="nav-link" data-scroll-target="#pretraining-data"><span class="header-section-number">12.8.3</span> Pretraining Data</a></li>
+  <li><a href="#what-does-a-model-learn-from-pretraining" id="toc-what-does-a-model-learn-from-pretraining" class="nav-link" data-scroll-target="#what-does-a-model-learn-from-pretraining"><span class="header-section-number">12.8.4</span> What Does a Model Learn from Pretraining?</a></li>
+  </ul></li>
+  <li><a href="#working-with-large-language-models" id="toc-working-with-large-language-models" class="nav-link" data-scroll-target="#working-with-large-language-models"><span class="header-section-number">12.9</span> Working with Large Language Models</a>
+  <ul class="collapse">
+  <li><a href="#model-types" id="toc-model-types" class="nav-link" data-scroll-target="#model-types"><span class="header-section-number">12.9.1</span> Model Types</a></li>
+  <li><a href="#key-settings" id="toc-key-settings" class="nav-link" data-scroll-target="#key-settings"><span class="header-section-number">12.9.2</span> Key Settings</a></li>
+  <li><a href="#prompt-structure" id="toc-prompt-structure" class="nav-link" data-scroll-target="#prompt-structure"><span class="header-section-number">12.9.3</span> Prompt Structure</a></li>
+  <li><a href="#common-tasks" id="toc-common-tasks" class="nav-link" data-scroll-target="#common-tasks"><span class="header-section-number">12.9.4</span> Common Tasks</a></li>
+  <li><a href="#prompting-techniques" id="toc-prompting-techniques" class="nav-link" data-scroll-target="#prompting-techniques"><span class="header-section-number">12.9.5</span> Prompting Techniques</a></li>
+  </ul></li>
+  <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">12.10</span> Takeaways</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 10</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tim Roessling </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 9, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-10-the-transformer-and-pre-trained-language-models" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> Chapter 10: The Transformer and Pre-trained Language Models</h1>
+<section id="background" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="background"><span class="header-section-number">12.1</span> Background</h2>
+<section id="descartes-and-the-nature-of-thought" class="level3" data-number="12.1.1">
+<h3 data-number="12.1.1" class="anchored" data-anchor-id="descartes-and-the-nature-of-thought"><span class="header-section-number">12.1.1</span> Descartes and the Nature of Thought</h3>
+<p>Philosophers like Descartes have long debated what it means to “think.” In the context of artificial intelligence, this leads us to consider whether machines can truly understand or just simulate understanding.</p>
+</section>
+<section id="the-turing-test" class="level3" data-number="12.1.2">
+<h3 data-number="12.1.2" class="anchored" data-anchor-id="the-turing-test"><span class="header-section-number">12.1.2</span> The Turing Test</h3>
+<p>Alan Turing proposed a test to determine if a machine can exhibit intelligent behavior indistinguishable from a human. If a human evaluator cannot reliably tell the machine from a human based on their responses, the machine is said to have passed the Turing Test.</p>
+</section>
+<section id="singularity-and-agi" class="level3" data-number="12.1.3">
+<h3 data-number="12.1.3" class="anchored" data-anchor-id="singularity-and-agi"><span class="header-section-number">12.1.3</span> Singularity and AGI</h3>
+<p>The concept of the Singularity refers to a hypothetical point where artificial intelligence surpasses human intelligence, leading to rapid technological growth. AGI (Artificial General Intelligence) is the idea of machines that can perform any intellectual task that a human can.</p>
+</section>
+</section>
+<section id="the-challenge-of-language" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="the-challenge-of-language"><span class="header-section-number">12.2</span> The Challenge of Language</h2>
+<p>Language is complex and powerful. It allows us to express an infinite number of ideas using a finite set of words and rules. Sentences can have unbounded dependencies, such as:</p>
+<blockquote class="blockquote">
+<p>“The cat that the dog chased ran away.”</p>
+</blockquote>
+<p>Here, “the cat” and “ran away” are connected, even though other words intervene.</p>
+</section>
+<section id="the-miracle-of-llms-3-key-insights" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="the-miracle-of-llms-3-key-insights"><span class="header-section-number">12.3</span> The Miracle of LLMs – 3 Key Insights</h2>
+<ol type="1">
+<li><p><strong>Bag of Words / N-grams</strong><br>
+Early models represented text as unordered collections of words (bag of words) or short sequences (n-grams). For example, the sentence “The quick brown fox” as a bag of words is just {“The”, “quick”, “brown”, “fox”}.</p></li>
+<li><p><strong>Word Embeddings and Self-Learning</strong><br>
+Word embeddings map words to high-dimensional vectors that capture semantic relationships. For example:</p>
+<ul>
+<li>“king” - “man” + “woman” ≈ “queen”</li>
+<li>“Paris” - “France” + “Italy” ≈ “Rome” These vectors capture analogies and relationships between words.</li>
+</ul></li>
+<li><p><strong>The Transformer</strong><br>
+Transformers (covered in detail next) revolutionized NLP by allowing models to consider the entire context of a sentence, not just local word sequences.</p></li>
+</ol>
+</section>
+<section id="word-embeddings" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="word-embeddings"><span class="header-section-number">12.4</span> Word Embeddings</h2>
+<p>Word vectors are rich representations of word meaning and usage. They capture relationships such as:</p>
+<ul>
+<li><p><strong>Gender:</strong><br>
+“king” - “man” + “woman” ≈ “queen”</p></li>
+<li><p><strong>Capital Cities:</strong><br>
+“Paris” - “France” + “Italy” ≈ “Rome”</p></li>
+<li><p><strong>Comparatives:</strong><br>
+“big” - “bigger” + “small” ≈ “smaller”</p></li>
+</ul>
+<p>These embeddings allow models to understand and manipulate language in a way that reflects real-world relationships.</p>
+<p>What we need is a method to capture how words are combined to produce sentences and meaning—this is where models like the Transformer come in.</p>
+</section>
+<section id="transformers" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="transformers"><span class="header-section-number">12.5</span> Transformers</h2>
+<section id="the-problem-with-static-embeddings" class="level3" data-number="12.5.1">
+<h3 data-number="12.5.1" class="anchored" data-anchor-id="the-problem-with-static-embeddings"><span class="header-section-number">12.5.1</span> The Problem with Static Embeddings</h3>
+<p>Traditional embeddings like <strong>word2vec</strong> are <em>static</em>:<br>
+A word always has the same vector, regardless of context.</p>
+<blockquote class="blockquote">
+<p><em>Example:</em><br>
+“The chicken didn’t cross the road because <strong>it</strong> was too tired.”</p>
+</blockquote>
+<p>What does “it” refer to?<br>
+A static embedding for “it” cannot capture the difference between “chicken” and “road” as possible referents.</p>
+<p><strong>Key Insight:</strong><br>
+A word’s meaning should change depending on its context!</p>
+</section>
+<section id="contextual-embeddings" class="level3" data-number="12.5.2">
+<h3 data-number="12.5.2" class="anchored" data-anchor-id="contextual-embeddings"><span class="header-section-number">12.5.2</span> Contextual Embeddings</h3>
+<ul>
+<li><strong>Contextual embeddings</strong> assign a different vector to each word <em>in each context</em>.</li>
+<li>The meaning of “it” in the above sentence depends on the surrounding words.</li>
+</ul>
+<p><strong>How can we compute contextual embeddings?</strong><br>
+→ <strong>Attention</strong></p>
+</section>
+<section id="attention-mechanism" class="level3" data-number="12.5.3">
+<h3 data-number="12.5.3" class="anchored" data-anchor-id="attention-mechanism"><span class="header-section-number">12.5.3</span> Attention Mechanism</h3>
+<p><strong>Intuition:</strong><br>
+To build a contextual embedding for a word, we <em>selectively integrate</em> information from all other words in the sentence.</p>
+<ul>
+<li>Each word “attends to” other words, weighting them by relevance.</li>
+<li>The embedding for a word is a <em>weighted sum</em> of the embeddings of all words in the sentence.</li>
+</ul>
+<blockquote class="blockquote">
+<p><em>Example 1:</em><br>
+“The chicken didn’t cross the road because <strong>it</strong> was too tired.”<br>
+Here, “it” likely refers to “chicken”.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><em>Example 2:</em><br>
+“The chicken didn’t cross the road because <strong>it</strong> was too wide.”<br>
+Here, “it” likely refers to “road”.</p>
+</blockquote>
+<p>At the word “it”, the model uses attention to decide whether “it” refers to “chicken” or “road”, based on context.</p>
+<p><strong>Formally:</strong><br>
+Given token embeddings:<br>
+x₁, x₂, x₃, …, xₙ</p>
+<p>For each word:<br>
+aᵢ = weighted sum of x₁, x₂, …, xₙ<br>
+Weights are based on similarity to xᵢ (the current word).</p>
+<p><strong>Result:</strong><br>
+- Each word’s embedding is <em>context-dependent</em>. - Attention enables models to capture complex relationships and meanings in language.</p>
+</section>
+<section id="position-embeddings" class="level3" data-number="12.5.4">
+<h3 data-number="12.5.4" class="anchored" data-anchor-id="position-embeddings"><span class="header-section-number">12.5.4</span> Position Embeddings</h3>
+<p>Transformers have no inherent sense of word order.<br>
+<strong>Position embeddings</strong> solve this by assigning each position in the sequence a unique vector.</p>
+<ul>
+<li>For a sequence of length N, learn a position embedding matrix Eₚₒₛ of shape [1 × N].</li>
+<li>Each position (e.g., 1, 2, 3, …) gets its own embedding, learned during training.</li>
+<li>These are added to the word embeddings so the model knows the order of words.</li>
+</ul>
+<blockquote class="blockquote">
+<p><em>Example:</em><br>
+The embedding for “fish” at position 3 is different from “fish” at position 17.</p>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/chapter10_1.png" class="img-fluid figure-img"></p>
+<figcaption>Position Embeddings</figcaption>
+</figure>
+</div>
+</section>
+<section id="output-logits-and-softmax" class="level3" data-number="12.5.5">
+<h3 data-number="12.5.5" class="anchored" data-anchor-id="output-logits-and-softmax"><span class="header-section-number">12.5.5</span> Output: Logits and Softmax</h3>
+<p>After processing, the model produces a <strong>logit</strong> (score) for each word in the vocabulary.</p>
+<ul>
+<li><strong>Logits:</strong> Vector of size [1 × |V|], where |V| is the vocabulary size.</li>
+<li><strong>Softmax:</strong> Converts logits into probabilities over the vocabulary.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/chapter10_2.png" class="img-fluid figure-img"></p>
+<figcaption>Final Transformer Model</figcaption>
+</figure>
+</div>
+</section>
+<section id="bert-bidirectional-encoder-representations-from-transformers" class="level3" data-number="12.5.6">
+<h3 data-number="12.5.6" class="anchored" data-anchor-id="bert-bidirectional-encoder-representations-from-transformers"><span class="header-section-number">12.5.6</span> BERT: Bidirectional Encoder Representations from Transformers</h3>
+<ul>
+<li><strong>BERT</strong> is an encoder-only Transformer.</li>
+<li><strong>Goal:</strong> Produce a rich vector representation for each token in the input sequence.</li>
+<li>Not a chatbot; best for classification tasks (e.g., sentiment analysis, spam detection, ticket routing).</li>
+</ul>
+<blockquote class="blockquote">
+<p><em>Example:</em><br>
+Given a sentence, BERT can classify its sentiment as positive or negative.</p>
+</blockquote>
+<ul>
+<li>BERT adds a special <code>[CLS]</code> token to represent the entire sequence (sentence embedding).</li>
+<li>For specific tasks, BERT is further trained (fine-tuned) with labeled data.</li>
+</ul>
+</section>
+<section id="decoder-only-models-e.g.-gpt" class="level3" data-number="12.5.7">
+<h3 data-number="12.5.7" class="anchored" data-anchor-id="decoder-only-models-e.g.-gpt"><span class="header-section-number">12.5.7</span> Decoder-Only Models (e.g., GPT)</h3>
+<ul>
+<li><strong>Goal:</strong> Generate new output sequences from input sequences (e.g., text generation, chatbots).</li>
+<li>Unlike BERT, these models predict the next word in a sequence.</li>
+</ul>
+<blockquote class="blockquote">
+<p><em>Example:</em><br>
+Given “The weather is”, GPT might generate “sunny today in Berlin.”</p>
+</blockquote>
+<p><strong>Summary Table: Encoder vs Decoder Transformers</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 13%">
+<col style="width: 41%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model Type</th>
+<th>Example</th>
+<th>Main Use</th>
+<th>Special Token</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Encoder-only</td>
+<td>BERT</td>
+<td>Classification, embeddings</td>
+<td><code>[CLS]</code></td>
+</tr>
+<tr class="even">
+<td>Decoder-only</td>
+<td>GPT</td>
+<td>Text generation</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="large-language-models-llms" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="large-language-models-llms"><span class="header-section-number">12.6</span> Large Language Models (LLMs)</h2>
+<p>Large Language Models (LLMs) are advanced neural networks trained to predict the next word in a sequence, enabling them to generate coherent and contextually relevant text.</p>
+<section id="from-n-gram-models-to-llms" class="level3" data-number="12.6.1">
+<h3 data-number="12.6.1" class="anchored" data-anchor-id="from-n-gram-models-to-llms"><span class="header-section-number">12.6.1</span> From N-gram Models to LLMs</h3>
+<ul>
+<li><p><strong>N-gram Language Models:</strong><br>
+Assign probabilities to word sequences based on observed counts in large text corpora.<br>
+<em>Example:</em><br>
+Given “The cat sat on the”, an n-gram model predicts “mat” if that sequence is common.</p></li>
+<li><p><strong>LLMs:</strong><br>
+Also assign probabilities to word sequences, but learn these probabilities by training on massive datasets and using deep neural networks (Transformers).<br>
+<em>Example:</em><br>
+Given “The cat sat on the”, an LLM might generate “mat”, “sofa”, or “floor”, depending on context.</p></li>
+</ul>
+</section>
+<section id="why-llms-are-powerful" class="level3" data-number="12.6.2">
+<h3 data-number="12.6.2" class="anchored" data-anchor-id="why-llms-are-powerful"><span class="header-section-number">12.6.2</span> Why LLMs Are Powerful</h3>
+<ul>
+<li>Even though LLMs are trained only to predict the next word, they learn a lot about language, facts, and reasoning.</li>
+<li>Many tasks can be reframed as next-word prediction.</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<ul>
+<li><p><em>Sentiment Analysis</em><br>
+Prompt:<br>
+&gt; The sentiment of the sentence “I like Jackie Chan” is<br>
+LLM likely predicts: “positive”</p></li>
+<li><p><em>Summarization</em><br>
+Prompt:<br>
+&gt; Summarize: “The movie was exciting and full of twists.”<br>
+LLM might generate: “Exciting and unpredictable movie.”</p></li>
+</ul>
+</section>
+</section>
+<section id="decoding-and-sampling" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="decoding-and-sampling"><span class="header-section-number">12.7</span> Decoding and Sampling</h2>
+<p>When generating text, LLMs must choose the next word based on predicted probabilities. This process is called <strong>decoding</strong>.</p>
+<section id="random-sampling" class="level3" data-number="12.7.1">
+<h3 data-number="12.7.1" class="anchored" data-anchor-id="random-sampling"><span class="header-section-number">12.7.1</span> Random Sampling</h3>
+<ul>
+<li>The model samples the next word according to its probability.</li>
+<li>Most of the time, high-probability words are chosen, but occasionally, rare words are picked, which can lead to unexpected or odd sentences.</li>
+</ul>
+<p><em>Example:</em><br>
+Prompt: “The sky is”<br>
+Possible outputs: “blue”, “clear”, “falling”, “delicious” (the last is odd, but possible with low probability).</p>
+</section>
+<section id="balancing-quality-and-diversity" class="level3" data-number="12.7.2">
+<h3 data-number="12.7.2" class="anchored" data-anchor-id="balancing-quality-and-diversity"><span class="header-section-number">12.7.2</span> Balancing Quality and Diversity</h3>
+<ul>
+<li><strong>Emphasize high-probability words:</strong>
+<ul>
+<li>More accurate, coherent, and factual<br>
+– Can be repetitive or boring</li>
+</ul></li>
+<li><strong>Emphasize middle-probability words:</strong>
+<ul>
+<li>More creative and diverse<br>
+– May be less factual or coherent</li>
+</ul></li>
+</ul>
+</section>
+<section id="top-k-sampling" class="level3" data-number="12.7.3">
+<h3 data-number="12.7.3" class="anchored" data-anchor-id="top-k-sampling"><span class="header-section-number">12.7.3</span> Top-k Sampling</h3>
+<ul>
+<li>Choose a number <em>k</em> (e.g., 10).</li>
+<li>For each prediction, keep only the top <em>k</em> most probable words.</li>
+<li>Randomly sample from these <em>k</em> words.</li>
+</ul>
+<p><em>Example:</em><br>
+If the top 3 words after “The sky is” are “blue”, “clear”, “cloudy”, only these are considered for sampling.</p>
+</section>
+<section id="top-p-nucleus-sampling" class="level3" data-number="12.7.4">
+<h3 data-number="12.7.4" class="anchored" data-anchor-id="top-p-nucleus-sampling"><span class="header-section-number">12.7.4</span> Top-p (Nucleus) Sampling</h3>
+<ul>
+<li>Instead of a fixed <em>k</em>, keep the smallest set of words whose total probability exceeds a threshold <em>p</em> (e.g., 0.9).</li>
+<li>This set may be larger or smaller depending on the context.</li>
+</ul>
+<p><em>Example:</em><br>
+If “blue” has 0.6, “clear” 0.2, “cloudy” 0.1, “stormy” 0.05, “red” 0.05, then top-p with p=0.9 includes “blue”, “clear”, “cloudy”.</p>
+</section>
+<section id="temperature-sampling" class="level3" data-number="12.7.5">
+<h3 data-number="12.7.5" class="anchored" data-anchor-id="temperature-sampling"><span class="header-section-number">12.7.5</span> Temperature Sampling</h3>
+<ul>
+<li>Adjusts the “sharpness” of the probability distribution.</li>
+<li><strong>Low temperature (τ &lt; 1):</strong><br>
+Makes the model more confident; high-probability words become even more likely.</li>
+<li><strong>High temperature (τ &gt; 1):</strong><br>
+Makes the model more random; low-probability words are more likely to be chosen.</li>
+</ul>
+<p><em>Example:</em><br>
+With τ = 0.5, “blue” is much more likely than “cloudy”.<br>
+With τ = 2.0, “cloudy” or “red” might be chosen more often.</p>
+<p><strong>How it works:</strong><br>
+Divide the logits (raw scores) by τ before applying softmax.<br>
+- τ = 1: No change<br>
+- τ &lt; 1: Sharper distribution<br>
+- τ &gt; 1: Flatter distribution</p>
+<p><strong>Summary Table: Decoding Methods</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 50%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>How it works</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Random</td>
+<td>Sample from all words by probability</td>
+<td>Most diverse, least accurate</td>
+</tr>
+<tr class="even">
+<td>Top-k</td>
+<td>Sample from top <em>k</em> words</td>
+<td>Balances quality and diversity</td>
+</tr>
+<tr class="odd">
+<td>Top-p</td>
+<td>Sample from smallest set covering <em>p</em> prob.</td>
+<td>Adaptive, flexible</td>
+</tr>
+<tr class="even">
+<td>Temperature</td>
+<td>Adjusts probability sharpness</td>
+<td>Controls randomness</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="pretraining" class="level2" data-number="12.8">
+<h2 data-number="12.8" class="anchored" data-anchor-id="pretraining"><span class="header-section-number">12.8</span> Pretraining</h2>
+<p>The big idea behind the success of language models:</p>
+<ol type="1">
+<li><strong>Pretrain</strong> a transformer model on enormous amounts of text.</li>
+<li><strong>Fine-tune</strong> it for new tasks.</li>
+</ol>
+<section id="self-supervised-training" class="level3" data-number="12.8.1">
+<h3 data-number="12.8.1" class="anchored" data-anchor-id="self-supervised-training"><span class="header-section-number">12.8.1</span> Self-Supervised Training</h3>
+<ul>
+<li>Train models to predict the next word in a sequence.</li>
+<li>At each time step <em>t</em>, ask the model to predict the next word.</li>
+<li>Use gradient descent to minimize the prediction error.</li>
+</ul>
+<p><strong>Why “self-supervised”?</strong><br>
+Because the next word in the text itself serves as the label—no manual annotation needed.</p>
+</section>
+<section id="language-model-training-loss-function" class="level3" data-number="12.8.2">
+<h3 data-number="12.8.2" class="anchored" data-anchor-id="language-model-training-loss-function"><span class="header-section-number">12.8.2</span> Language Model Training: Loss Function</h3>
+<ul>
+<li>Use <strong>cross-entropy loss</strong>.</li>
+<li>We want the model to assign a high probability to the true next word.</li>
+<li>If the model assigns too low a probability, the loss is high.</li>
+<li>Training adjusts weights to increase the probability of the correct word.</li>
+</ul>
+</section>
+<section id="pretraining-data" class="level3" data-number="12.8.3">
+<h3 data-number="12.8.3" class="anchored" data-anchor-id="pretraining-data"><span class="header-section-number">12.8.3</span> Pretraining Data</h3>
+<ul>
+<li><strong>Common Crawl:</strong> Billions of web pages.</li>
+<li><strong>Colossal Clean Crawled Corpus (C4):</strong> 156 billion tokens of English, filtered for quality.
+<ul>
+<li>Includes patent documents, Wikipedia, news sites, etc.</li>
+</ul></li>
+</ul>
+</section>
+<section id="what-does-a-model-learn-from-pretraining" class="level3" data-number="12.8.4">
+<h3 data-number="12.8.4" class="anchored" data-anchor-id="what-does-a-model-learn-from-pretraining"><span class="header-section-number">12.8.4</span> What Does a Model Learn from Pretraining?</h3>
+<ul>
+<li>Factual knowledge:
+<ul>
+<li>“The author of ‘A Room of One’s Own’ is Virginia Woolf.”</li>
+<li>“The square root of 4 is 2.”</li>
+</ul></li>
+<li>Language patterns:
+<ul>
+<li>“There are canines everywhere! One dog in the front room, and two dogs…”</li>
+<li>“It wasn’t just big, it was enormous.”</li>
+</ul></li>
+<li>Commonsense reasoning:
+<ul>
+<li>“The doctor told me that he…”</li>
+</ul></li>
+</ul>
+<p>Text contains enormous amounts of knowledge.<br>
+Pretraining on large, diverse text corpora gives language models their remarkable abilities.</p>
+</section>
+</section>
+<section id="working-with-large-language-models" class="level2" data-number="12.9">
+<h2 data-number="12.9" class="anchored" data-anchor-id="working-with-large-language-models"><span class="header-section-number">12.9</span> Working with Large Language Models</h2>
+<section id="model-types" class="level3" data-number="12.9.1">
+<h3 data-number="12.9.1" class="anchored" data-anchor-id="model-types"><span class="header-section-number">12.9.1</span> Model Types</h3>
+<ul>
+<li><strong>Base Model:</strong> Result of pre-training on large text corpora.</li>
+<li><strong>Instruct Model:</strong> Base model fine-tuned to follow instructions.</li>
+<li><strong>Chat Model:</strong> Further tuned for dialogue and conversational tasks.</li>
+</ul>
+</section>
+<section id="key-settings" class="level3" data-number="12.9.2">
+<h3 data-number="12.9.2" class="anchored" data-anchor-id="key-settings"><span class="header-section-number">12.9.2</span> Key Settings</h3>
+<ul>
+<li><p><strong>Temperature:</strong><br>
+Controls randomness in output.</p>
+<ul>
+<li>Low temperature (e.g., 0.2): More deterministic, focused responses.<br>
+</li>
+<li>High temperature (e.g., 1.0): More random, creative outputs.</li>
+</ul></li>
+<li><p><strong>Top-p (Nucleus Sampling):</strong><br>
+Only considers the smallest set of words whose cumulative probability exceeds <em>p</em> (e.g., 0.9).</p>
+<ul>
+<li>Higher <em>p</em>: More possible words, more diverse outputs.</li>
+</ul></li>
+<li><p><strong>Max Length:</strong><br>
+Maximum number of tokens in the generated response.</p></li>
+<li><p><strong>Stop Sequences:</strong><br>
+Specify tokens or phrases where generation should stop.</p></li>
+<li><p><strong>Frequency Penalty:</strong><br>
+Penalizes repeated words to encourage variety.</p></li>
+<li><p><strong>Presence Penalty:</strong><br>
+Penalizes new words to encourage sticking to the prompt context.</p></li>
+</ul>
+</section>
+<section id="prompt-structure" class="level3" data-number="12.9.3">
+<h3 data-number="12.9.3" class="anchored" data-anchor-id="prompt-structure"><span class="header-section-number">12.9.3</span> Prompt Structure</h3>
+<p>A good prompt often includes:</p>
+<ol type="1">
+<li><strong>Instruction:</strong> What you want the model to do.<br>
+<em>Example:</em> “Summarize the following text.”</li>
+<li><strong>Context:</strong> Extra information to guide the model.<br>
+<em>Example:</em> “The text is a news article.”</li>
+<li><strong>Input Data:</strong> The main content or question.<br>
+<em>Example:</em> “The movie was exciting and full of twists.”</li>
+<li><strong>Output Indicator:</strong> Desired format or type of output.<br>
+<em>Example:</em> “Summary:”</li>
+</ol>
+</section>
+<section id="common-tasks" class="level3" data-number="12.9.4">
+<h3 data-number="12.9.4" class="anchored" data-anchor-id="common-tasks"><span class="header-section-number">12.9.4</span> Common Tasks</h3>
+<ul>
+<li>Text Summarization</li>
+<li>Information Extraction</li>
+<li>Question Answering</li>
+<li>Text Classification</li>
+<li>Conversation</li>
+<li>Code Generation</li>
+<li>Reasoning</li>
+</ul>
+</section>
+<section id="prompting-techniques" class="level3" data-number="12.9.5">
+<h3 data-number="12.9.5" class="anchored" data-anchor-id="prompting-techniques"><span class="header-section-number">12.9.5</span> Prompting Techniques</h3>
+<ul>
+<li><p><strong>Zero-shot Prompting:</strong><br>
+Ask the model to perform a task without examples.<br>
+<em>Example:</em><br>
+&gt; “Translate to French: ‘Good morning.’”</p></li>
+<li><p><strong>Few-shot Prompting:</strong><br>
+Provide a few examples to guide the model.<br>
+<em>Example:</em><br>
+&gt; “Translate to French:<br>
+&gt; English: ‘Good morning.’ → French: ‘Bonjour.’<br>
+&gt; English: ‘How are you?’ → French:”</p></li>
+<li><p><strong>Chain-of-Thought Prompting:</strong><br>
+Encourage the model to explain its reasoning step by step.<br>
+<em>Example:</em><br>
+&gt; “If there are 3 apples and you eat 1, how many are left? Let’s think step by step.”</p></li>
+</ul>
+</section>
+</section>
+<section id="takeaways" class="level2" data-number="12.10">
+<h2 data-number="12.10" class="anchored" data-anchor-id="takeaways"><span class="header-section-number">12.10</span> Takeaways</h2>
+<ul>
+<li>Transformers use attention to create context-aware word representations.</li>
+<li><strong>BERT:</strong> Encoder model, best for classification and embedding tasks.</li>
+<li><strong>GPT:</strong> Decoder model, best for text generation and chat.</li>
+<li>Prompt engineering is key to getting useful outputs from LLMs.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./session9.html" class="pagination-link" aria-label="Natural Language Processing - Chapter 9">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 9</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./session11.html" class="pagination-link" aria-label="Natural Language Processing - Chapter 11">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Natural Language Processing - Chapter 11</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
