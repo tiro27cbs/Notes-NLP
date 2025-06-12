@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 book:
-  title: "My NLP Notes"
+  title: "NLP Notes"
   author: "Tim Roessling"
   chapters:
     - index.qmd
