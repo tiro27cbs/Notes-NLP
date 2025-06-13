@@ -119,47 +119,74 @@ These metrics help quantify how similar or related two words or documents are in
 
 ## Word2Vec
 
+Word2Vec is a widely used algorithm for learning **word embeddings**—dense vector representations that capture word meanings and relationships.
 
+### Dense vs. Sparse Vectors
 
+- **Sparse Vectors**: High-dimensional, mostly zeros. Used in one-hot or bag-of-words models.
+    - Example: One-hot for "apple" in a 10,000-word vocab: `[0, 0, ..., 1, ..., 0]`.
+    - Example: Bag-of-words for a document: `[2, 0, 0, 1, 0, ..., 0]`.
+- **Dense Vectors**: Low-dimensional, mostly nonzero. Used in embeddings like Word2Vec.
+    - Example: Word2Vec for "apple": `[0.12, -0.08, 0.44, ..., 0.03]` (50–300 dimensions).
 
-### Learning the Embeddings
-Instead of simply counting how often each word *w* occurs near "bank", Word2Vec takes a different approach:  
-it trains a classifier on a binary prediction task.
-
-We don't actually care about the classifier's predictions; instead, we use the learned classifier weights as the word embeddings.
-
-**Big idea: Self-supervision**  
-A word *c* that occurs near "bank" in the corpus is a good candidate for a word that is similar to "bank"—no need for human annotations.
-
-> Dense vectors (embeddings) work better in nearly every NLP task than sparse vectors.  
-> We don’t completely understand all the reasons for this.  
-> — SLP ch 6, p17
+Dense vectors group similar words closer together in space, capturing semantic similarity.
 
 ---
 
-### Learning Word2Vec Embeddings
-
-1. Treat the target word *t* and a neighboring context word *c* as a positive example.
-2. Randomly sample other words in the vocabulary to get negative examples.
-3. Use logistic regression to train a classifier to distinguish positive from negative pairs.
-4. Use the learned weights as the word embeddings.
-
----
 ### How Word2Vec Learns Embeddings
 
-- **Embeddings**: For each word (*w*) and context (*c*), Word2Vec learns a dense vector representation.
-- **Skip-Gram Training Data**: The model uses pairs of (target word, context word) from a corpus.
-- **Learning Objective**:
-    - Maximize the similarity between target words and their true context words (positive pairs).
-    - Minimize the similarity between target words and randomly chosen words (negative pairs).
+Word2Vec uses the **skip-gram** model:
 
-#### Training Process
+1. **Skip-Gram Objective**: For each word (the **target**) in a sentence, predict its nearby words (the **context**).
+    - Example sentence:  
+      `"The bank of the river was flooded."`
+    - If the target is `"bank"`, context words (window size 2) are: `"the"`, `"of"`, `"river"`, `"was"`.
 
-1. **Initialization**: Start with random vectors for each word in the vocabulary.
-2. **Positive Examples**: For each word in the corpus, pair it with its nearby context words.
-3. **Negative Examples**: Pair the target word with randomly sampled words from the vocabulary.
-4. **Classifier Training**: Use logistic regression to distinguish positive from negative pairs, updating the vectors to improve classification.
-5. **Result**: Discard the classifier; the learned vectors are the word embeddings.
+2. **Training Data**: Create (target, context) pairs from text.
+    - Example pairs:
+        | Target | Context |
+        |--------|---------|
+        | bank   | the     |
+        | bank   | of      |
+        | bank   | river   |
+        | bank   | was     |
+
+3. **Positive & Negative Examples**:
+    - **Positive**: Real (target, context) pairs from text.
+    - **Negative**: Randomly pair the target with unrelated words (not in the context window).
+
+4. **Learning Process**:
+    - Use a simple neural network (logistic regression) to distinguish positive from negative pairs.
+    - Adjust word vectors so that real pairs are similar, random pairs are dissimilar.
+
+5. **Result**: The learned vectors (embeddings) represent each word.
+
+> **Self-supervised**: The model learns from raw text, no human labels needed.
+
+---
+
+### Why Dense Vectors Matter
+
+- Dense vectors capture subtle relationships:
+    - `"king"` and `"queen"` have similar vectors.
+    - Vector arithmetic:  
+      `vec("king") - vec("man") + vec("woman") ≈ vec("queen")`
+- These embeddings work better for most NLP tasks than sparse vectors.
+
+---
+
+### Summary Table: Word2Vec Relationships
+
+| Concept                | Description                                                      |
+|------------------------|------------------------------------------------------------------|
+| **Embedding**          | Each word gets a dense vector                                    |
+| **Skip-Gram**          | Predict context words from a target word                         |
+| **Positive Example**   | (target, context) from real text                                 |
+| **Negative Example**   | (target, random word) not in context                             |
+| **Training**           | Make real pairs similar, random pairs dissimilar                 |
+| **Result**             | Vectors encode word meaning and relationships                    |
+
+---
 
 #### Analogy Reasoning with Embeddings
 
