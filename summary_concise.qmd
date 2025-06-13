@@ -1,0 +1,464 @@
+---
+title: "Concepts and Explanations Short"
+author: "Tim Roessling"
+format: html
+jupyter: myvenv
+---
+
+## Chapter 1: Foundations of NLP
+
+### The Revolution in NLP
+
+- Transformer models have enabled NLP systems to learn from massive datasets, using objectives like masked language modeling.
+- RLHF (Reinforcement Learning from Human Feedback) further aligns models with human preferences.
+
+### Language is Hard
+
+- Language is infinitely expressive and ambiguous, making it difficult for machines to achieve true understanding.
+- Even advanced models may not fully replicate human-like comprehension.
+
+### Brief History
+
+- Descartes doubted machines could imitate humans; Turing proposed the Turing Test to evaluate machine intelligence via conversation.
+- Passing the Turing Test means a machine's responses are indistinguishable from a human's.
+
+### NLP: The Basic Approach
+
+- Text data is unstructured and context-dependent, unlike numerical data.
+- Bag-of-words (BoW) representations structure text but ignore word order and context.
+
+### Supervised ML for Text Processing
+
+- Labeled text enables tasks like spam detection and sentiment analysis.
+- Raises questions about whether these approaches capture real language understanding.
+
+### Bag-of-Words Limitation
+
+- BoW ignores word order, so it cannot distinguish between sentences with the same words in different orders.
+
+### Language Modeling with N-grams
+
+- N-gram models assign probabilities to word sequences based on the Markov assumption (dependence on previous n-1 words).
+- They capture local word order but struggle with long-range dependencies and rare phrases.
+
+### Training an LLM
+
+- LLMs are trained to predict the next word using neural networks and the softmax function.
+- Training involves computing loss and updating model weights to improve predictions.
+
+### Probing GPT
+
+- LLMs generate coherent, grammatical text and show some understanding of linguistic structure.
+- They challenge previous claims about the impossibility of learning abstract linguistic knowledge from input alone.
+
+### AI: Where Are We Heading?
+
+- AGI aims for machines to match or surpass human cognitive abilities across tasks.
+- Benchmarks include passing exams, performing jobs, and completing complex real-world tasks.
+
+### Applications of LLMs
+
+- LLMs are used in customer support, research portals, automated help desks, and accessibility tools.
+
+### Takeaways
+
+- Language is inherently difficult for machines due to its infinite and ambiguous nature.
+- LLMs are rapidly advancing toward human-level language ability.
+
+---
+
+## Chapter 2: Core NLP Tools and Preprocessing
+
+### NLP Libraries
+
+- **NLTK**: Flexible and feature-rich, but slower; supports POS tagging, NER, and more.
+- **spaCy**: Fast, deep learning-based, suitable for production.
+- **TextBlob**: Simple API for basic NLP tasks, not suitable for large-scale production.
+
+### Normalization
+
+- Standardizes text (lowercasing, removing punctuation/stopwords, extra spaces, special characters) to reduce noise.
+
+### Morphological Normalization
+
+- **Stemming**: Reduces words to their root form by removing suffixes (fast, less accurate).
+- **Lemmatization**: Maps words to their dictionary form using vocabulary and POS information (more accurate, slower).
+
+### Tokenization
+
+- Splits text into tokens (words, sentences) for further processing.
+- Tokens are used for stemming, lemmatization, and POS tagging.
+
+### Regular Expressions
+
+- Used for pattern matching and text manipulation (searching, extracting, replacing).
+- Python’s `re` module provides methods for regex operations.
+
+### POS Tagging
+
+- Assigns grammatical categories (noun, verb, adjective, etc.) to each word.
+- Methods: rule-based and statistical (machine learning).
+
+### Named Entity Recognition (NER)
+
+- Identifies and classifies named entities (persons, organizations, locations, dates, etc.) in text.
+- Crucial for extracting structured information from unstructured text.
+
+---
+
+## Chapter 3: Language Modeling with N-grams
+
+### N-Gram Language Models
+
+- Predict the probability of a word based on the previous n-1 words.
+- Types: unigram, bigram, trigram.
+
+### Conditional Probability and Chain Rule
+
+- Joint probability measures the likelihood of multiple events together; conditional probability measures one event given another.
+- The chain rule allows calculation of a word sequence's probability by multiplying conditional probabilities.
+
+### Markov Assumption
+
+- Simplifies modeling by assuming a word depends only on the previous n-1 words.
+
+### N-Gram Probability Calculation & MLE
+
+- Probability is estimated by counting n-gram occurrences and dividing by the count of the previous (n-1)-gram.
+- MLE can assign zero probability to unseen n-grams.
+
+### Padding
+
+- Uses special tokens at sentence boundaries to handle missing context.
+
+### Underflow
+
+- Multiplying many small probabilities can cause underflow; log probabilities convert multiplication into addition.
+
+### Smoothing Techniques
+
+- Assign small non-zero probabilities to unseen n-grams (Laplace, add-k, Good-Turing, backoff/interpolation, Kneser-Ney).
+
+### Perplexity
+
+- Measures how well a model predicts text; lower perplexity indicates a better model.
+
+### Practical Implementation
+
+- Steps: tokenize, pad, generate n-grams, count, calculate probabilities, evaluate with perplexity.
+
+---
+
+## Chapter 4: Text Classification
+
+### Text Classification
+
+- Assigns predefined categories to text using supervised, unsupervised, or deep learning methods.
+- Used in spam detection, sentiment analysis, and topic categorization.
+
+### Types of Text Classification Techniques
+
+- **Supervised Learning**: Uses labeled data (e.g., Naive Bayes, Logistic Regression).
+- **Unsupervised Learning**: Finds patterns in unlabeled data (e.g., LDA, K-means).
+- **Deep Learning**: Uses neural networks (e.g., CNNs, RNNs, Transformers).
+
+### Bayes Theorem
+
+- Relates conditional probabilities and is used to update the probability of a hypothesis given new evidence.
+- Naive Bayes assumes features are conditionally independent given the class label.
+
+### Types of Naive Bayes Classifiers
+
+- **Gaussian**: For continuous features.
+- **Multinomial**: For discrete features like word counts.
+- **Bernoulli**: For binary features.
+
+### Implementing Naive Bayes
+
+- Steps: load and preprocess data, split into train/test, extract features, train classifier, evaluate.
+
+### Evaluation Metrics
+
+- **Accuracy**: Correct predictions / total predictions.
+- **Precision**: True positives / predicted positives.
+- **Recall**: True positives / actual positives.
+- **F1-Score**: Harmonic mean of precision and recall.
+
+### Disadvantages of Naive Bayes
+
+- Independence assumption may not hold; zero probability for unseen features; struggles with correlated features.
+
+### Handling Class Imbalance
+
+- **Resampling**: Oversample minority or undersample majority class.
+- **Class Weights**: Penalize misclassification of minority class.
+- **Ensemble Methods**: Improve robustness (e.g., Random Forest, Gradient Boosting).
+
+---
+
+## Chapter 5: Logistic Regression
+
+### Logistic Regression
+
+- Linear model for binary classification using the logistic (sigmoid) function.
+- Outputs probabilities between 0 and 1.
+
+### Log-Odds (Logit)
+
+- The log-odds is the logarithm of the odds ratio, modeled as a linear combination of input features.
+
+### Training Logistic Regression
+
+- Coefficients are estimated using Maximum Likelihood Estimation (MLE).
+- Regularization (L1, L2, Elastic Net) helps prevent overfitting.
+
+### Bag of Words vs. TF-IDF
+
+- **BoW**: Represents text as word count vectors, ignoring word order and context.
+- **TF-IDF**: Weighs words by their frequency in a document and rarity across the corpus.
+
+### LR Model Assumptions
+
+- Assumes linearity in log-odds, independence of observations, and no multicollinearity.
+
+### LR Limitations
+
+- Sensitive to multicollinearity and outliers; cannot capture complex, non-linear relationships.
+
+---
+
+## Chapter 6: Sentiment Analysis
+
+### Sentiment Analysis (SA)
+
+- Determines the sentiment (positive, negative, neutral) expressed in text.
+- Uses sentiment lexicons or machine learning models.
+
+### Resources for Sentiment Lexicons
+
+- **VADER**: Social media, handles negations/intensifiers.
+- **AFINN**: 3300+ English words, scores -5 to +5.
+- **SentiWordNet**: Assigns positive, negative, objective scores to WordNet synsets.
+- **LIWC**: Psychological/linguistic categories.
+
+### Sentiment Analysis Approaches
+
+- **Rule-based**: Uses predefined rules and lexicons.
+- **Machine learning-based**: Trains models on labeled data.
+- **Hybrid**: Combines both for improved performance.
+
+### Model Comparison
+
+- Lexicon-based models are simple but struggle with negation/sarcasm.
+- Deep learning models (LSTM, BERT) handle complex sentiment and context.
+
+### Python Libraries and Tools for SA
+
+- **NLTK**, **TextBlob**, **TensorFlow**, **PyTorch**, **Hugging Face Transformers**.
+
+### SA Challenges
+
+- Context, sarcasm, ambiguity, and domain-specific language make accurate classification difficult.
+
+---
+
+## Chapter 7: Topic Modeling
+
+### Topic Modeling
+
+- Unsupervised technique for discovering abstract topics in a collection of documents.
+
+### Latent Dirichlet Allocation (LDA)
+
+- Each document is a mixture of topics, each topic is a distribution over words.
+- Uses Bayes' Theorem for parameter estimation; methods include EM, Variational Inference, Gibbs sampling.
+
+### LDA Parameters and Trade-offs
+
+- Key parameters: document density (α), topic word density (β), number of topics (K).
+
+### Practical Considerations for LDA
+
+- Requires specifying the number of topics; works best with longer, preprocessed documents.
+
+### Top2Vec
+
+- Embeds documents/words in vector space, clusters, finds topics automatically.
+
+### BERTopic
+
+- Uses transformer-based embeddings for better topic quality, especially in nuanced/short texts.
+
+### K-means Clustering with Word2Vec
+
+- Clusters Word2Vec embeddings, suitable for short texts.
+
+---
+
+## Chapter 8: Word Meanings and Vector Semantics
+
+### Word Meanings
+
+- Meanings are complex and context-dependent; words can have multiple unrelated meanings (homonymy) or related senses (polysemy).
+
+### Word Relations
+
+- **Synonymy**: Similar meanings.
+- **Antonymy**: Opposite meanings.
+- **Similarity/Relatedness**: Words can be similar or just related.
+- **Connotation**: Emotional/cultural associations.
+
+### Vector Semantics
+
+- Represents words/documents as vectors in multidimensional space.
+- Distributional hypothesis: words in similar contexts have similar meanings.
+
+#### Comparing Word Vectors
+
+- **Cosine Similarity**, **Euclidean Distance**, **Dot Product**: Metrics for quantifying semantic similarity.
+
+### Word2Vec
+
+- Learns dense word embeddings by distinguishing real context pairs from random pairs.
+- Embeddings capture abstract relationships and analogies.
+
+---
+
+## Chapter 9: Neural Networks in NLP
+
+### Ambiguity in Language
+
+- Ambiguity is a core challenge, requiring structural models (parse trees, dependency graphs) to clarify meaning.
+
+### Simple Neural Networks
+
+- Layers of units (neurons) compute weighted sums, add bias, and apply activation functions.
+
+### Activation Functions
+
+- **Sigmoid**, **Tanh**, **ReLU**: Introduce non-linearity, enabling modeling of complex relationships.
+
+### Multi-Layer Networks and XOR
+
+- Multi-layer networks with non-linear activations can solve complex functions like XOR.
+
+### Feedforward Neural Networks
+
+- Information flows from input to output without cycles; hidden layers enable hierarchical representations.
+
+### Applying to NLP
+
+- Used for text classification, language modeling, and more; handle variable-length input via padding, truncation, or pooling.
+
+### Training Neural Networks
+
+- Uses backpropagation and gradient descent to minimize prediction error.
+
+---
+
+## Chapter 10: Transformers and Large Language Models
+
+### Key Innovations
+
+- **Bag of Words/N-grams**: Early models missed deeper context.
+- **Word Embeddings**: Capture semantic relationships.
+- **Transformers**: Consider entire sentence context via attention.
+
+### Transformers
+
+- Use attention to create context-aware word representations.
+- **Position embeddings** encode word order.
+
+### BERT and Decoder-Only Models
+
+- **BERT**: Encoder-only, best for classification and embeddings.
+- **GPT**: Decoder-only, best for text generation and chat.
+
+### Large Language Models (LLMs)
+
+- Trained to predict the next word, learning language, facts, and reasoning.
+- Decoding methods (random, top-k, top-p, temperature) balance quality and diversity.
+
+### Pretraining and Self-Supervised Learning
+
+- LLMs are pretrained on large text corpora using self-supervised learning and cross-entropy loss.
+
+### Working with LLMs
+
+- Prompt engineering (zero-shot, few-shot, chain-of-thought) is key for effective use.
+- Model types: base, instruct, chat.
+- Key settings: temperature, top-p, max length, penalties.
+
+---
+
+## Chapter 11: Question Answering and Information Retrieval
+
+### Information Retrieval (IR)
+
+- IR finds relevant documents from a large collection based on a user's query.
+- Documents and queries are represented as vectors (e.g., BoW, TF-IDF), and similarity (often cosine similarity) is used to rank results.
+- Key metrics: precision (fraction of retrieved documents that are relevant) and recall (fraction of relevant documents that are retrieved).
+
+### Vector Space Model & TF-IDF
+
+- Represents documents and queries as vectors in a high-dimensional space.
+- TF-IDF weighs terms by their importance: frequent in a document but rare in the collection.
+
+### Dense Retrieval with Neural Models
+
+- Uses neural networks (e.g., BERT) to encode queries and documents into dense embeddings.
+- Allows semantic matching beyond exact word overlap, addressing vocabulary mismatch.
+
+### Question Answering Datasets
+
+- Datasets like SQuAD provide passages and questions, with answers as text spans within the passage.
+- SQuAD 2.0 introduces unanswerable questions to test model robustness.
+
+### Extractive Question Answering
+
+- Involves selecting a span of text from a passage as the answer to a question.
+- Models (e.g., BERT) predict the start and end positions of the answer span.
+
+### Entity Linking (Wikification)
+
+- Maps mentions in text to specific entities in a knowledge base (e.g., Wikipedia pages).
+- Involves mention detection, candidate generation, and disambiguation based on context.
+
+### Knowledge-based Question Answering (KBQA)
+
+- Answers questions by mapping them to queries over structured knowledge bases (e.g., DBpedia, Wikidata).
+- Approaches: graph-based QA (traversing entity-relation graphs), semantic parsing (mapping questions to logical forms).
+- RDF triples (subject, predicate, object) are a common data structure.
+
+### Supervision for Semantic Parsing
+
+- Fully supervised: annotated logical forms for each question.
+- Weakly supervised: only the answer (denotation), logical form is latent.
+
+### Retrieve-and-Generate (RAG)
+
+- Combines retrieval of relevant documents or passages with generative LLMs to produce answers.
+- Retrieves relevant chunks, combines them with the question, and generates an answer using an LLM.
+
+### Evaluation of RAG Systems
+
+- Retrieval evaluation: checks if relevant chunks are retrieved (precision, recall).
+- Generation evaluation: assesses if the answer is correct, relevant, and faithful to the retrieved context.
+- Faithfulness and answer/context relevance are key; hallucinations should be avoided.
+
+### Agents
+
+- Agents are systems capable of forming intentions, making plans, and acting to achieve goals, often using internal representations.
+- LLM-based agents control application flow (e.g., LangChain agents) and can process text, audio, or visual input via modality fusion.
+
+### Formal vs. Functional Abilities of LLMs
+
+- Formal linguistic competence: knowledge of grammar and language rules.
+- Functional competence: ability to use language in real-world contexts.
+- LLMs excel at formal competence but may struggle with functional competence, such as real-world reasoning.
+
+### Takeaways
+
+- Question answering can be approached via IR, KBQA, or LLM-based methods (including RAG and agents).
+- Key datasets: SQuAD, SimpleQuestions, DBpedia.
+- LLMs are powerful for formal linguistic tasks, but functional, real-world understanding remains a challenge.

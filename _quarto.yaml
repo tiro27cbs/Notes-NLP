@@ -18,6 +18,8 @@ book:
     - session9.qmd
     - session10.qmd
     - session11.qmd
+    - summary_concise.qmd
+    - summary.qmd
 
 format:
   html:

@@ -8,6 +8,7 @@ jupyter: myvenv
 
 
 ## Logistic Regression
+
 - Logistic regression is a statistical method used for binary classification problems. It models the relationship between a binary dependent variable and one or more independent variables by estimating the probability of the dependent variable being in a particular class.
 - It is a type of regression analysis that uses the logistic function to model the probability of a binary outcome.
 - Logistic regression is widely used in various fields, including social sciences, healthcare, marketing, and finance, for tasks such as predicting customer churn, disease diagnosis, and credit risk assessment.
@@ -40,6 +41,7 @@ jupyter: myvenv
 
 
 ### Training Logistic Regression
+
 - **Maximum Likelihood Estimation (MLE)** is used to estimate the coefficients of the logistic regression model.
   - The MLE finds the values of the coefficients that maximize the likelihood of the observed data given the model.
 - **L2 regularization (Ridge)** is often used to prevent overfitting by adding a penalty term to the loss function.
@@ -63,6 +65,7 @@ Scikit-Learn's LogisticRegression
 
 
 ### Bag of Words vs. TF-IDF
+
 - **Bag of Words (BoW)**: A simple representation of text data where each document is represented as a vector of word counts. It ignores the order of words and focuses on the frequency of each word in the document.
   - Pros: Simple to implement, easy to interpret, works well for many applications.
   - Cons: Ignores word order, can lead to high-dimensional sparse vectors, may not capture semantic meaning.
@@ -95,6 +98,7 @@ Make table of columns: Feature | BoW | TF-IDF
 | Limitations | Ignores word order, may lead to high-dimensional vectors | May still lead to high-dimensional vectors, sensitive to document length, Does not capture word order |
 
 ### LR Model Assumptions
+
 - **Linearity**: The relationship between the independent variables and the log-odds of the dependent variable is linear. This means that a one-unit change in an independent variable will result in a constant change in the log-odds of the dependent variable.
 - **Independence**: The observations are independent of each other. This means that the outcome of one observation does not influence the outcome of another observation.
 - **No Multicollinearity**: The independent variables are not highly correlated with each other. This means that the model should not include highly correlated features, as this can lead to unstable coefficient estimates and difficulty in interpreting the results.
@@ -102,6 +106,7 @@ Make table of columns: Feature | BoW | TF-IDF
   
 
 ### LR Limitations
+
 - **Linearity Assumption**: Logistic regression assumes a linear relationship between the independent variables and the log-odds of the dependent variable. This may not hold true for all datasets, leading to poor performance.
 - **Feature Independence**: Logistic regression assumes that the independent variables are independent of each other. In practice, this assumption may not hold, leading to multicollinearity issues.
 - **Sensitivity to Outliers**: Logistic regression can be sensitive to outliers, which can disproportionately influence the model's coefficients and predictions.
