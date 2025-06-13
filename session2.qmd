@@ -55,7 +55,7 @@ Tasks involved in normalization include
 - **Tokenization**: Breaking a text into words, phrases, symbols, or other meaningful elements.
 - **Case Folding**: Converting all characters to lowercase.
 - **Removing Punctuation**: Removing any non-alphanumeric characters.
-- **Removing Stopwords**: Removing common words that do not carry much meaning.
+- **Removing Stopwords**: Removing common words that do not carry much meaning (e.g., "the", "is", "and", "in", "to", "of").
 - **Stemming or Lemmatization**: Reducing words to their base or root form.
 - **Removing Extra Spaces**: Removing any extra spaces between words.
 - **Expanding Contractions**: Expanding contractions such as "don't" to "do not".
@@ -173,6 +173,9 @@ for i in range(len(word_tokens)):
 - Lemmatization is more accurate than stemming but can be slower and more computationally intensive.
 - **WordNet Lemmatizer** is a popular lemmatization algorithm that is available in NLTK.
 
+> **Note:**  
+> NLTK vs spaCy for lemmatization: NLTK is more traditional and relies on WordNet, while spaCy uses a more modern approach. spaCy is generally more accurate.
+
 #### Example of stemming in Python using NLTK
 ```{python}
 sbs = SnowballStemmer("english")
@@ -228,6 +231,41 @@ for i in range(len(word_tokens)):
 | \\W | Any non-word character | "\\W" matches "@", "#", "$" |
 | \\s | Any whitespace character | "\\s" matches " ", "\t", "\n" |
 | \\S | Any non-whitespace character | "\\S" matches "a", "b", "c" |
+
+```{python}
+#(1.1)
+
+Employee_Record = ['Rajani Singh: rs.digi@cbs.dk: +918750602050',
+                   'Sine Zambach: sz.itm@cbs.dk: +4538153815',
+                    'Daniel Hardt: dha.msc@cbs.dk: +41852024']
+print('1.1 Created List\n''Employee Name:',' Email address:',' Telephone Number')
+for d in Employee_Record:
+    print(d)
+
+#(1.2)
+#\w is short hand for [a-zA-Z_]
+#\d is short hand for [0-9]
+
+import re
+my_pattern =r'(\w+\s\w+): (\w+\.(\w+)@\w+\.\w+)'
+print('\n1.2 Extracted Information \nEmployee Name:',' Email address:','Department')
+for d in Employee_Record:
+    match = re.search(my_pattern ,d)
+    print(match.group(1)+': ' + match.group(2) + ': ' + match.group(3))
+
+#(1.3)
+#In tel. number we select last 8 digits, after the prefix (which is set to optional using ? sign)
+
+new_pattern =r'(\w+\s\w+): \w+\.\w+@\w+\.\w+: \+?\d?\d?(\d{8,10}$)'
+print('\n1.3 Extracted Information \nEmployee Name:','Telephone Number')
+for d in Employee_Record:
+    match = re.search(new_pattern ,d)
+    print(match.group(1)+': ' + match.group(2))
+
+    #notice all the match groups - and how they work - in the first one we have 3, in the second one only two - always use them for the info you want to retrieve
+```
+
+
 
 **Regular Expression Method Table**
 

@@ -77,39 +77,42 @@ We can measure their similarity using various metrics.
 ### Comparing Word Vectors
 
 - **Cosine Similarity**: Measures the angle between two vectors (e.g., "king" and "queen" have high cosine similarity).
-    ```{python}
-    from sklearn.metrics.pairwise import cosine_similarity
-    import numpy as np
 
-    vec_king = np.array([0.5, 0.8, 0.1])
-    vec_queen = np.array([0.51, 0.79, 0.12])
+```{python}
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
 
-    cos_sim = cosine_similarity([vec_king], [vec_queen])
-    print("Cosine Similarity:", cos_sim[0][0])
-    ```
+vec_king = np.array([0.5, 0.8, 0.1])
+vec_queen = np.array([0.51, 0.79, 0.12])
+
+cos_sim = cosine_similarity([vec_king], [vec_queen])
+print("Cosine Similarity:", cos_sim[0][0])
+```
 
 - **Euclidean Distance**: Measures the straight-line distance between vectors.
-    ```{python}
-    from scipy.spatial.distance import euclidean
-    import numpy as np
 
-    vec_king = np.array([0.5, 0.8, 0.1])
-    vec_queen = np.array([0.51, 0.79, 0.12])
+```{python}
+from scipy.spatial.distance import euclidean
+import numpy as np
 
-    dist = euclidean(vec_king, vec_queen)
-    print("Euclidean Distance:", dist)
-    ```
+vec_king = np.array([0.5, 0.8, 0.1])
+vec_queen = np.array([0.51, 0.79, 0.12])
+
+dist = euclidean(vec_king, vec_queen)
+print("Euclidean Distance:", dist)
+```    
 
 - **Dot Product**: Measures similarity based on direction and magnitude.
-    ```{python}
-    import numpy as np
 
-    vec_king = np.array([0.5, 0.8, 0.1])
-    vec_queen = np.array([0.51, 0.79, 0.12])
+```{python}
+import numpy as np
 
-    dot = np.dot(vec_king, vec_queen)
-    print("Dot Product:", dot)
-    ```
+vec_king = np.array([0.5, 0.8, 0.1])
+vec_queen = np.array([0.51, 0.79, 0.12])
+
+dot = np.dot(vec_king, vec_queen)
+print("Dot Product:", dot)
+```
 
 These metrics help quantify how similar or related two words or documents are in vector space.
 
