@@ -506,17 +506,27 @@ Randomly assign each word in each document to one of the K topics.</p></li>
 <li><p><strong>Iterative Sampling:</strong><br>
 For each word ( w_{d,n} ) in document ( d ):</p>
 <ul>
-<li>Remove the current topic assignment for ( w_{d,n} ).</li>
-<li>Compute the probability of assigning topic ( k ) to ( w_{d,n} ) as: [ P(z_{d,n} = k z_{-}, w) ] where:
+<li><p>Remove the current topic assignment for ( w_{d,n} ).</p></li>
+<li><p>Compute the probability of assigning topic ( k ) to ( w_{d,n} ) as:</p>
+<p><span class="math display">\[
+P(z_{d,n} = k \mid z_{-}, w) \propto
+\frac{n_{d,k}^{-n} + \alpha}{\sum_{k'} n_{d,k'}^{-n} + K\alpha} \cdot
+\frac{n_{k,w}^{-n} + \beta}{\sum_{w'} n_{k,w'}^{-n} + V\beta}
+\]</span></p>
+<p>where:</p>
 <ul>
-<li>( n_{d,k}^{-n} ): Number of words in document ( d ) assigned to topic ( k ), excluding the current word.</li>
-<li>( n_{k,w}^{-n} ): Number of times word ( w ) is assigned to topic ( k ), excluding the current word.</li>
-<li>( ), ( ): Dirichlet priors.</li>
-<li>( K ): Number of topics.</li>
+<li>( n_{d,k}^{-n} ): Number of words in document ( d ) assigned to topic ( k ), excluding the current word.<br>
+</li>
+<li>( n_{k,w}^{-n} ): Number of times word ( w ) is assigned to topic ( k ), excluding the current word.<br>
+</li>
+<li>( ), ( ): Dirichlet priors.<br>
+</li>
+<li>( K ): Number of topics.<br>
+</li>
 <li>( V ): Vocabulary size.</li>
 </ul></li>
-<li>Sample a new topic for ( w_{d,n} ) from this distribution.</li>
-<li>Update the counts accordingly.</li>
+<li><p>Sample a new topic for ( w_{d,n} ) from this distribution.</p></li>
+<li><p>Update the counts accordingly.</p></li>
 </ul></li>
 <li><p><strong>Repeat:</strong><br>
 Iterate over all words multiple times (epochs) until the topic assignments stabilize.</p></li>
