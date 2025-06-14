@@ -66,7 +66,7 @@ LDA tries to reverse-engineer this process: given the words, it infers the topic
 - **Topic distribution per document** (`θ_d`): Which topics are likely in each document.
 - **Topic assignment for each word** (`z_{d,n}`): Which topic generated each word.
 
-![LDA as a graphical model](images/chapter7_1.png){#fig-tree width=80%}
+![LDA as a graphical model](C:\Users\roess\Documents\repos\Notes-NLP\images\chapter7_1.png){#fig-tree width=80%}
 
 ---
 
@@ -262,7 +262,7 @@ Top2Vec is a modern topic modeling algorithm (arXiv 2020, [GitHub: ddangelov/Top
 4. **Calculate topic vectors** for each cluster.
 5. **Find closest words** to each topic vector to define topics.
 
-![Top2Vec](images/chapter7_2.png){#fig-tree width=80%}
+![Top2Vec](images\chapter7_2.png){#fig-tree width=80%}
 
 #### Hyperparameters
 
