@@ -249,10 +249,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#word2vec" id="toc-word2vec" class="nav-link" data-scroll-target="#word2vec"><span class="header-section-number">9.3</span> Word2Vec</a>
   <ul class="collapse">
-  <li><a href="#what-are-dense-vectors" id="toc-what-are-dense-vectors" class="nav-link" data-scroll-target="#what-are-dense-vectors"><span class="header-section-number">9.3.1</span> What Are Dense Vectors?</a></li>
-  <li><a href="#the-skip-gram-model" id="toc-the-skip-gram-model" class="nav-link" data-scroll-target="#the-skip-gram-model"><span class="header-section-number">9.3.2</span> The Skip-Gram Model</a></li>
-  <li><a href="#how-does-word2vec-learn" id="toc-how-does-word2vec-learn" class="nav-link" data-scroll-target="#how-does-word2vec-learn"><span class="header-section-number">9.3.3</span> How Does Word2Vec Learn?</a></li>
-  <li><a href="#summary-how-word2vec-learns-embeddings" id="toc-summary-how-word2vec-learns-embeddings" class="nav-link" data-scroll-target="#summary-how-word2vec-learns-embeddings"><span class="header-section-number">9.3.4</span> Summary: How Word2Vec Learns Embeddings</a></li>
+  <li><a href="#from-sparse-to-dense-vectors" id="toc-from-sparse-to-dense-vectors" class="nav-link" data-scroll-target="#from-sparse-to-dense-vectors"><span class="header-section-number">9.3.1</span> From Sparse to Dense Vectors</a></li>
+  <li><a href="#how-word2vec-works" id="toc-how-word2vec-works" class="nav-link" data-scroll-target="#how-word2vec-works"><span class="header-section-number">9.3.2</span> How Word2Vec Works</a></li>
+  <li><a href="#why-dense-embeddings-are-powerful" id="toc-why-dense-embeddings-are-powerful" class="nav-link" data-scroll-target="#why-dense-embeddings-are-powerful"><span class="header-section-number">9.3.3</span> Why Dense Embeddings Are Powerful</a></li>
+  <li><a href="#word2vec-at-a-glance" id="toc-word2vec-at-a-glance" class="nav-link" data-scroll-target="#word2vec-at-a-glance"><span class="header-section-number">9.3.4</span> Word2Vec at a Glance</a></li>
   </ul></li>
   <li><a href="#takeaways" id="toc-takeaways" class="nav-link" data-scroll-target="#takeaways"><span class="header-section-number">9.4</span> Takeaways</a>
   <ul class="collapse">
@@ -371,7 +371,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Each row is a word, each column is a document, and the numbers are word counts.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/chapter8_1.png" class="img-fluid figure-img"></p>
+<p><img src="images\chapter8_1.png" class="img-fluid figure-img"></p>
 <figcaption>Visualizing Document Vectors</figcaption>
 </figure>
 </div>
@@ -423,7 +423,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><strong>Cosine Similarity</strong>: Measures the angle between two vectors (e.g., “king” and “queen” have high cosine similarity).</li>
 </ul>
-<div id="0d7df6e8" class="cell" data-execution_count="1">
+<div id="c5ec0cf0" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -439,7 +439,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><strong>Euclidean Distance</strong>: Measures the straight-line distance between vectors.</li>
 </ul>
-<div id="7834ce3e" class="cell" data-execution_count="2">
+<div id="e7c12058" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.spatial.distance <span class="im">import</span> euclidean</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -455,7 +455,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><strong>Dot Product</strong>: Measures similarity based on direction and magnitude.</li>
 </ul>
-<div id="d033bbc6" class="cell" data-execution_count="3">
+<div id="87025743" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>vec_king <span class="op">=</span> np.array([<span class="fl">0.5</span>, <span class="fl">0.8</span>, <span class="fl">0.1</span>])</span>
@@ -472,98 +472,90 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="word2vec" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="word2vec"><span class="header-section-number">9.3</span> Word2Vec</h2>
-<p>Word2Vec is a popular algorithm for learning word embeddings—dense vector representations of words that capture their meanings and relationships.</p>
-<section id="what-are-dense-vectors" class="level3" data-number="9.3.1">
-<h3 data-number="9.3.1" class="anchored" data-anchor-id="what-are-dense-vectors"><span class="header-section-number">9.3.1</span> What Are Dense Vectors?</h3>
+<p>Word2Vec is a popular algorithm for learning <strong>word embeddings</strong>—compact, dense vectors that capture the meanings and relationships of words.</p>
+<section id="from-sparse-to-dense-vectors" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="from-sparse-to-dense-vectors"><span class="header-section-number">9.3.1</span> From Sparse to Dense Vectors</h3>
 <ul>
-<li><strong>Dense vectors</strong> are lists of numbers (e.g., <code>[0.2, -0.1, 0.7, ...]</code>) that represent words in a continuous space.</li>
-<li>Unlike sparse vectors (like one-hot or bag-of-words), dense vectors are low-dimensional and capture similarities: similar words have similar vectors.</li>
+<li><strong>Sparse Vectors</strong>: Traditional representations like one-hot or bag-of-words use high-dimensional vectors with mostly zeros.
+<ul>
+<li>Example: One-hot for “apple” in a 10,000-word vocabulary: <code>[0, 0, ..., 1, ..., 0]</code>.</li>
+<li>Example: Bag-of-words for a document: <code>[2, 0, 0, 1, 0, ..., 0]</code>.</li>
+</ul></li>
+<li><strong>Dense Vectors</strong>: Word2Vec learns low-dimensional vectors (e.g., 50–300 dimensions) where most values are nonzero.
+<ul>
+<li>Example: Word2Vec for “apple”: <code>[0.12, -0.08, 0.44, ..., 0.03]</code>.</li>
+</ul></li>
 </ul>
+<p>Dense vectors place similar words close together in space, making it easier to capture semantic similarity.</p>
+<hr>
 </section>
-<section id="the-skip-gram-model" class="level3" data-number="9.3.2">
-<h3 data-number="9.3.2" class="anchored" data-anchor-id="the-skip-gram-model"><span class="header-section-number">9.3.2</span> The Skip-Gram Model</h3>
-<p>Word2Vec uses the <strong>skip-gram</strong> approach:</p>
-<ul>
-<li>For each word in a sentence (the <strong>target word</strong>), the model tries to predict the words that appear nearby (the <strong>context words</strong>).</li>
-<li>Example: In the sentence<br>
-<code>"The bank of the river was flooded."</code><br>
-If the target word is <code>"bank"</code>, the context words might be <code>"the"</code>, <code>"of"</code>, <code>"the"</code>, <code>"river"</code>, <code>"was"</code>.</li>
-</ul>
-<section id="example-skip-gram-pairs" class="level4" data-number="9.3.2.1">
-<h4 data-number="9.3.2.1" class="anchored" data-anchor-id="example-skip-gram-pairs"><span class="header-section-number">9.3.2.1</span> Example: Skip-Gram Pairs</h4>
-<p>Suppose the window size is 2 (look at 2 words before and after):</p>
+<section id="how-word2vec-works" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="how-word2vec-works"><span class="header-section-number">9.3.2</span> How Word2Vec Works</h3>
+<p>Word2Vec can use the <strong>skip-gram</strong> approach to learn word relationships from text:</p>
+<ol type="1">
+<li><p><strong>Skip-Gram Objective</strong>: For each word (the <strong>target</strong>) in a sentence, predict its nearby words (the <strong>context</strong>). - Example sentence:<br>
+<code>"The bank of the river was flooded."</code> - If the target is <code>"bank"</code>, and the window size is 2, the context words are: <code>"the"</code>, <code>"of"</code>, <code>"river"</code>, <code>"was"</code>.</p></li>
+<li><p><strong>Creating Training Pairs</strong>: The model creates (target, context) pairs from the text. - Example pairs: | Target | Context | |——–|———| | bank | the | | bank | of | | bank | river | | bank | was |</p></li>
+<li><p><strong>Positive and Negative Examples</strong>: - <strong>Positive pairs</strong>: Real (target, context) pairs from the text. - <strong>Negative pairs</strong>: Randomly combine the target with words that do not appear in its context window.</p></li>
+<li><p><strong>Learning Process</strong>: - The model uses a simple neural network/logistic regression to distinguish positive pairs from negative ones. - The goal is to maximize the probability of positive pairs while minimizing the probability of negative pairs. - The model adjusts the word vectors so that words appearing in similar contexts have similar vectors.</p></li>
+<li><p><strong>Result</strong>: Each word is represented by a vector that reflects its meaning and relationships to other words.</p></li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>Self-supervised</strong>: Word2Vec learns directly from raw text, without any manual labeling.</p>
+</blockquote>
+<hr>
+</section>
+<section id="why-dense-embeddings-are-powerful" class="level3" data-number="9.3.3">
+<h3 data-number="9.3.3" class="anchored" data-anchor-id="why-dense-embeddings-are-powerful"><span class="header-section-number">9.3.3</span> Why Dense Embeddings Are Powerful</h3>
+<p>Dense vectors capture subtle relationships between words: - Words like <code>"king"</code> and <code>"queen"</code> have similar vectors. - You can do vector arithmetic to solve analogies:<br>
+<code>vec("king") - vec("man") + vec("woman") ≈ vec("queen")</code></p>
+<p>These embeddings are much more effective for NLP tasks than sparse representations.</p>
+<hr>
+</section>
+<section id="word2vec-at-a-glance" class="level3" data-number="9.3.4">
+<h3 data-number="9.3.4" class="anchored" data-anchor-id="word2vec-at-a-glance"><span class="header-section-number">9.3.4</span> Word2Vec at a Glance</h3>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 73%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Target</th>
-<th>Context</th>
+<th>Concept</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>bank</td>
-<td>the</td>
+<td><strong>Embedding</strong></td>
+<td>Each word gets a dense vector</td>
 </tr>
 <tr class="even">
-<td>bank</td>
-<td>of</td>
+<td><strong>Skip-Gram</strong></td>
+<td>Predict context words from a target word</td>
 </tr>
 <tr class="odd">
-<td>bank</td>
-<td>river</td>
+<td><strong>Positive Example</strong></td>
+<td>(target, context) from real text</td>
 </tr>
 <tr class="even">
-<td>bank</td>
-<td>was</td>
+<td><strong>Negative Example</strong></td>
+<td>(target, random word) not in context</td>
+</tr>
+<tr class="odd">
+<td><strong>Training</strong></td>
+<td>Make real pairs similar, random pairs dissimilar</td>
+</tr>
+<tr class="even">
+<td><strong>Result</strong></td>
+<td>Vectors encode word meaning and relationships</td>
 </tr>
 </tbody>
 </table>
-</section>
-</section>
-<section id="how-does-word2vec-learn" class="level3" data-number="9.3.3">
-<h3 data-number="9.3.3" class="anchored" data-anchor-id="how-does-word2vec-learn"><span class="header-section-number">9.3.3</span> How Does Word2Vec Learn?</h3>
-<ol type="1">
-<li><strong>Positive Examples</strong>: For each (target, context) pair from real text, treat as a positive example.</li>
-<li><strong>Negative Examples</strong>: Randomly pair the target word with other words from the vocabulary (not in the context window).</li>
-<li><strong>Training</strong>: Use a simple neural network (logistic regression) to distinguish positive from negative pairs.</li>
-<li><strong>Embeddings</strong>: The learned weights (vectors) for each word become the word embeddings.</li>
-</ol>
-<blockquote class="blockquote">
-<p><strong>Self-supervision</strong>: The model learns from raw text, without human-labeled data.</p>
-</blockquote>
-<section id="why-dense-vectors" class="level4" data-number="9.3.3.1">
-<h4 data-number="9.3.3.1" class="anchored" data-anchor-id="why-dense-vectors"><span class="header-section-number">9.3.3.1</span> Why Dense Vectors?</h4>
-<p>Dense vectors capture subtle relationships: - <code>"king"</code> and <code>"queen"</code> have similar vectors. - Vector arithmetic:<br>
-<code>vec("king") - vec("man") + vec("woman") ≈ vec("queen")</code></p>
-<blockquote class="blockquote">
-<p>Dense vectors (embeddings) work better in nearly every NLP task than sparse vectors.<br>
-We don’t completely understand all the reasons for this.<br>
-— SLP ch 6, p17</p>
-</blockquote>
 <hr>
-</section>
-</section>
-<section id="summary-how-word2vec-learns-embeddings" class="level3" data-number="9.3.4">
-<h3 data-number="9.3.4" class="anchored" data-anchor-id="summary-how-word2vec-learns-embeddings"><span class="header-section-number">9.3.4</span> Summary: How Word2Vec Learns Embeddings</h3>
-<ul>
-<li><strong>Embeddings</strong>: Each word gets a dense vector.</li>
-<li><strong>Skip-Gram Training Data</strong>: Model uses (target, context) pairs from text.</li>
-<li><strong>Learning Objective</strong>: - Make vectors for real (target, context) pairs similar. - Make vectors for random (target, random word) pairs dissimilar.</li>
-</ul>
-<hr>
-<section id="training-process" class="level4" data-number="9.3.4.1">
-<h4 data-number="9.3.4.1" class="anchored" data-anchor-id="training-process"><span class="header-section-number">9.3.4.1</span> Training Process</h4>
-<ol type="1">
-<li><strong>Initialization</strong>: Start with random vectors for each word in the vocabulary.</li>
-<li><strong>Positive Examples</strong>: For each word in the corpus, pair it with its nearby context words.</li>
-<li><strong>Negative Examples</strong>: Pair the target word with randomly sampled words from the vocabulary.</li>
-<li><strong>Classifier Training</strong>: Use logistic regression to distinguish positive from negative pairs, updating the vectors to improve classification.</li>
-<li><strong>Result</strong>: Discard the classifier; the learned vectors are the word embeddings.</li>
-</ol>
-</section>
-<section id="analogy-reasoning-with-embeddings" class="level4" data-number="9.3.4.2">
-<h4 data-number="9.3.4.2" class="anchored" data-anchor-id="analogy-reasoning-with-embeddings"><span class="header-section-number">9.3.4.2</span> Analogy Reasoning with Embeddings</h4>
-<p>Word2Vec embeddings capture relationships between words. For example, vector arithmetic can reveal analogies:</p>
+<section id="analogy-reasoning-with-embeddings" class="level4" data-number="9.3.4.1">
+<h4 data-number="9.3.4.1" class="anchored" data-anchor-id="analogy-reasoning-with-embeddings"><span class="header-section-number">9.3.4.1</span> Analogy Reasoning with Embeddings</h4>
+<p>Word2Vec embeddings can solve analogies using vector math. For example:</p>
 </section>
 </section>
 </section>

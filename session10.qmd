@@ -125,7 +125,7 @@ Transformers have no inherent sense of word order.
 > *Example:*  
 > The embedding for "fish" at position 3 is different from "fish" at position 17.
 
-![Position Embeddings](images/chapter10_1.png)
+![Position Embeddings](images\chapter10_1.png)
 
 ### Output: Logits and Softmax
 
@@ -134,7 +134,7 @@ After processing, the model produces a **logit** (score) for each word in the vo
 - **Logits:** Vector of size [1 × |V|], where |V| is the vocabulary size.
 - **Softmax:** Converts logits into probabilities over the vocabulary.
 
-![Final Transformer Model](images/chapter10_2.png)
+![Final Transformer Model](images\chapter10_2.png)
 
 ### BERT: Bidirectional Encoder Representations from Transformers
 

@@ -101,7 +101,7 @@ Activation functions introduce non-linearity, allowing neural networks to model 
 
 ---
 
-![Neural Network Unit](images/chapter9_1.png)
+![Neural Network Unit](images\chapter9_1.png)
 
 *Figure: A single neural network unit computes a weighted sum of its inputs, adds a bias, and applies an activation function to produce its output.*
 
@@ -231,7 +231,7 @@ The computation is:
    $$
 
 
-![Feedforward Neural Network](images/chapter9_2.png)
+![Feedforward Neural Network](images\chapter9_2.png)
 
 
 ## Applying Feedforward Networks to NLP Tasks
